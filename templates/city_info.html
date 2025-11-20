@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ city.name }} - City Information</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .population-bar {
+            transition: width 1s ease-out;
+        }
+        .guess-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .guess-btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen">
+
+<div class="container mx-auto px-4 py-12 max-w-4xl">
+    
+    <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8">
+        <div class="text-center mb-8">
+            <h1 class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 mb-4">
+                🏙️ {{ city.name }}
+            </h1>
+            <p class="text-xl text-gray-600">City in {{ state|title }}</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6">
+                <h3 class="text-2xl font-bold text-green-800 mb-3">👥 Population</h3>
+                <p class="text-3xl font-bold text-gray-800">{{ city.population }}</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6">
+                <h3 class="text-2xl font-bold text-blue-800 mb-3">📏 Area</h3>
+                <p class="text-3xl font-bold text-gray-800">{{ city.area }}</p>
+            </div>
+        </div>
+        
+        <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">🗺️ Current Route Structure</h3>
+            <div class="bg-white rounded-lg p-4 font-mono text-lg">
+                /india/<strong class="text-blue-600">{{ state|lower }}</strong>/<strong class="text-green-600">{{ city.name|lower|replace(' ', '') }}</strong>
+            </div>
+            <p class="text-gray-600 mt-4">
+                <strong>Level 2:</strong> State → City
+            </p>
+        </div>
+        
+        <div class="bg-orange-50 border-l-4 border-orange-500 rounded-lg p-6 mb-8">
+            <h3 class="text-xl font-bold text-orange-800 mb-3">🔍 Explore Areas in this City</h3>
+            <p class="text-gray-700 mb-4">Add an area to the URL:</p>
+            <div class="space-y-2">
+                <a href="/india/{{ state|lower }}/{{ city.name|lower|replace(' ', '') }}/peenya" class="block bg-white hover:bg-gray-50 rounded-lg p-3 transition">
+                    <code class="text-blue-600">.../peenya</code>
+                    <span class="text-gray-600 ml-2">→ Industrial Area</span>
+                </a>
+                <a href="/india/{{ state|lower }}/{{ city.name|lower|replace(' ', '') }}/whitefield" class="block bg-white hover:bg-gray-50 rounded-lg p-3 transition">
+                    <code class="text-blue-600">.../whitefield</code>
+                    <span class="text-gray-600 ml-2">→ IT Corridor</span>
+                </a>
+                <a href="/india/{{ state|lower }}/{{ city.name|lower|replace(' ', '') }}/koramangala" class="block bg-white hover:bg-gray-50 rounded-lg p-3 transition">
+                    <code class="text-blue-600">.../koramangala</code>
+                    <span class="text-gray-600 ml-2">→ Startup Hub</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Route Building Game Level 2 -->
+        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-2xl p-8 mb-8 border-4 border-green-300">
+            <h3 class="text-3xl font-bold text-green-900 mb-4 text-center">🎮 Build Route: Add City!</h3>
+            <p class="text-center text-gray-700 mb-6 text-lg">Click cities to see how the URL grows with each level</p>
+            
+            <div class="bg-white rounded-xl p-6 mb-6">
+                <h4 class="text-xl font-bold mb-4 text-gray-800">Building URL Path:</h4>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">1️⃣</span>
+                        <div class="flex-1">
+                            <div class="bg-blue-100 p-3 rounded-lg">
+                                <code class="text-blue-800 font-bold">/india/<span class="bg-blue-300 px-2 py-1 rounded">{{ state|lower }}</span></code>
+                                <p class="text-sm text-gray-600 mt-1">← State parameter captured</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">2️⃣</span>
+                        <div class="flex-1">
+                            <div class="bg-green-100 p-3 rounded-lg">
+                                <code class="text-green-800 font-bold">/india/{{ state|lower }}/<span id="cityParam" class="bg-green-300 px-2 py-1 rounded">{{ city.name|lower|replace(' ', '') }}</span></code>
+                                <p class="text-sm text-gray-600 mt-1">← City parameter captured</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-center text-gray-700 mb-4 font-semibold">Click a city to visit ({{ state|title }} cities):</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                {% set colors = [
+                    'from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600',
+                    'from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600',
+                    'from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600',
+                    'from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600',
+                    'from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600',
+                    'from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600'
+                ] %}
+                {% for city_item in available_cities %}
+                <button onclick="visitCity('{{ city_item.id }}')" class="guess-btn bg-gradient-to-br {{ colors[loop.index0 % colors|length] }} text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">🏙️</div>
+                    <div>{{ city_item.name }}</div>
+                </button>
+                {% endfor %}
+            </div>
+            
+            <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-6">
+                <h4 class="text-lg font-bold text-blue-800 mb-2">💡 Understanding Routes:</h4>
+                <ul class="space-y-2 text-gray-700">
+                    <li>✅ Route pattern: <code class="bg-white px-2 py-1 rounded">/india/&lt;state&gt;/&lt;city&gt;</code></li>
+                    <li>✅ Flask captures <strong>2 variables</strong>: state AND city</li>
+                    <li>✅ Each level adds more specific information</li>
+                    <li>✅ Next: Add area for Level 3!</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="flex justify-center gap-4">
+            <a href="/india/{{ state|lower }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-full transition">
+                ← Back to {{ state|title }}
+            </a>
+            <a href="/routes-explained" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-8 py-4 rounded-full transition">
+                Routes Guide
+            </a>
+            <a href="/" class="bg-gray-600 hover:bg-gray-700 text-white font-bold px-8 py-4 rounded-full transition">
+                🏠 Home
+            </a>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+const currentState = '{{ state|lower }}';
+
+function visitCity(city) {
+    window.location.href = `/india/${currentState}/${city}`;
+}
+</script>
+
+</body>
+</html>

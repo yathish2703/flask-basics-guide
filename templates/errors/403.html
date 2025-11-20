@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}403 - Forbidden{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white py-20 px-4 text-center rounded-lg mb-8">
+    <h1 class="text-8xl font-bold mb-4">403</h1>
+    <h2 class="text-3xl font-semibold mb-2">Access Forbidden</h2>
+    <p class="text-xl">You don't have permission to access this resource.</p>
+</div>
+
+<div class="max-w-3xl mx-auto px-4">
+    <div class="bg-white rounded-lg shadow-md p-8 border border-gray-200 mb-8">
+        <p class="text-gray-700 mb-4">You tried to access a resource that you don't have permission to view.</p>
+        
+        <p class="text-gray-700 mb-4">This might be because:</p>
+        <ul class="space-y-2 list-disc pl-6 text-gray-700">
+            <li>You need to be logged in</li>
+            <li>You don't have the required permissions</li>
+            <li>This resource is restricted</li>
+        </ul>
+    </div>
+
+    <div class="flex gap-4 mb-8">
+        <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition">Go to Homepage</a>
+        <a href="{{ url_for('auth.login') }}" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg transition">Login</a>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Custom Error Handler:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>@app.errorhandler(403)
+def forbidden_error(error):
+    return render_template('errors/403.html'), 403</code></pre>
+    </div>
+</div>
+{% endblock %}

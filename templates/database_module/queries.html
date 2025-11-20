@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Query Examples{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8">Database Query Examples</h1>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Query Statistics</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Metric</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Value</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr>
+                        <td class="px-6 py-4 text-sm text-gray-700">Total Tasks:</td>
+                        <td class="px-6 py-4 text-sm font-semibold text-gray-900">{{ results.total_tasks }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 text-sm text-gray-700">Completed Tasks:</td>
+                        <td class="px-6 py-4 text-sm font-semibold text-gray-900">{{ results.completed_count }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 text-sm text-gray-700">High Priority Tasks:</td>
+                        <td class="px-6 py-4 text-sm font-semibold text-gray-900">{{ results.high_priority_count }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if results.first_task %}
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">First Task in Database</h2>
+        <p class="text-lg font-medium text-gray-900 mb-2">{{ results.first_task.title }}</p>
+        <p class="text-sm text-gray-600"><em>Created: {{ results.first_task.created_at.strftime('%Y-%m-%d') }}</em></p>
+    </div>
+    {% endif %}
+
+    {% if results.recent_tasks %}
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Recent Tasks (Limited to 5)</h2>
+        <ul class="space-y-3">
+            {% for task in results.recent_tasks %}
+            <li class="flex items-center">
+                <span class="text-gray-700">{{ task.title }} - </span>
+                <span class="ml-2 inline-flex px-3 py-1 text-xs font-semibold rounded-full {% if task.priority == 'high' %}bg-red-100 text-red-800{% elif task.priority == 'medium' %}bg-yellow-100 text-yellow-800{% else %}bg-green-100 text-green-800{% endif %}">
+                    {{ task.priority }}
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Common Query Methods:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code># Get all records
+all_tasks = Task.query.all()
+
+# Get first record
+first_task = Task.query.first()
+
+# Filter by field
+completed = Task.query.filter_by(completed=True).all()
+
+# Complex filtering
+high_priority = Task.query.filter_by(priority='high').all()
+
+# Order by
+ordered = Task.query.order_by(Task.created_at.desc()).all()
+
+# Limit results
+limited = Task.query.limit(5).all()
+
+# Get by ID (or 404)
+task = Task.query.get_or_404(task_id)
+
+# Count
+count = Task.query.count()
+
+# Chain methods
+tasks = Task.query.filter_by(completed=False)\
+                  .order_by(Task.priority)\
+                  .limit(10)\
+                  .all()</code></pre>
+    </div>
+
+    <div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-6 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Query Methods Summary:</h3>
+        <ul class="space-y-2 text-gray-700">
+            <li><code class="bg-gray-200 px-2 py-1 rounded text-sm">.all()</code> - Get all results as a list</li>
+            <li><code class="bg-gray-200 px-2 py-1 rounded text-sm">.first()</code> - Get first result or None</li>
+            <li><code class="bg-gray-200 px-2 py-1 rounded text-sm">.get(id)</code> - Get by primary key</li>
+            <li><code class="bg-gray-200 px-2 py-1 rounded text-sm">.get_or_404(id)</code> - Get or return 404 error</li>
+            <li><code class="bg-gray-200 px-2 py-1 rounded text-sm">.filter_by()</code> - Simple equality filtering</li>
+            <li><code class="bg-gray-200 px-2 py-1 rounded text-sm">.filter()</code> - Advanced filtering with expressions</li>
+            <li><code class="bg-gray-200 px-2 py-1 rounded text-sm">.order_by()</code> - Sort results</li>
+            <li><code class="bg-gray-200 px-2 py-1 rounded text-sm">.limit(n)</code> - Limit number of results</li>
+            <li><code class="bg-gray-200 px-2 py-1 rounded text-sm">.count()</code> - Count results</li>
+        </ul>
+    </div>
+
+    <div>
+        <a href="{{ url_for('database.database_home') }}" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">← Back to Database</a>
+    </div>
+</div>
+{% endblock %}

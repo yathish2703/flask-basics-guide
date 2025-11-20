@@ -1,0 +1,30 @@
+[project]
+name = "flask-basics-guide"
+version = "1.0.0"
+description = "A comprehensive Flask starter guide for beginners with modular examples"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "Flask Basics Guide", email = "flask@example.com" }
+]
+keywords = ["flask", "tutorial", "beginner", "web-development", "python"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "email-validator>=2.3.0",
+    "flask>=3.1.2",
+    "flask-login>=0.6.3",
+    "flask-sqlalchemy>=3.1.1",
+    "flask-wtf>=1.2.2",
+    "python-dotenv>=1.2.1",
+    "werkzeug>=3.1.3",
+]

@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}HTTP Methods Demo{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-gradient-to-r from-red-500 to-pink-600 rounded-lg shadow-lg p-8 text-white mb-8">
+        <h1 class="text-4xl font-bold mb-2">HTTP Methods Demo 🌐</h1>
+        <p class="text-red-100">Understanding GET, POST, PUT, DELETE</p>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Current Request</h2>
+        <div class="p-4 bg-{{ method_color }}-50 rounded-lg border border-{{ method_color }}-200">
+            <h3 class="font-semibold text-{{ method_color }}-900 mb-1">HTTP Method</h3>
+            <p class="text-3xl font-bold text-{{ method_color }}-600">{{ method }}</p>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🧪 Test Different HTTP Methods</h2>
+        <p class="text-gray-700 mb-4">
+            Click the buttons below to send different HTTP requests and see the responses:
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <button onclick="sendRequest('GET')" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-4 rounded-lg transition shadow-md">
+                📥 GET Request
+                <div class="text-xs mt-1 opacity-90">Retrieve data</div>
+            </button>
+            
+            <button onclick="sendRequest('POST')" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-4 rounded-lg transition shadow-md">
+                📤 POST Request
+                <div class="text-xs mt-1 opacity-90">Create data</div>
+            </button>
+            
+            <button onclick="sendRequest('PUT')" class="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-6 py-4 rounded-lg transition shadow-md">
+                ✏️ PUT Request
+                <div class="text-xs mt-1 opacity-90">Update data</div>
+            </button>
+            
+            <button onclick="sendRequest('DELETE')" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-4 rounded-lg transition shadow-md">
+                🗑️ DELETE Request
+                <div class="text-xs mt-1 opacity-90">Remove data</div>
+            </button>
+        </div>
+        
+        <div id="response" class="hidden">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Response:</h3>
+            <div id="responseContent" class="bg-gray-100 border border-gray-300 rounded-lg p-4 overflow-x-auto"></div>
+        </div>
+        
+        <div id="loading" class="hidden text-center py-4">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <p class="text-gray-600 mt-2">Sending request...</p>
+        </div>
+    </div>
+    
+    {% if method == 'GET' %}
+    <div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">💡 Using cURL in Terminal</h3>
+        <p class="text-gray-700 mb-3">You can also test with command-line tools:</p>
+        <div class="space-y-2">
+            <div>
+                <code class="bg-white px-3 py-1 rounded text-sm">curl -X POST http://localhost:5000/basic/methods-demo</code>
+            </div>
+            <div>
+                <code class="bg-white px-3 py-1 rounded text-sm">curl -X PUT http://localhost:5000/basic/methods-demo</code>
+            </div>
+            <div>
+                <code class="bg-white px-3 py-1 rounded text-sm">curl -X DELETE http://localhost:5000/basic/methods-demo</code>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-3">📝 HTTP Methods Code:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm font-mono"><span class="text-gray-400"># Allow multiple HTTP methods for this route</span>
+@app.route('/methods-demo', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def methods_demo():
+    <span class="text-gray-400"># Get the HTTP method used</span>
+    method = request.method
+    
+    <span class="text-gray-400"># Different logic for each method</span>
+    if method == 'GET':
+        return 'Reading data'
+    elif method == 'POST':
+        return 'Creating new data'
+    elif method == 'PUT':
+        return 'Updating data'
+    elif method == 'DELETE':
+        return 'Deleting data'</code></pre>
+        
+        <div class="mt-4 space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
+            <p><strong class="text-gray-900">methods=[]:</strong> List of allowed HTTP methods for this route</p>
+            <p><strong class="text-gray-900">request.method:</strong> Returns which method was used (GET, POST, etc.)</p>
+            <p><strong class="text-gray-900">Default:</strong> If methods not specified, only GET is allowed</p>
+        </div>
+    </div>
+    
+    <div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-3">💡 HTTP Methods Explained</h3>
+        <div class="space-y-3 text-gray-700">
+            <div>
+                <h4 class="font-semibold text-blue-900">GET</h4>
+                <p class="text-sm">Retrieve data from the server (default method for browser navigation)</p>
+            </div>
+            <div>
+                <h4 class="font-semibold text-green-900">POST</h4>
+                <p class="text-sm">Send data to create a new resource (e.g., form submissions)</p>
+            </div>
+            <div>
+                <h4 class="font-semibold text-yellow-900">PUT</h4>
+                <p class="text-sm">Update an existing resource completely</p>
+            </div>
+            <div>
+                <h4 class="font-semibold text-red-900">DELETE</h4>
+                <p class="text-sm">Remove a resource from the server</p>
+            </div>
+            <div>
+                <h4 class="font-semibold text-purple-900">PATCH</h4>
+                <p class="text-sm">Partially update an existing resource</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center">
+        <a href="/basic" class="text-blue-600 hover:text-blue-700 font-medium">← Back to Basic Routes</a>
+    </div>
+</div>
+
+<script>
+async function sendRequest(method) {
+    const responseDiv = document.getElementById('response');
+    const responseContent = document.getElementById('responseContent');
+    const loading = document.getElementById('loading');
+    
+    // Show loading
+    loading.classList.remove('hidden');
+    responseDiv.classList.add('hidden');
+    
+    try {
+        const response = await fetch('/basic/methods-demo', {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        const contentType = response.headers.get('content-type');
+        let data;
+        
+        if (contentType && contentType.includes('application/json')) {
+            data = await response.json();
+        } else {
+            data = await response.text();
+        }
+        
+        // Hide loading and show response
+        loading.classList.add('hidden');
+        responseDiv.classList.remove('hidden');
+        
+        // Color code based on method
+        const colors = {
+            'GET': 'blue',
+            'POST': 'green',
+            'PUT': 'yellow',
+            'DELETE': 'red'
+        };
+        const color = colors[method] || 'gray';
+        
+        responseContent.innerHTML = `
+            <div class="bg-${color}-50 border-l-4 border-${color}-600 p-4 rounded">
+                <div class="flex items-center mb-2">
+                    <span class="font-bold text-${color}-900 text-lg">${method} Request Successful!</span>
+                </div>
+                <div class="text-sm text-gray-700 mt-2">
+                    <strong>Status:</strong> ${response.status} ${response.statusText}
+                </div>
+                <div class="text-sm text-gray-700 mt-1">
+                    <strong>Response:</strong>
+                </div>
+                <pre class="bg-gray-900 text-gray-100 p-3 rounded mt-2 text-xs overflow-x-auto">${JSON.stringify(data, null, 2)}</pre>
+            </div>
+        `;
+    } catch (error) {
+        loading.classList.add('hidden');
+        responseDiv.classList.remove('hidden');
+        responseContent.innerHTML = `
+            <div class="bg-red-50 border-l-4 border-red-600 p-4 rounded">
+                <div class="font-bold text-red-900">Error!</div>
+                <div class="text-sm text-red-700 mt-1">${error.message}</div>
+            </div>
+        `;
+    }
+}
+
+// Auto-scroll to response when it appears
+document.getElementById('response').addEventListener('DOMNodeInserted', function() {
+    this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ area.name }} - Area Information</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen">
+
+<div class="container mx-auto px-4 py-12 max-w-4xl">
+    
+    <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8">
+        <div class="text-center mb-8">
+            <h1 class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-4">
+                🗺️ {{ area.name }}
+            </h1>
+            <p class="text-xl text-gray-600">Area in {{ city|title }}, {{ state|title }}</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6">
+                <h3 class="text-2xl font-bold text-purple-800 mb-3">🏢 Type</h3>
+                <p class="text-3xl font-bold text-gray-800">{{ area.type }}</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-6">
+                <h3 class="text-2xl font-bold text-pink-800 mb-3">📮 ZIP Code</h3>
+                <p class="text-3xl font-bold text-gray-800">{{ area.zip }}</p>
+            </div>
+        </div>
+        
+        <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">🗺️ Current Route Structure</h3>
+            <div class="bg-white rounded-lg p-4 font-mono text-sm md:text-base break-all">
+                /india/<strong class="text-blue-600">{{ state|lower }}</strong>/<strong class="text-green-600">{{ city|lower }}</strong>/<strong class="text-purple-600">{{ area.name|lower|replace(' ', '') }}</strong>
+            </div>
+            <p class="text-gray-600 mt-4">
+                <strong>Level 3:</strong> State → City → Area
+            </p>
+        </div>
+        
+        <div class="bg-red-50 border-l-4 border-red-500 rounded-lg p-6 mb-8">
+            <h3 class="text-xl font-bold text-red-800 mb-3">🏭 Explore Factories in this Area</h3>
+            <p class="text-gray-700 mb-4">Add a factory to the URL to see the deepest level:</p>
+            <div class="space-y-3">
+                <a href="/india/{{ state|lower }}/{{ city|lower }}/{{ area.name|lower|replace(' ', '') }}/infosys" class="block bg-white hover:bg-gray-50 rounded-lg p-4 transition shadow-sm hover:shadow-md">
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">💻</span>
+                        <div>
+                            <code class="text-blue-600 font-bold">.../infosys</code>
+                            <p class="text-sm text-gray-600">Infosys Limited - IT Services</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="/india/{{ state|lower }}/{{ city|lower }}/{{ area.name|lower|replace(' ', '') }}/bosch" class="block bg-white hover:bg-gray-50 rounded-lg p-4 transition shadow-sm hover:shadow-md">
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">🔧</span>
+                        <div>
+                            <code class="text-blue-600 font-bold">.../bosch</code>
+                            <p class="text-sm text-gray-600">Bosch India - Automotive & Technology</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="/india/{{ state|lower }}/{{ city|lower }}/{{ area.name|lower|replace(' ', '') }}/biocon" class="block bg-white hover:bg-gray-50 rounded-lg p-4 transition shadow-sm hover:shadow-md">
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">💊</span>
+                        <div>
+                            <code class="text-blue-600 font-bold">.../biocon</code>
+                            <p class="text-sm text-gray-600">Biocon Biologics - Pharmaceuticals</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Route Building Game Level 3 -->
+        <div class="bg-gradient-to-br from-yellow-100 to-orange-100 rounded-2xl p-8 mb-8 border-4 border-yellow-300">
+            <h3 class="text-3xl font-bold text-yellow-900 mb-4 text-center">🎮 Build Route: Add Area!</h3>
+            <p class="text-center text-gray-700 mb-6 text-lg">See how adding areas creates deeper URL paths</p>
+            
+            <div class="bg-white rounded-xl p-6 mb-6">
+                <h4 class="text-xl font-bold mb-4 text-gray-800">Complete URL Path:</h4>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">1️⃣</span>
+                        <div class="bg-blue-100 px-3 py-2 rounded flex-1">
+                            <code class="text-sm">/india/<span class="bg-blue-300 px-2 py-1 rounded">{{ state|lower }}</span></code>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">2️⃣</span>
+                        <div class="bg-green-100 px-3 py-2 rounded flex-1">
+                            <code class="text-sm">...<span class="bg-green-300 px-2 py-1 rounded">{{ city|lower }}</span></code>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">3️⃣</span>
+                        <div class="bg-purple-100 px-3 py-2 rounded flex-1">
+                            <code class="text-sm">...<span class="bg-purple-300 px-2 py-1 rounded">{{ area.name|lower|replace(' ', '-') }}</span></code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-center text-gray-700 mb-4 font-semibold">Click an area to visit (Bengaluru areas):</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                <button onclick="visitArea('peenya')" class="area-btn bg-gradient-to-br from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">🏭</div>
+                    <div class="text-sm">Peenya</div>
+                    <div class="text-xs opacity-80">Industrial</div>
+                </button>
+                <button onclick="visitArea('whitefield')" class="area-btn bg-gradient-to-br from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">💼</div>
+                    <div class="text-sm">Whitefield</div>
+                    <div class="text-xs opacity-80">IT Corridor</div>
+                </button>
+                <button onclick="visitArea('koramangala')" class="area-btn bg-gradient-to-br from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">🚀</div>
+                    <div class="text-sm">Koramangala</div>
+                    <div class="text-xs opacity-80">Startup Hub</div>
+                </button>
+                <button onclick="visitArea('electronic-city')" class="area-btn bg-gradient-to-br from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">⚡</div>
+                    <div class="text-sm">Electronic City</div>
+                    <div class="text-xs opacity-80">IT Park</div>
+                </button>
+                <button onclick="visitArea('jayanagar')" class="area-btn bg-gradient-to-br from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">🏘️</div>
+                    <div class="text-sm">Jayanagar</div>
+                    <div class="text-xs opacity-80">Residential</div>
+                </button>
+                <button onclick="visitArea('majestic')" class="area-btn bg-gradient-to-br from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">🏢</div>
+                    <div class="text-sm">Majestic</div>
+                    <div class="text-xs opacity-80">Commercial</div>
+                </button>
+            </div>
+            
+            <div class="bg-orange-50 border-l-4 border-orange-500 rounded-lg p-6">
+                <h4 class="text-lg font-bold text-orange-800 mb-2">💡 Routes Are Growing:</h4>
+                <ul class="space-y-2 text-gray-700">
+                    <li>✅ Pattern: <code class="bg-white px-2 py-1 rounded">/india/&lt;state&gt;/&lt;city&gt;/&lt;area&gt;</code></li>
+                    <li>✅ Flask now captures <strong>3 variables</strong>!</li>
+                    <li>✅ Each level narrows down the location</li>
+                    <li>✅ Final level: Add a factory/company!</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="/india/{{ state|lower }}/{{ city|lower }}" class="bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-full transition">
+                ← {{ city|title }}
+            </a>
+            <a href="/india/{{ state|lower }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-full transition">
+                ← {{ state|title }}
+            </a>
+            <a href="/routes-explained" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-6 py-3 rounded-full transition">
+                Routes Guide
+            </a>
+            <a href="/" class="bg-gray-600 hover:bg-gray-700 text-white font-bold px-6 py-3 rounded-full transition">
+                🏠 Home
+            </a>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+const currentState = '{{ state|lower }}';
+const currentCity = '{{ city|lower }}';
+
+function visitArea(area) {
+    window.location.href = `/india/${currentState}/${currentCity}/${area}`;
+}
+</script>
+
+</body>
+</html>

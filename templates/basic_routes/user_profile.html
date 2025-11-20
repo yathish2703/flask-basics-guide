@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Hello {{ username }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg shadow-lg p-8 text-white mb-8">
+        <h1 class="text-4xl font-bold mb-2">Hello, {{ username }}! 👤</h1>
+        <p class="text-purple-100">Welcome to URL parameter routing!</p>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🎯 URL Parameter</h2>
+        <p class="text-gray-700 mb-4">
+            This route uses a URL parameter: <code class="bg-blue-100 text-blue-800 px-3 py-1 rounded font-mono">&lt;username&gt;</code>
+        </p>
+        <p class="text-gray-700 mb-4">
+            Try changing the URL to see different names. For example:
+        </p>
+        <div class="space-y-2">
+            <a href="/basic/user/Alice" class="block p-3 bg-gray-50 hover:bg-gray-100 rounded border transition">
+                <code class="text-sm text-gray-800">/basic/user/Alice</code>
+            </a>
+            <a href="/basic/user/Bob" class="block p-3 bg-gray-50 hover:bg-gray-100 rounded border transition">
+                <code class="text-sm text-gray-800">/basic/user/Bob</code>
+            </a>
+            <a href="/basic/user/Charlie" class="block p-3 bg-gray-50 hover:bg-gray-100 rounded border transition">
+                <code class="text-sm text-gray-800">/basic/user/Charlie</code>
+            </a>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-3">📝 Code Example:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm font-mono">@app.route('/user/&lt;username&gt;')  <span class="text-gray-400"># Define route with parameter</span>
+def user_profile(username):        <span class="text-gray-400"># username is passed as argument</span>
+    return f'Hello, {username}!'   <span class="text-gray-400"># Use the parameter in response</span></code></pre>
+        
+        <div class="mt-4 space-y-2 text-sm text-gray-700">
+            <p><strong class="text-gray-900">Line 1:</strong> <code class="bg-gray-100 px-2 py-1 rounded text-xs">&lt;username&gt;</code> defines a dynamic part of the URL</p>
+            <p><strong class="text-gray-900">Line 2:</strong> The function receives <code class="bg-gray-100 px-2 py-1 rounded text-xs">username</code> as a parameter</p>
+            <p><strong class="text-gray-900">Line 3:</strong> You can use the parameter value in your response</p>
+        </div>
+    </div>
+    
+    <div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">💡 How It Works</h3>
+        <div class="space-y-3 text-gray-700">
+            <p><strong>URL Pattern:</strong> <code class="bg-white px-2 py-1 rounded">/user/&lt;username&gt;</code></p>
+            <p><strong>Example URL:</strong> <code class="bg-white px-2 py-1 rounded">/user/{{ username }}</code></p>
+            <p><strong>Captured Value:</strong> <code class="bg-white px-2 py-1 rounded">username = "{{ username }}"</code></p>
+            <p class="mt-3">The <code class="bg-white px-2 py-1 rounded">&lt;username&gt;</code> in the route captures 
+            whatever text appears in that position of the URL and passes it as an argument to your function.</p>
+        </div>
+    </div>
+    
+    <div class="text-center">
+        <a href="/basic" class="text-blue-600 hover:text-blue-700 font-medium">← Back to Basic Routes</a>
+    </div>
+</div>
+{% endblock %}

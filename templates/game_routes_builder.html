@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routes Explorer - Learning Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .route-segment {
+            transition: all 0.3s ease;
+        }
+        .route-segment:hover {
+            transform: scale(1.05);
+        }
+        .path-animation {
+            animation: pathGrow 0.5s ease-out;
+        }
+        @keyframes pathGrow {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen">
+
+<div class="container mx-auto px-4 py-12 max-w-6xl">
+    
+    <!-- Header -->
+    <div class="text-center mb-12">
+        <h1 class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-4">
+            🗺️ Routes Explorer
+        </h1>
+        <p class="text-2xl text-gray-700 mb-2">Build Routes Through Indian Cities</p>
+        <p class="text-lg text-gray-600">Learn URL parameters by exploring Karnataka!</p>
+    </div>
+
+    <!-- Progress -->
+    <div class="flex justify-center gap-6 mb-8">
+        <div class="bg-white rounded-2xl shadow-lg px-6 py-4">
+            <p class="text-sm text-gray-600">Level</p>
+            <p class="text-3xl font-bold text-purple-600" id="level">1</p>
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg px-6 py-4">
+            <p class="text-sm text-gray-600">Routes Built</p>
+            <p class="text-3xl font-bold text-pink-600" id="routesBuilt">0</p>
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg px-6 py-4">
+            <p class="text-sm text-gray-600">Parameters</p>
+            <p class="text-3xl font-bold text-blue-600" id="paramsUsed">0</p>
+        </div>
+    </div>
+
+    <!-- URL Display -->
+    <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 text-center">🌐 Current Route</h2>
+        <div class="bg-gray-900 text-green-400 rounded-xl p-6 font-mono text-xl break-all text-center">
+            <span class="text-gray-500">yourdomain.com</span><span id="currentRoute">/india</span>
+        </div>
+        <div id="paramExplanation" class="mt-6 space-y-3 text-center">
+            <p class="text-gray-600">Start building your route by selecting options below!</p>
+        </div>
+    </div>
+
+    <!-- Game Area -->
+    <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="gameArea">
+        
+        <!-- Level 1: States -->
+        <div id="level1" class="mb-8">
+            <div class="text-center mb-6">
+                <div class="text-6xl mb-4">📍</div>
+                <h3 class="text-3xl font-bold text-blue-800 mb-3">Level 1: Select State</h3>
+                <p class="text-gray-700">Choose a state to add the first parameter</p>
+                <code class="bg-blue-100 px-3 py-1 rounded text-blue-800">/india/&lt;state&gt;</code>
+            </div>
+            <div class="grid md:grid-cols-3 gap-4">
+                <button onclick="selectState('karnataka')" class="route-segment bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-6 px-4 rounded-xl transition">
+                    <div class="text-4xl mb-2">🏛️</div>
+                    <div class="text-xl">Karnataka</div>
+                    <div class="text-sm opacity-80">Capital: Bengaluru</div>
+                </button>
+                <button onclick="selectState('tamilnadu')" class="route-segment bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-6 px-4 rounded-xl transition">
+                    <div class="text-4xl mb-2">🏛️</div>
+                    <div class="text-xl">Tamil Nadu</div>
+                    <div class="text-sm opacity-80">Capital: Chennai</div>
+                </button>
+                <button onclick="selectState('kerala')" class="route-segment bg-gradient-to-br from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white font-bold py-6 px-4 rounded-xl transition">
+                    <div class="text-4xl mb-2">🏛️</div>
+                    <div class="text-xl">Kerala</div>
+                    <div class="text-sm opacity-80">Capital: Trivandrum</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Level 2: Cities (Hidden initially) -->
+        <div id="level2" class="mb-8 hidden">
+            <div class="text-center mb-6">
+                <div class="text-6xl mb-4">🏙️</div>
+                <h3 class="text-3xl font-bold text-green-800 mb-3">Level 2: Select City</h3>
+                <p class="text-gray-700">Add a city to build a 2-parameter route</p>
+                <code class="bg-green-100 px-3 py-1 rounded text-green-800">/india/&lt;state&gt;/&lt;city&gt;</code>
+            </div>
+            <div id="cityOptions" class="grid md:grid-cols-4 gap-4">
+                <!-- Cities will be loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- Level 3: Areas (Hidden initially) -->
+        <div id="level3" class="mb-8 hidden">
+            <div class="text-center mb-6">
+                <div class="text-6xl mb-4">🗺️</div>
+                <h3 class="text-3xl font-bold text-purple-800 mb-3">Level 3: Select Area</h3>
+                <p class="text-gray-700">Add an area to build a 3-parameter route</p>
+                <code class="bg-purple-100 px-3 py-1 rounded text-purple-800">/india/&lt;state&gt;/&lt;city&gt;/&lt;area&gt;</code>
+            </div>
+            <div id="areaOptions" class="grid md:grid-cols-3 gap-4">
+                <!-- Areas will be loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- Level 4: Companies (Hidden initially) -->
+        <div id="level4" class="mb-8 hidden">
+            <div class="text-center mb-6">
+                <div class="text-6xl mb-4">🏢</div>
+                <h3 class="text-3xl font-bold text-orange-800 mb-3">Level 4: Select Company</h3>
+                <p class="text-gray-700">Complete the route with a company name</p>
+                <code class="bg-orange-100 px-3 py-1 rounded text-orange-800">/india/&lt;state&gt;/&lt;city&gt;/&lt;area&gt;/&lt;company&gt;</code>
+            </div>
+            <div id="companyOptions" class="grid md:grid-cols-5 gap-4">
+                <!-- Companies will be loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="hidden text-center">
+            <div class="text-8xl mb-4">🎉</div>
+            <h3 class="text-4xl font-bold text-green-800 mb-4">Route Complete!</h3>
+            <p class="text-xl text-gray-700 mb-6">You've built a full 4-parameter hierarchical route!</p>
+            <div class="bg-green-50 border-2 border-green-300 rounded-xl p-6 mb-6">
+                <p class="text-lg font-bold text-gray-800 mb-3">What you learned:</p>
+                <div class="space-y-2 text-left max-w-2xl mx-auto">
+                    <p>✅ URL parameters capture dynamic values</p>
+                    <p>✅ Routes can be hierarchical (state → city → area → company)</p>
+                    <p>✅ Each level narrows down the information</p>
+                    <p>✅ Flask captures these parameters and passes them to functions</p>
+                </div>
+            </div>
+            <button onclick="resetGame()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-4 rounded-full transition">
+                🔄 Build Another Route
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Learning Cards -->
+    <div class="grid md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <div class="text-4xl mb-3 text-center">1️⃣</div>
+            <h3 class="font-bold text-gray-800 text-center mb-2">State</h3>
+            <p class="text-sm text-gray-600 text-center">First parameter</p>
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <div class="text-4xl mb-3 text-center">2️⃣</div>
+            <h3 class="font-bold text-gray-800 text-center mb-2">City</h3>
+            <p class="text-sm text-gray-600 text-center">Second parameter</p>
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <div class="text-4xl mb-3 text-center">3️⃣</div>
+            <h3 class="font-bold text-gray-800 text-center mb-2">Area</h3>
+            <p class="text-sm text-gray-600 text-center">Third parameter</p>
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <div class="text-4xl mb-3 text-center">4️⃣</div>
+            <h3 class="font-bold text-gray-800 text-center mb-2">Company</h3>
+            <p class="text-sm text-gray-600 text-center">Fourth parameter</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="flex justify-center gap-4">
+        <a href="/games" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-8 py-4 rounded-full transition">
+            🎮 All Games
+        </a>
+        <button onclick="resetGame()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-4 rounded-full transition">
+            🔄 Restart
+        </button>
+        <a href="/" class="bg-gray-600 hover:bg-gray-700 text-white font-bold px-8 py-4 rounded-full transition">
+            🏠 Home
+        </a>
+    </div>
+
+</div>
+
+<script>
+let currentState = '';
+let currentCity = '';
+let currentArea = '';
+let routesBuilt = 0;
+let level = 1;
+let paramsUsed = 0;
+
+const stateData = {
+    'karnataka': {
+        cities: [
+            { id: 'bengaluru', name: 'Bengaluru', emoji: '🌆' },
+            { id: 'mysuru', name: 'Mysuru', emoji: '🏰' },
+            { id: 'mangaluru', name: 'Mangaluru', emoji: '🏖️' },
+            { id: 'hubballi', name: 'Hubballi', emoji: '🏙️' }
+        ]
+    },
+    'tamilnadu': {
+        cities: [
+            { id: 'chennai', name: 'Chennai', emoji: '🌊' },
+            { id: 'coimbatore', name: 'Coimbatore', emoji: '🏭' }
+        ]
+    },
+    'kerala': {
+        cities: [
+            { id: 'kochi', name: 'Kochi', emoji: '⛵' },
+            { id: 'trivandrum', name: 'Trivandrum', emoji: '🏝️' }
+        ]
+    }
+};
+
+const areas = [
+    { id: 'peenya', name: 'Peenya', type: 'Industrial', emoji: '🏭' },
+    { id: 'whitefield', name: 'Whitefield', type: 'IT Hub', emoji: '💻' },
+    { id: 'koramangala', name: 'Koramangala', type: 'Startup Hub', emoji: '🚀' },
+    { id: 'electroniccity', name: 'Electronic City', type: 'Tech Park', emoji: '🏢' },
+    { id: 'jayanagar', name: 'Jayanagar', type: 'Residential', emoji: '🏘️' },
+    { id: 'majestic', name: 'Majestic', type: 'Commercial', emoji: '🛍️' }
+];
+
+const companies = [
+    { id: 'infosys', name: 'Infosys', type: 'IT', emoji: '💼' },
+    { id: 'bosch', name: 'Bosch', type: 'Automotive', emoji: '🚗' },
+    { id: 'biocon', name: 'Biocon', type: 'Pharma', emoji: '💊' },
+    { id: 'toyota', name: 'Toyota', type: 'Auto', emoji: '🚙' },
+    { id: 'wipro', name: 'Wipro', type: 'IT', emoji: '🖥️' }
+];
+
+function selectState(state) {
+    currentState = state;
+    level = 2;
+    paramsUsed = 1;
+    
+    updateRoute();
+    updateStats();
+    
+    // Show city options
+    const cities = stateData[state].cities;
+    const cityContainer = document.getElementById('cityOptions');
+    cityContainer.innerHTML = cities.map(city => `
+        <button onclick="selectCity('${city.id}')" class="route-segment bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-6 px-4 rounded-xl transition">
+            <div class="text-4xl mb-2">${city.emoji}</div>
+            <div class="text-lg">${city.name}</div>
+        </button>
+    `).join('');
+    
+    document.getElementById('level1').classList.add('opacity-50');
+    document.getElementById('level2').classList.remove('hidden');
+    
+    updateParamExplanation();
+}
+
+function selectCity(city) {
+    currentCity = city;
+    level = 3;
+    paramsUsed = 2;
+    
+    updateRoute();
+    updateStats();
+    
+    // Show area options
+    const areaContainer = document.getElementById('areaOptions');
+    areaContainer.innerHTML = areas.map(area => `
+        <button onclick="selectArea('${area.id}')" class="route-segment bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-bold py-6 px-4 rounded-xl transition">
+            <div class="text-4xl mb-2">${area.emoji}</div>
+            <div class="text-lg">${area.name}</div>
+            <div class="text-xs opacity-80">${area.type}</div>
+        </button>
+    `).join('');
+    
+    document.getElementById('level2').classList.add('opacity-50');
+    document.getElementById('level3').classList.remove('hidden');
+    
+    updateParamExplanation();
+}
+
+function selectArea(area) {
+    currentArea = area;
+    level = 4;
+    paramsUsed = 3;
+    
+    updateRoute();
+    updateStats();
+    
+    // Show company options
+    const companyContainer = document.getElementById('companyOptions');
+    companyContainer.innerHTML = companies.map(company => `
+        <button onclick="selectCompany('${company.id}')" class="route-segment bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-6 px-4 rounded-xl transition">
+            <div class="text-4xl mb-2">${company.emoji}</div>
+            <div class="text-sm">${company.name}</div>
+            <div class="text-xs opacity-80">${company.type}</div>
+        </button>
+    `).join('');
+    
+    document.getElementById('level3').classList.add('opacity-50');
+    document.getElementById('level4').classList.remove('hidden');
+    
+    updateParamExplanation();
+}
+
+function selectCompany(company) {
+    paramsUsed = 4;
+    routesBuilt++;
+    
+    currentRoute = `/india/${currentState}/${currentCity}/${currentArea}/${company}`;
+    document.getElementById('currentRoute').innerHTML = 
+        `/india/<span class="text-blue-400">${currentState}</span>/<span class="text-green-400">${currentCity}</span>/<span class="text-purple-400">${currentArea}</span>/<span class="text-orange-400">${company}</span>`;
+    
+    updateStats();
+    
+    // Show success
+    document.getElementById('level1').classList.add('hidden');
+    document.getElementById('level2').classList.add('hidden');
+    document.getElementById('level3').classList.add('hidden');
+    document.getElementById('level4').classList.add('hidden');
+    document.getElementById('successMessage').classList.remove('hidden');
+}
+
+function updateRoute() {
+    let route = '/india';
+    if (currentState) route += `/<span class="text-blue-400">${currentState}</span>`;
+    if (currentCity) route += `/<span class="text-green-400">${currentCity}</span>`;
+    if (currentArea) route += `/<span class="text-purple-400">${currentArea}</span>`;
+    
+    document.getElementById('currentRoute').innerHTML = route;
+}
+
+function updateParamExplanation() {
+    const explanations = {
+        1: '<p class="text-blue-600 font-bold">✅ State parameter captured!</p><p class="text-gray-600">Flask stores this in the <code class="bg-gray-100 px-2 py-1 rounded">state</code> variable</p>',
+        2: '<p class="text-green-600 font-bold">✅ City parameter captured!</p><p class="text-gray-600">Flask now has <code class="bg-gray-100 px-2 py-1 rounded">state</code> and <code class="bg-gray-100 px-2 py-1 rounded">city</code> variables</p>',
+        3: '<p class="text-purple-600 font-bold">✅ Area parameter captured!</p><p class="text-gray-600">Flask now has 3 parameters: state, city, and area</p>'
+    };
+    
+    document.getElementById('paramExplanation').innerHTML = explanations[paramsUsed] || '';
+}
+
+function updateStats() {
+    document.getElementById('level').textContent = level;
+    document.getElementById('routesBuilt').textContent = routesBuilt;
+    document.getElementById('paramsUsed').textContent = paramsUsed;
+}
+
+function resetGame() {
+    currentState = '';
+    currentCity = '';
+    currentArea = '';
+    level = 1;
+    paramsUsed = 0;
+    
+    document.getElementById('currentRoute').textContent = '/india';
+    document.getElementById('paramExplanation').innerHTML = '<p class="text-gray-600">Start building your route by selecting options below!</p>';
+    
+    document.getElementById('level1').classList.remove('opacity-50', 'hidden');
+    document.getElementById('level2').classList.add('hidden');
+    document.getElementById('level3').classList.add('hidden');
+    document.getElementById('level4').classList.add('hidden');
+    document.getElementById('successMessage').classList.add('hidden');
+    
+    updateStats();
+}
+</script>
+
+</body>
+</html>

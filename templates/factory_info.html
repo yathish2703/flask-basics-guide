@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ factory.name }} - Factory Information</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-orange-50 to-red-50 min-h-screen">
+
+<div class="container mx-auto px-4 py-12 max-w-5xl">
+    
+    <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" data-aos="fade-up">
+        <div class="text-center mb-8">
+            <h1 class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 mb-4">
+                🏭 {{ factory.name }}
+            </h1>
+            <p class="text-xl text-gray-600">Factory in {{ area|title }}, {{ city|title }}, {{ state|title }}</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-6" data-aos="fade-right" data-aos-delay="100">
+                <h3 class="text-2xl font-bold text-orange-800 mb-3">🏢 Type</h3>
+                <p class="text-2xl font-bold text-gray-800">{{ factory.type }}</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
+                <h3 class="text-2xl font-bold text-blue-800 mb-3">👷 Employees</h3>
+                <p class="text-2xl font-bold text-gray-800">{{ factory.employees }}</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6" data-aos="fade-left" data-aos-delay="300">
+                <h3 class="text-2xl font-bold text-green-800 mb-3">📅 Established</h3>
+                <p class="text-2xl font-bold text-gray-800">{{ factory.established }}</p>
+            </div>
+        </div>
+        
+        <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 mb-8" data-aos="fade-up" data-aos-delay="400">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">📦 Products Manufactured</h3>
+            <div class="grid md:grid-cols-3 gap-4">
+                {% for product in factory.products %}
+                <div class="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition">
+                    <p class="text-lg font-semibold text-gray-800 text-center">{{ product }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-6 mb-8" data-aos="fade-up" data-aos-delay="500">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">🗺️ Complete Route Structure</h3>
+            <div class="bg-white rounded-lg p-4 font-mono text-xs md:text-sm break-all">
+                /india/<strong class="text-blue-600">{{ state|lower }}</strong>/<strong class="text-green-600">{{ city|lower }}</strong>/<strong class="text-purple-600">{{ area|lower }}</strong>/<strong class="text-red-600">{{ factory.name|lower|replace(' ', '') }}</strong>
+            </div>
+            <div class="mt-6 space-y-2">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">📍</span>
+                    <span class="text-gray-700"><strong>Level 1:</strong> State - {{ state|title }}</span>
+                </div>
+                <div class="flex items-center gap-3 ml-8">
+                    <span class="text-2xl">🏙️</span>
+                    <span class="text-gray-700"><strong>Level 2:</strong> City - {{ city|title }}</span>
+                </div>
+                <div class="flex items-center gap-3 ml-16">
+                    <span class="text-2xl">🗺️</span>
+                    <span class="text-gray-700"><strong>Level 3:</strong> Area - {{ area|title }}</span>
+                </div>
+                <div class="flex items-center gap-3 ml-24">
+                    <span class="text-2xl">🏭</span>
+                    <span class="text-gray-700"><strong>Level 4:</strong> Factory - {{ factory.name }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-gradient-to-r from-green-100 to-blue-100 border-l-4 border-green-500 rounded-lg p-6 mb-8" data-aos="fade-up" data-aos-delay="600">
+            <h3 class="text-xl font-bold text-green-800 mb-3">🎓 What You Learned</h3>
+            <div class="space-y-3 text-gray-700">
+                <div class="flex items-start gap-3">
+                    <span class="text-2xl">✅</span>
+                    <div>
+                        <strong>Hierarchical Routes:</strong> URLs can have multiple levels of information
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="text-2xl">✅</span>
+                    <div>
+                        <strong>URL Parameters:</strong> Each <code class="bg-white px-2 py-1 rounded">&lt;variable&gt;</code> captures part of the URL
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="text-2xl">✅</span>
+                    <div>
+                        <strong>Real-World Usage:</strong> This pattern is used in e-commerce, social media, file systems, and more!
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="text-2xl">✅</span>
+                    <div>
+                        <strong>Clean URLs:</strong> Easy to read and understand: State/City/Area/Factory
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Route Building Final Level -->
+        <div class="bg-gradient-to-br from-red-100 to-orange-100 rounded-2xl p-8 mb-8 border-4 border-red-300" data-aos="fade-up" data-aos-delay="800">
+            <h3 class="text-3xl font-bold text-red-900 mb-4 text-center">🎮 Complete Route: Add Factory!</h3>
+            <p class="text-center text-gray-700 mb-6 text-lg">You've reached the deepest level - 4 parameters!</p>
+            
+            <div class="bg-white rounded-xl p-6 mb-6">
+                <h4 class="text-xl font-bold mb-4 text-gray-800">🎯 Full URL Hierarchy:</h4>
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg font-bold text-blue-600">Level 1:</span>
+                        <div class="bg-blue-100 px-3 py-2 rounded flex-1">
+                            <code class="text-xs md:text-sm">/india/<span class="bg-blue-300 px-2 py-1 rounded font-bold">{{ state|lower }}</span></code>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg font-bold text-green-600">Level 2:</span>
+                        <div class="bg-green-100 px-3 py-2 rounded flex-1">
+                            <code class="text-xs md:text-sm">...<span class="bg-green-300 px-2 py-1 rounded font-bold">{{ city|lower }}</span></code>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg font-bold text-purple-600">Level 3:</span>
+                        <div class="bg-purple-100 px-3 py-2 rounded flex-1">
+                            <code class="text-xs md:text-sm">...<span class="bg-purple-300 px-2 py-1 rounded font-bold">{{ area|lower|replace(' ', '-') }}</span></code>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg font-bold text-red-600">Level 4:</span>
+                        <div class="bg-red-100 px-3 py-2 rounded flex-1">
+                            <code class="text-xs md:text-sm">...<span class="bg-red-300 px-2 py-1 rounded font-bold">{{ factory.name|lower|replace(' ', '') }}</span></code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-center text-gray-700 mb-4 font-semibold">Try visiting other companies:</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                <button onclick="visitFactory('infosys')" class="factory-btn bg-gradient-to-br from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">💻</div>
+                    <div class="text-sm">Infosys</div>
+                    <div class="text-xs opacity-80">IT Services</div>
+                </button>
+                <button onclick="visitFactory('bosch')" class="factory-btn bg-gradient-to-br from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">🔧</div>
+                    <div class="text-sm">Bosch</div>
+                    <div class="text-xs opacity-80">Automotive</div>
+                </button>
+                <button onclick="visitFactory('biocon')" class="factory-btn bg-gradient-to-br from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">💊</div>
+                    <div class="text-sm">Biocon</div>
+                    <div class="text-xs opacity-80">Pharma</div>
+                </button>
+                <button onclick="visitFactory('toyota')" class="factory-btn bg-gradient-to-br from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">🚗</div>
+                    <div class="text-sm">Toyota</div>
+                    <div class="text-xs opacity-80">Automobile</div>
+                </button>
+                <button onclick="visitFactory('wipro')" class="factory-btn bg-gradient-to-br from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">🌐</div>
+                    <div class="text-sm">Wipro</div>
+                    <div class="text-xs opacity-80">IT Services</div>
+                </button>
+            </div>
+            
+            <div class="bg-gradient-to-r from-green-50 to-blue-50 border-l-4 border-green-500 rounded-lg p-6">
+                <h4 class="text-lg font-bold text-green-800 mb-3">🎓 Congratulations! You Understand Routes!</h4>
+                <ul class="space-y-2 text-gray-700">
+                    <li>✅ <strong>4-Level Hierarchy:</strong> State → City → Area → Factory</li>
+                    <li>✅ <strong>Flask Pattern:</strong> <code class="bg-white px-2 py-1 rounded text-xs">/india/&lt;state&gt;/&lt;city&gt;/&lt;area&gt;/&lt;factory&gt;</code></li>
+                    <li>✅ <strong>All Variables Captured:</strong> Your function receives all 4 parameters</li>
+                    <li>✅ <strong>Real-World Use:</strong> E-commerce categories, file systems, org structures</li>
+                    <li>✅ <strong>Clean & Readable:</strong> URLs that humans can understand!</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up" data-aos-delay="1000">
+            <a href="/india/{{ state|lower }}/{{ city|lower }}/{{ area|lower }}" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-3 rounded-full transition">
+                ← {{ area|title }}
+            </a>
+            <a href="/india/{{ state|lower }}/{{ city|lower }}" class="bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-full transition">
+                ← {{ city|title }}
+            </a>
+            <a href="/india/{{ state|lower }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-full transition">
+                ← {{ state|title }}
+            </a>
+            <a href="/routes-explained" class="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-bold px-6 py-3 rounded-full transition">
+                📚 Routes Guide
+            </a>
+            <a href="/" class="bg-gray-600 hover:bg-gray-700 text-white font-bold px-6 py-3 rounded-full transition">
+                🏠 Home
+            </a>
+        </div>
+    </div>
+    
+</div>
+
+<!-- AOS Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+AOS.init({
+    duration: 600,
+    easing: 'ease-out-cubic',
+    once: true,
+    offset: 50
+});
+
+const currentState = '{{ state|lower }}';
+const currentCity = '{{ city|lower }}';
+const currentArea = '{{ area|lower|replace(" ", "-") }}';
+
+function visitFactory(factory) {
+    window.location.href = `/india/${currentState}/${currentCity}/${currentArea}/${factory}`;
+}
+</script>
+
+</body>
+</html>

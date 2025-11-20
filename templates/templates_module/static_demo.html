@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8">Static Files Demo</h1>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">CSS Styling</h2>
+        <p class="text-gray-700 mb-4">This page uses CSS from <code class="bg-gray-200 px-2 py-1 rounded text-sm">static/css/style.css</code></p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-blue-500 text-white p-6 rounded-lg text-center font-semibold">Blue Box</div>
+            <div class="bg-green-500 text-white p-6 rounded-lg text-center font-semibold">Green Box</div>
+            <div class="bg-red-500 text-white p-6 rounded-lg text-center font-semibold">Red Box</div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">JavaScript Example</h2>
+        <div class="flex gap-4 mb-4">
+            <button onclick="showAlert()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition">Click Me!</button>
+            <button onclick="changeColor()" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg transition">Change Color</button>
+        </div>
+        <div id="color-demo" class="p-6 bg-gray-100 rounded-lg border-2 border-gray-300 transition-colors duration-300">
+            <p class="text-center text-gray-700 font-medium">This box will change color</p>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">How to Reference Static Files</h2>
+        <div class="space-y-6">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">CSS:</h3>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>&lt;link rel="stylesheet" href="{{ "{{ url_for('static', filename='css/style.css') }}" }}"&gt;</code></pre>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">JavaScript:</h3>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>&lt;script src="{{ "{{ url_for('static', filename='js/script.js') }}" }}"&gt;&lt;/script&gt;</code></pre>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Images:</h3>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>&lt;img src="{{ "{{ url_for('static', filename='images/logo.png') }}" }}" alt="Logo"&gt;</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-6 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Static Files Structure:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm">static/
+├── css/
+│   └── style.css
+├── js/
+│   └── script.js
+└── images/
+    └── logo.png</pre>
+    </div>
+
+    <div>
+        <a href="{{ url_for('templates.templates_home') }}" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">← Back to Templates</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function showAlert() {
+    alert('Hello from JavaScript!');
+}
+
+function changeColor() {
+    const box = document.getElementById('color-demo');
+    const colors = ['#ffcccb', '#90ee90', '#add8e6', '#ffb6c1', '#ffd700'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    box.style.background = randomColor;
+}
+</script>
+{% endblock %}

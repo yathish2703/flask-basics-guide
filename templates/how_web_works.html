@@ -1,0 +1,441 @@
+{% extends "base.html" %}
+
+{% block title %}How Web Pages Work{% endblock %}
+
+{% block extra_css %}
+<!-- AOS (Animate On Scroll) Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+<!-- Animate.css for additional animations -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+{% endblock %}
+
+{% block content %}
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes slideIn {
+        from { transform: translateX(-100%); }
+        to { transform: translateX(0); }
+    }
+    
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+    
+    @keyframes dataFlow {
+        0% { left: 0; }
+        100% { left: 100%; }
+    }
+    
+    .animate-fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+    }
+    
+    .section-card {
+        opacity: 0;
+        animation: fadeIn 0.6s ease-out forwards;
+    }
+    
+    .data-packet {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: #3b82f6;
+        border-radius: 50%;
+        animation: dataFlow 3s linear infinite;
+    }
+    
+    .interactive-demo {
+        transition: all 0.3s ease;
+    }
+    
+    .interactive-demo:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .step-number {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+    
+    .code-demo {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .code-demo::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        animation: shimmer 3s infinite;
+    }
+    
+    @keyframes shimmer {
+        0% { left: -100%; }
+        100% { left: 100%; }
+    }
+</style>
+
+<div class="max-w-6xl mx-auto px-4 py-8">
+    <!-- Hero Section -->
+    <div class="text-center mb-12 animate-fade-in" data-aos="fade-down" data-aos-duration="1000">
+        <h1 class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4 animate__animated animate__fadeInDown">
+            How Web Pages Work 🌐
+        </h1>
+        <p class="text-xl text-gray-600 mb-6" data-aos="fade-up" data-aos-delay="200">Understanding the magic behind every website you visit!</p>
+        <div class="inline-block bg-blue-100 border-2 border-blue-400 rounded-full px-6 py-3 text-blue-900 font-semibold" data-aos="zoom-in" data-aos-delay="400">
+            💡 From typing a URL to seeing content on your screen
+        </div>
+    </div>
+
+    <!-- The Big Picture -->
+    <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl shadow-xl p-8 mb-12 section-card" style="animation-delay: 0.2s;" data-aos="fade-up">
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-8" data-aos="fade-down">🎯 The Big Picture</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-lg p-6 text-center transform hover:scale-105 transition" data-aos="flip-left" data-aos-delay="100">
+                <div class="text-5xl mb-3">💻</div>
+                <h3 class="font-bold text-lg mb-2">1. Your Browser</h3>
+                <p class="text-sm text-gray-600">You type a URL and hit Enter</p>
+            </div>
+            <div class="bg-white rounded-lg p-6 text-center transform hover:scale-105 transition" data-aos="flip-left" data-aos-delay="200">
+                <div class="text-5xl mb-3">🌐</div>
+                <h3 class="font-bold text-lg mb-2">2. The Internet</h3>
+                <p class="text-sm text-gray-600">Request travels across networks</p>
+            </div>
+            <div class="bg-white rounded-lg p-6 text-center transform hover:scale-105 transition" data-aos="flip-left" data-aos-delay="300">
+                <div class="text-5xl mb-3">🖥️</div>
+                <h3 class="font-bold text-lg mb-2">3. Web Server</h3>
+                <p class="text-sm text-gray-600">Sends back HTML, CSS, JavaScript</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step-by-Step Process -->
+    <div class="bg-white rounded-xl shadow-2xl p-8 mb-12 section-card" style="animation-delay: 0.4s;">
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">🔄 Step-by-Step: What Happens?</h2>
+        
+        <!-- Step 1 -->
+        <div class="mb-8 flex items-start space-x-4 interactive-demo p-6 bg-blue-50 rounded-lg">
+            <div class="step-number flex-shrink-0">1</div>
+            <div class="flex-grow">
+                <h3 class="text-xl font-bold text-blue-900 mb-2">You Enter a URL</h3>
+                <p class="text-gray-700 mb-3">For example: <code class="bg-blue-200 px-2 py-1 rounded">https://example.com/about</code></p>
+                <div class="bg-white p-4 rounded-lg border-2 border-blue-200">
+                    <p class="text-sm font-semibold mb-2">URL Structure:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-2 text-xs">
+                        <div class="bg-green-100 p-2 rounded">
+                            <strong>Protocol:</strong><br>https://
+                        </div>
+                        <div class="bg-yellow-100 p-2 rounded">
+                            <strong>Domain:</strong><br>example.com
+                        </div>
+                        <div class="bg-purple-100 p-2 rounded">
+                            <strong>Path:</strong><br>/about
+                        </div>
+                        <div class="bg-pink-100 p-2 rounded">
+                            <strong>Port:</strong><br>:443 (hidden)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="mb-8 flex items-start space-x-4 interactive-demo p-6 bg-green-50 rounded-lg">
+            <div class="step-number flex-shrink-0" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">2</div>
+            <div class="flex-grow">
+                <h3 class="text-xl font-bold text-green-900 mb-2">DNS Lookup</h3>
+                <p class="text-gray-700 mb-3">Your browser finds the server's IP address</p>
+                <div class="bg-white p-4 rounded-lg border-2 border-green-200">
+                    <div class="text-sm space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span><strong>example.com</strong></span>
+                            <span class="text-gray-400">→ DNS Server →</span>
+                            <span class="bg-green-200 px-3 py-1 rounded"><strong>192.168.1.100</strong></span>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-2">💡 DNS = Domain Name System (like a phonebook for the internet)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="mb-8 flex items-start space-x-4 interactive-demo p-6 bg-purple-50 rounded-lg">
+            <div class="step-number flex-shrink-0" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">3</div>
+            <div class="flex-grow">
+                <h3 class="text-xl font-bold text-purple-900 mb-2">HTTP Request Sent</h3>
+                <p class="text-gray-700 mb-3">Browser sends a request to the server</p>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg text-xs overflow-x-auto code-demo"><code>GET /about HTTP/1.1
+Host: example.com
+User-Agent: Mozilla/5.0 (Chrome)
+Accept: text/html
+Connection: keep-alive</code></pre>
+                <p class="text-xs text-gray-600 mt-2">📨 This request includes: method (GET), path (/about), headers</p>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="mb-8 flex items-start space-x-4 interactive-demo p-6 bg-yellow-50 rounded-lg">
+            <div class="step-number flex-shrink-0" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">4</div>
+            <div class="flex-grow">
+                <h3 class="text-xl font-bold text-yellow-900 mb-2">Server Processes Request</h3>
+                <p class="text-gray-700 mb-3">Web server (Flask, Node.js, etc.) handles the request</p>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg text-xs overflow-x-auto code-demo"><code><span class="text-green-400">@app.route</span>(<span class="text-yellow-300">'/about'</span>)
+<span class="text-blue-400">def</span> <span class="text-purple-400">about</span>():
+    <span class="text-gray-400"># Server runs this code</span>
+    <span class="text-blue-400">return</span> render_template(<span class="text-yellow-300">'about.html'</span>)</code></pre>
+            </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="mb-8 flex items-start space-x-4 interactive-demo p-6 bg-pink-50 rounded-lg">
+            <div class="step-number flex-shrink-0" style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);">5</div>
+            <div class="flex-grow">
+                <h3 class="text-xl font-bold text-pink-900 mb-2">Server Sends Response</h3>
+                <p class="text-gray-700 mb-3">Server returns HTML, CSS, JavaScript</p>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg text-xs overflow-x-auto code-demo"><code>HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: 1234
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;About&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;&lt;h1&gt;About Us&lt;/h1&gt;&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="flex items-start space-x-4 interactive-demo p-6 bg-indigo-50 rounded-lg">
+            <div class="step-number flex-shrink-0" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);">6</div>
+            <div class="flex-grow">
+                <h3 class="text-xl font-bold text-indigo-900 mb-2">Browser Renders Page</h3>
+                <p class="text-gray-700 mb-3">Your browser displays the content</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
+                    <div class="bg-white p-3 rounded border-2 border-red-200">
+                        <h4 class="font-bold text-sm text-red-700">HTML</h4>
+                        <p class="text-xs text-gray-600">Structure & Content</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border-2 border-blue-200">
+                        <h4 class="font-bold text-sm text-blue-700">CSS</h4>
+                        <p class="text-xs text-gray-600">Styling & Layout</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border-2 border-yellow-200">
+                        <h4 class="font-bold text-sm text-yellow-700">JavaScript</h4>
+                        <p class="text-xs text-gray-600">Interactivity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Three Languages -->
+    <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-xl p-8 mb-12 section-card" style="animation-delay: 0.6s;">
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">🎨 The Three Languages of the Web</h2>
+        
+        <div class="space-y-6">
+            <!-- HTML -->
+            <div class="bg-white rounded-lg p-6 border-l-4 border-red-500">
+                <div class="flex items-center mb-4">
+                    <div class="bg-red-100 p-3 rounded-lg mr-4">
+                        <span class="text-3xl">📄</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-red-700">HTML (Structure)</h3>
+                        <p class="text-sm text-gray-600">The skeleton - what content is on the page</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-semibold mb-2 text-sm">Code:</p>
+                        <pre class="bg-gray-900 text-gray-100 p-3 rounded text-xs"><code>{% raw %}&lt;h1&gt;Welcome!&lt;/h1&gt;
+&lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;button&gt;Click Me&lt;/button&gt;{% endraw %}</code></pre>
+                    </div>
+                    <div>
+                        <p class="font-semibold mb-2 text-sm">Result:</p>
+                        <div class="bg-gray-100 p-3 rounded border">
+                            <h1 class="text-2xl font-bold">Welcome!</h1>
+                            <p class="text-sm">This is a paragraph.</p>
+                            <button class="bg-blue-500 text-white px-4 py-2 rounded text-sm">Click Me</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CSS -->
+            <div class="bg-white rounded-lg p-6 border-l-4 border-blue-500">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                        <span class="text-3xl">🎨</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-blue-700">CSS (Style)</h3>
+                        <p class="text-sm text-gray-600">The clothing - how things look</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-semibold mb-2 text-sm">Code:</p>
+                        <pre class="bg-gray-900 text-gray-100 p-3 rounded text-xs"><code>h1 {
+    color: blue;
+    font-size: 32px;
+}
+button {
+    background: green;
+    padding: 10px;
+}</code></pre>
+                    </div>
+                    <div>
+                        <p class="font-semibold mb-2 text-sm">Result:</p>
+                        <div class="bg-gray-100 p-3 rounded border">
+                            <h1 class="text-blue-600" style="font-size: 32px;">Welcome!</h1>
+                            <button class="bg-green-500 text-white px-4 py-2 rounded text-sm">Click Me</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JavaScript -->
+            <div class="bg-white rounded-lg p-6 border-l-4 border-yellow-500">
+                <div class="flex items-center mb-4">
+                    <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                        <span class="text-3xl">⚡</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-yellow-700">JavaScript (Behavior)</h3>
+                        <p class="text-sm text-gray-600">The actions - what happens when you interact</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-semibold mb-2 text-sm">Code:</p>
+                        <pre class="bg-gray-900 text-gray-100 p-3 rounded text-xs"><code>button.addEventListener('click', () => {
+    alert('Hello World!');
+    document.body.style.background = 'blue';
+});</code></pre>
+                    </div>
+                    <div>
+                        <p class="font-semibold mb-2 text-sm">Try it:</p>
+                        <div class="bg-gray-100 p-3 rounded border">
+                            <button onclick="alert('Hello World!'); this.textContent='Clicked!'; this.classList.add('bg-green-600');" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-sm transition">
+                                Click Me!
+                            </button>
+                            <p class="text-xs text-gray-600 mt-2">👆 Click the button to see JavaScript in action!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HTTP Methods -->
+    <div class="bg-white rounded-xl shadow-xl p-8 mb-12 section-card" style="animation-delay: 0.8s;">
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">📡 HTTP Methods (Request Types)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="border-2 border-green-300 rounded-lg p-6 bg-green-50">
+                <h3 class="text-xl font-bold text-green-800 mb-2">GET - Read Data</h3>
+                <p class="text-sm text-gray-700 mb-3">Retrieve information from server (like viewing a page)</p>
+                <pre class="bg-gray-900 text-gray-100 p-3 rounded text-xs"><code>GET /users
+→ Returns list of users</code></pre>
+            </div>
+            <div class="border-2 border-blue-300 rounded-lg p-6 bg-blue-50">
+                <h3 class="text-xl font-bold text-blue-800 mb-2">POST - Create Data</h3>
+                <p class="text-sm text-gray-700 mb-3">Send data to server (like submitting a form)</p>
+                <pre class="bg-gray-900 text-gray-100 p-3 rounded text-xs"><code>POST /users
+Data: {name: "Alice"}
+→ Creates new user</code></pre>
+            </div>
+            <div class="border-2 border-yellow-300 rounded-lg p-6 bg-yellow-50">
+                <h3 class="text-xl font-bold text-yellow-800 mb-2">PUT - Update Data</h3>
+                <p class="text-sm text-gray-700 mb-3">Modify existing data on server</p>
+                <pre class="bg-gray-900 text-gray-100 p-3 rounded text-xs"><code>PUT /users/1
+Data: {name: "Alice Smith"}
+→ Updates user #1</code></pre>
+            </div>
+            <div class="border-2 border-red-300 rounded-lg p-6 bg-red-50">
+                <h3 class="text-xl font-bold text-red-800 mb-2">DELETE - Remove Data</h3>
+                <p class="text-sm text-gray-700 mb-3">Delete data from server</p>
+                <pre class="bg-gray-900 text-gray-100 p-3 rounded text-xs"><code>DELETE /users/1
+→ Deletes user #1</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Facts -->
+    <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow-2xl p-8 mb-12 text-white section-card" style="animation-delay: 1s;">
+        <h2 class="text-3xl font-bold text-center mb-8">⚡ Quick Facts</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-lg p-6 text-center">
+                <div class="text-4xl mb-3">🚀</div>
+                <h3 class="font-bold text-lg mb-2">Speed of Light</h3>
+                <p class="text-sm">Data travels at ~70% speed of light through fiber optic cables!</p>
+            </div>
+            <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-lg p-6 text-center">
+                <div class="text-4xl mb-3">🌍</div>
+                <h3 class="font-bold text-lg mb-2">Around the World</h3>
+                <p class="text-sm">A request can travel around Earth in ~100 milliseconds</p>
+            </div>
+            <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-lg p-6 text-center">
+                <div class="text-4xl mb-3">📦</div>
+                <h3 class="font-bold text-lg mb-2">Packets</h3>
+                <p class="text-sm">Data is split into small "packets" that take different routes</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center mb-8">
+        <a href="/" class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold px-8 py-4 rounded-full text-lg shadow-xl transform hover:scale-105 transition">
+            ← Back to All Modules
+        </a>
+    </div>
+</div>
+
+<!-- AOS Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<script>
+// Initialize AOS (Animate On Scroll)
+AOS.init({
+    duration: 1000,
+    easing: 'ease-in-out',
+    once: false,
+    mirror: true,
+    offset: 120
+});
+
+// Animate sections on scroll
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.section-card').forEach(card => {
+        observer.observe(card);
+    });
+});
+</script>
+
+{% endblock %}

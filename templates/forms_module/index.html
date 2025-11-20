@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Forms Module{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8">Module 3: Forms</h1>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Form Examples:</h2>
+        <ul class="space-y-3">
+            <li>
+                <a href="{{ url_for('forms.basic_form') }}" class="text-blue-600 hover:text-blue-800 hover:underline flex items-center">
+                    <span class="mr-2">📋</span> Basic HTML Form
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('forms.wtf_form') }}" class="text-blue-600 hover:text-blue-800 hover:underline flex items-center">
+                    <span class="mr-2">✨</span> Flask-WTF Form
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('forms.registration') }}" class="text-blue-600 hover:text-blue-800 hover:underline flex items-center">
+                    <span class="mr-2">📝</span> Registration Form (Advanced Validation)
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('forms.file_upload') }}" class="text-blue-600 hover:text-blue-800 hover:underline flex items-center">
+                    <span class="mr-2">📁</span> File Upload
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-6">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">What You'll Learn:</h3>
+        <ul class="space-y-2 list-disc pl-6 text-gray-700">
+            <li>Creating and handling HTML forms</li>
+            <li>GET vs POST methods</li>
+            <li>Flask-WTF for better form handling</li>
+            <li>Form validation and error messages</li>
+            <li>CSRF protection</li>
+            <li>File uploads</li>
+            <li>Custom validators</li>
+        </ul>
+    </div>
+
+    <div class="mt-8">
+        <a href="/" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">← Back to Home</a>
+    </div>
+</div>
+{% endblock %}

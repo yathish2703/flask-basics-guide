@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Games Hub - Flask Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        .game-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .game-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
+
+<div class="container mx-auto px-4 py-12 max-w-7xl">
+    
+    <!-- Header -->
+    <div class="text-center mb-16" data-aos="fade-down">
+        <h1 class="text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 mb-6">
+            🎮 Learning Games Hub
+        </h1>
+        <p class="text-2xl text-gray-700 mb-4">Learn Flask concepts through interactive games!</p>
+        <p class="text-lg text-gray-600">Play games, understand web development, and have fun learning</p>
+    </div>
+
+    <!-- Games Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        
+        <!-- Web Server Game -->
+        <a href="/games/web-server" class="game-card bg-white rounded-3xl shadow-xl p-8 block" data-aos="fade-up" data-aos-delay="100">
+            <div class="text-center mb-6">
+                <div class="text-7xl mb-4">🌐</div>
+                <h2 class="text-3xl font-bold text-blue-800 mb-3">Web Server Quest</h2>
+                <p class="text-gray-600 mb-4">Learn how web servers work by building request-response chains</p>
+            </div>
+            <div class="space-y-2 text-sm text-gray-700">
+                <div class="flex items-center gap-2">
+                    <span class="text-green-600">✓</span>
+                    <span>Understand Client-Server Model</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-green-600">✓</span>
+                    <span>Learn Request-Response Cycle</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-green-600">✓</span>
+                    <span>Practice HTTP Basics</span>
+                </div>
+            </div>
+            <div class="mt-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-center py-3 rounded-full font-bold">
+                Play Now →
+            </div>
+        </a>
+
+        <!-- REST Protocol Game -->
+        <a href="/games/rest-protocol" class="game-card bg-white rounded-3xl shadow-xl p-8 block" data-aos="fade-up" data-aos-delay="200">
+            <div class="text-center mb-6">
+                <div class="text-7xl mb-4">🔄</div>
+                <h2 class="text-3xl font-bold text-green-800 mb-3">REST API Adventure</h2>
+                <p class="text-gray-600 mb-4">Master REST methods by managing a digital restaurant</p>
+            </div>
+            <div class="space-y-2 text-sm text-gray-700">
+                <div class="flex items-center gap-2">
+                    <span class="text-green-600">✓</span>
+                    <span>Master GET, POST, PUT, DELETE</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-green-600">✓</span>
+                    <span>Understand CRUD Operations</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-green-600">✓</span>
+                    <span>Learn API Design</span>
+                </div>
+            </div>
+            <div class="mt-6 bg-gradient-to-r from-green-500 to-green-600 text-white text-center py-3 rounded-full font-bold">
+                Play Now →
+            </div>
+        </a>
+
+        <!-- Routes Building Game -->
+        <a href="/games/routes-builder" class="game-card bg-white rounded-3xl shadow-xl p-8 block" data-aos="fade-up" data-aos-delay="300">
+            <div class="text-center mb-6">
+                <div class="text-7xl mb-4">🗺️</div>
+                <h2 class="text-3xl font-bold text-purple-800 mb-3">Routes Explorer</h2>
+                <p class="text-gray-600 mb-4">Build hierarchical routes through Indian cities</p>
+            </div>
+            <div class="space-y-2 text-sm text-gray-700">
+                <div class="flex items-center gap-2">
+                    <span class="text-green-600">✓</span>
+                    <span>Learn URL Parameters</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-green-600">✓</span>
+                    <span>Master Dynamic Routing</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-green-600">✓</span>
+                    <span>Explore Karnataka Cities</span>
+                </div>
+            </div>
+            <div class="mt-6 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-center py-3 rounded-full font-bold">
+                Play Now →
+            </div>
+        </a>
+
+        <!-- Combined Challenge (Coming Soon) -->
+        <a href="/games/master-challenge" class="game-card bg-white rounded-3xl shadow-xl p-8 block" data-aos="fade-up" data-aos-delay="400">
+            <div class="text-center mb-6">
+                <div class="text-7xl mb-4">🏆</div>
+                <h2 class="text-3xl font-bold text-orange-800 mb-3">Master Challenge</h2>
+                <p class="text-gray-600 mb-4">Combine all concepts in one ultimate challenge</p>
+            </div>
+            <div class="space-y-2 text-sm text-gray-700">
+                <div class="flex items-center gap-2">
+                    <span class="text-orange-600">✓</span>
+                    <span>Test All Your Skills</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-orange-600">✓</span>
+                    <span>Complete Web App Simulation</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-orange-600">✓</span>
+                    <span>Earn Master Badge</span>
+                </div>
+            </div>
+            <div class="mt-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-center py-3 rounded-full font-bold">
+                Play Now →
+            </div>
+        </a>
+
+        <!-- Quick Practice -->
+        <a href="/games/quick-practice" class="game-card bg-white rounded-3xl shadow-xl p-8 block" data-aos="fade-up" data-aos-delay="500">
+            <div class="text-center mb-6">
+                <div class="text-7xl mb-4">⚡</div>
+                <h2 class="text-3xl font-bold text-pink-800 mb-3">Quick Practice</h2>
+                <p class="text-gray-600 mb-4">Fast mini-games to reinforce key concepts</p>
+            </div>
+            <div class="space-y-2 text-sm text-gray-700">
+                <div class="flex items-center gap-2">
+                    <span class="text-pink-600">✓</span>
+                    <span>5-Minute Challenges</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-pink-600">✓</span>
+                    <span>Random Concept Practice</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-pink-600">✓</span>
+                    <span>Build Confidence</span>
+                </div>
+            </div>
+            <div class="mt-6 bg-gradient-to-r from-pink-500 to-pink-600 text-white text-center py-3 rounded-full font-bold">
+                Play Now →
+            </div>
+        </a>
+
+        <!-- Learning Path -->
+        <a href="/games/learning-path" class="game-card bg-white rounded-3xl shadow-xl p-8 block" data-aos="fade-up" data-aos-delay="600">
+            <div class="text-center mb-6">
+                <div class="text-7xl mb-4">📚</div>
+                <h2 class="text-3xl font-bold text-indigo-800 mb-3">Guided Path</h2>
+                <p class="text-gray-600 mb-4">Follow a structured learning journey with progressive games</p>
+            </div>
+            <div class="space-y-2 text-sm text-gray-700">
+                <div class="flex items-center gap-2">
+                    <span class="text-indigo-600">✓</span>
+                    <span>Beginner to Advanced</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-indigo-600">✓</span>
+                    <span>Track Your Progress</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-indigo-600">✓</span>
+                    <span>Unlock Achievements</span>
+                </div>
+            </div>
+            <div class="mt-6 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-center py-3 rounded-full font-bold">
+                Start Learning →
+            </div>
+        </a>
+
+    </div>
+
+    <!-- Learning Tips -->
+    <div class="bg-white rounded-3xl shadow-xl p-8 mb-12" data-aos="fade-up">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">💡 Learning Tips</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="text-center p-4">
+                <div class="text-5xl mb-3">🎯</div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Start Simple</h3>
+                <p class="text-gray-600">Begin with Web Server Quest, then progress to REST and Routes</p>
+            </div>
+            <div class="text-center p-4">
+                <div class="text-5xl mb-3">🔄</div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Practice Daily</h3>
+                <p class="text-gray-600">Play Quick Practice games for 5-10 minutes each day</p>
+            </div>
+            <div class="text-center p-4">
+                <div class="text-5xl mb-3">🏆</div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Challenge Yourself</h3>
+                <p class="text-gray-600">Complete Master Challenge when you're ready to test everything</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Home -->
+    <div class="text-center mb-8" data-aos="fade-up">
+        <a href="/" class="inline-block bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-12 py-5 rounded-full text-xl shadow-lg transition-all duration-300 hover:shadow-xl">
+            🏠 Back to Home
+        </a>
+    </div>
+
+</div>
+
+<!-- AOS Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+AOS.init({
+    duration: 800,
+    easing: 'ease-out-cubic',
+    once: true,
+    offset: 100
+});
+</script>
+
+</body>
+</html>

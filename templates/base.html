@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Flask Basics Guide{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#8b5cf6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        Flask Basics Guide
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-4 items-center">
+                    <!-- Learning Dropdown -->
+                    <div class="dropdown relative">
+                        <button class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition flex items-center">
+                            📚 Learning
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu hidden absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
+                            <a href="/why-flask" class="block px-4 py-3 hover:bg-purple-50 transition">
+                                <div class="font-semibold text-gray-900">💡 Why Flask?</div>
+                                <div class="text-xs text-gray-600">Discover advantages</div>
+                            </a>
+                            <a href="/how-web-works" class="block px-4 py-3 hover:bg-purple-50 transition">
+                                <div class="font-semibold text-gray-900">🌐 How Web Works</div>
+                                <div class="text-xs text-gray-600">Learn the basics</div>
+                            </a>
+                            <a href="/rest-protocol" class="block px-4 py-3 hover:bg-purple-50 transition">
+                                <div class="font-semibold text-gray-900">🔄 REST Protocol</div>
+                                <div class="text-xs text-gray-600">Understand APIs</div>
+                            </a>
+                            <a href="/routes-explained" class="block px-4 py-3 hover:bg-purple-50 transition">
+                                <div class="font-semibold text-gray-900">🗺️ Routes Explained</div>
+                                <div class="text-xs text-gray-600">Master routing</div>
+                            </a>
+                            <a href="/games" class="block px-4 py-3 hover:bg-purple-50 transition border-t border-gray-200">
+                                <div class="font-semibold text-gray-900">🎮 Learning Games</div>
+                                <div class="text-xs text-gray-600">Interactive practice</div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Flask Modules Dropdown -->
+                    <div class="dropdown relative">
+                        <button class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition flex items-center">
+                            🔧 Modules
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu hidden absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
+                            <a href="/basic" class="block px-4 py-3 hover:bg-blue-50 transition">
+                                <div class="font-semibold text-gray-900">🛣️ Routes</div>
+                                <div class="text-xs text-gray-600">Basic routing</div>
+                            </a>
+                            <a href="/templates" class="block px-4 py-3 hover:bg-blue-50 transition">
+                                <div class="font-semibold text-gray-900">📄 Templates</div>
+                                <div class="text-xs text-gray-600">Jinja2 templates</div>
+                            </a>
+                            <a href="/forms" class="block px-4 py-3 hover:bg-blue-50 transition">
+                                <div class="font-semibold text-gray-900">📝 Forms</div>
+                                <div class="text-xs text-gray-600">Form handling</div>
+                            </a>
+                            <a href="/database" class="block px-4 py-3 hover:bg-blue-50 transition">
+                                <div class="font-semibold text-gray-900">🗄️ Database</div>
+                                <div class="text-xs text-gray-600">SQLAlchemy ORM</div>
+                            </a>
+                            <a href="/auth" class="block px-4 py-3 hover:bg-blue-50 transition">
+                                <div class="font-semibold text-gray-900">🔐 Authentication</div>
+                                <div class="text-xs text-gray-600">User management</div>
+                            </a>
+                            <a href="/api" class="block px-4 py-3 hover:bg-blue-50 transition">
+                                <div class="font-semibold text-gray-900">🔌 API</div>
+                                <div class="text-xs text-gray-600">RESTful APIs</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% if current_user.is_authenticated %}
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-600">Hello, {{ current_user.username }}</span>
+                    <a href="/auth/logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition">Logout</a>
+                </div>
+                {% else %}
+                <div class="flex items-center space-x-2">
+                    <a href="/auth/login" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition">Login</a>
+                    <a href="/auth/register" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">Sign Up</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+                {% for category, message in messages %}
+                    <div class="{% if category == 'error' %}bg-red-100 border-red-400 text-red-700{% elif category == 'success' %}bg-green-100 border-green-400 text-green-700{% else %}bg-blue-100 border-blue-400 text-blue-700{% endif %} px-4 py-3 rounded-lg border mb-4" role="alert">
+                        <span class="block sm:inline">{{ message }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <p class="text-center text-gray-400">&copy; 2025 Flask Basics Guide. A beginner-friendly tutorial.</p>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

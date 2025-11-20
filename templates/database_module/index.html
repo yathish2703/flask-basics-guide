@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Database & ORM Module{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">Module 4: Database & ORM</h1>
+    <p class="text-xl text-gray-600 mb-8">Learn SQLAlchemy ORM - Write Python instead of SQL!</p>
+
+    <!-- What is ORM Section -->
+    <div class="bg-gradient-to-r from-purple-50 to-blue-50 border-l-4 border-purple-600 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🎯 What is ORM?</h2>
+        <p class="text-gray-700 mb-4">
+            <strong>ORM (Object-Relational Mapping)</strong> lets you interact with databases using Python objects instead of writing SQL queries.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div class="bg-white p-4 rounded-lg border border-purple-200">
+                <h3 class="font-semibold text-red-700 mb-2">❌ Without ORM (Raw SQL)</h3>
+                <pre class="bg-gray-900 text-gray-100 p-3 rounded text-xs overflow-x-auto"><code>cursor.execute(
+    "INSERT INTO task VALUES (?, ?, ?)",
+    (title, description, False)
+)
+conn.commit()</code></pre>
+            </div>
+            <div class="bg-white p-4 rounded-lg border border-green-200">
+                <h3 class="font-semibold text-green-700 mb-2">✅ With ORM (Python)</h3>
+                <pre class="bg-gray-900 text-gray-100 p-3 rounded text-xs overflow-x-auto"><code>task = Task(title=title, description=desc)
+db.session.add(task)
+db.session.commit()</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">✨ Why Use ORM?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex items-start">
+                <span class="text-2xl mr-3">🐍</span>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Write Python, Not SQL</h3>
+                    <p class="text-sm text-gray-600">Use familiar Python syntax for database operations</p>
+                </div>
+            </div>
+            <div class="flex items-start">
+                <span class="text-2xl mr-3">🔒</span>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Prevent SQL Injection</h3>
+                    <p class="text-sm text-gray-600">Automatic protection from security vulnerabilities</p>
+                </div>
+            </div>
+            <div class="flex items-start">
+                <span class="text-2xl mr-3">🔄</span>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Database Agnostic</h3>
+                    <p class="text-sm text-gray-600">Switch between SQLite, PostgreSQL, MySQL easily</p>
+                </div>
+            </div>
+            <div class="flex items-start">
+                <span class="text-2xl mr-3">🧹</span>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Clean & Maintainable</h3>
+                    <p class="text-sm text-gray-600">Easier to read, test, and refactor code</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Examples Links -->
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">📚 Interactive Examples:</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a href="{{ url_for('database.tasks') }}" class="block p-4 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition">
+                <div class="flex items-center mb-2">
+                    <span class="text-2xl mr-2">✅</span>
+                    <h3 class="font-semibold text-blue-900">Task Manager</h3>
+                </div>
+                <p class="text-sm text-gray-600">Complete CRUD operations with real examples</p>
+            </a>
+            <a href="{{ url_for('database.queries') }}" class="block p-4 bg-purple-50 hover:bg-purple-100 rounded-lg border border-purple-200 transition">
+                <div class="flex items-center mb-2">
+                    <span class="text-2xl mr-2">🔍</span>
+                    <h3 class="font-semibold text-purple-900">Query Examples</h3>
+                </div>
+                <p class="text-sm text-gray-600">Learn filtering, sorting, and advanced queries</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- Model Definition -->
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">🗂️ ORM Model Definition:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm font-mono"><span class="text-gray-400"># Each class = database table</span>
+<span class="text-gray-400"># Each attribute = table column</span>
+class Task(db.Model):
+    <span class="text-gray-400"># Primary key (unique ID for each record)</span>
+    id = db.Column(db.Integer, primary_key=True)
+    
+    <span class="text-gray-400"># Required text field (max 100 characters)</span>
+    title = db.Column(db.String(100), nullable=False)
+    
+    <span class="text-gray-400"># Optional text field (unlimited length)</span>
+    description = db.Column(db.Text)
+    
+    <span class="text-gray-400"># Boolean with default value</span>
+    completed = db.Column(db.Boolean, default=False)
+    
+    <span class="text-gray-400"># Auto-set timestamp when created</span>
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)</code></pre>
+        
+        <div class="mt-4 p-4 bg-gray-50 rounded-lg">
+            <h4 class="font-semibold text-gray-900 mb-2">📖 What This Creates:</h4>
+            <p class="text-sm text-gray-700 mb-2">This Python class automatically creates this SQL table:</p>
+            <pre class="bg-white p-3 rounded border text-xs"><code>CREATE TABLE task (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    completed BOOLEAN DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);</code></pre>
+        </div>
+    </div>
+
+    <!-- CRUD Overview -->
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">🔄 CRUD Operations Quick Reference:</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="border border-green-200 rounded-lg p-4 bg-green-50">
+                <h4 class="font-semibold text-green-900 mb-2">CREATE (Insert)</h4>
+                <pre class="bg-gray-900 text-gray-100 p-2 rounded text-xs"><code>task = Task(title="Learn ORM")
+db.session.add(task)
+db.session.commit()</code></pre>
+            </div>
+            <div class="border border-blue-200 rounded-lg p-4 bg-blue-50">
+                <h4 class="font-semibold text-blue-900 mb-2">READ (Select)</h4>
+                <pre class="bg-gray-900 text-gray-100 p-2 rounded text-xs"><code>tasks = Task.query.all()
+task = Task.query.get(1)
+filtered = Task.query.filter_by(completed=True).all()</code></pre>
+            </div>
+            <div class="border border-yellow-200 rounded-lg p-4 bg-yellow-50">
+                <h4 class="font-semibold text-yellow-900 mb-2">UPDATE (Modify)</h4>
+                <pre class="bg-gray-900 text-gray-100 p-2 rounded text-xs"><code>task = Task.query.get(1)
+task.title = "Updated Title"
+db.session.commit()</code></pre>
+            </div>
+            <div class="border border-red-200 rounded-lg p-4 bg-red-50">
+                <h4 class="font-semibold text-red-900 mb-2">DELETE (Remove)</h4>
+                <pre class="bg-gray-900 text-gray-100 p-2 rounded text-xs"><code>task = Task.query.get(1)
+db.session.delete(task)
+db.session.commit()</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-8">
+        <a href="/" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">← Back to Home</a>
+    </div>
+</div>
+{% endblock %}

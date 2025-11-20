@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Hello Flask{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg shadow-lg p-8 text-white mb-8">
+        <h1 class="text-4xl font-bold mb-2">Hello, Flask! 👋</h1>
+        <p class="text-blue-100">This is your first Flask route.</p>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">💡 What You're Learning:</h2>
+        <ul class="space-y-2 text-gray-700">
+            <li class="flex items-start">
+                <span class="text-green-600 mr-2">✓</span>
+                <span>Creating a basic Flask route</span>
+            </li>
+            <li class="flex items-start">
+                <span class="text-green-600 mr-2">✓</span>
+                <span>Returning HTML from a route function</span>
+            </li>
+            <li class="flex items-start">
+                <span class="text-green-600 mr-2">✓</span>
+                <span>Using the <code class="bg-gray-100 px-2 py-1 rounded">@app.route()</code> decorator</span>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-3">📝 Simple Route Code:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm font-mono"><span class="text-gray-400"># Import Flask to create web app</span>
+from flask import Flask
+app = Flask(__name__)
+
+<span class="text-gray-400"># @app.route() decorator maps URL to function</span>
+@app.route('/hello')
+def hello():
+    <span class="text-gray-400"># Return HTML to display in browser</span>
+    return '&lt;h1&gt;Hello, Flask!&lt;/h1&gt;'
+
+<span class="text-gray-400"># When user visits /hello, this function runs</span></code></pre>
+        
+        <div class="mt-4 space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
+            <p><strong class="text-gray-900">@app.route('/hello'):</strong> Decorator that registers the URL path</p>
+            <p><strong class="text-gray-900">def hello():</strong> Function that runs when URL is visited</p>
+            <p><strong class="text-gray-900">return:</strong> HTML content sent to user's browser</p>
+            <p><strong class="text-gray-900">Result:</strong> Visit /hello → see "Hello, Flask!" heading</p>
+        </div>
+    </div>
+    
+    <div class="text-center">
+        <a href="/basic" class="text-blue-600 hover:text-blue-700 font-medium">← Back to Basic Routes</a>
+    </div>
+</div>
+{% endblock %}

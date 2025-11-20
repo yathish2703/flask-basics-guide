@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Basic Form{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8">Basic HTML Form</h1>
+
+    {% if errors %}
+    <div class="bg-red-50 border-l-4 border-red-600 rounded-lg p-6 mb-8">
+        <h3 class="text-lg font-semibold text-red-800 mb-3">Please fix the following errors:</h3>
+        <ul class="space-y-1 list-disc pl-6 text-red-700">
+            {% for error in errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <div class="bg-white rounded-lg shadow-md p-8 border border-gray-200 mb-8">
+        <form method="POST">
+            <div class="mb-6">
+                <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Name:</label>
+                <input type="text" id="name" name="name" value="{{ name or '' }}" required
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+            
+            <div class="mb-6">
+                <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email:</label>
+                <input type="email" id="email" name="email" value="{{ email or '' }}" required
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+            
+            <div class="mb-6">
+                <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">Message:</label>
+                <textarea id="message" name="message" rows="5" required
+                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ message or '' }}</textarea>
+            </div>
+            
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition w-full">Submit</button>
+        </form>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">📝 HTML Form Structure:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm font-mono">&lt;form method="POST"&gt;  <span class="text-gray-400">&lt;!-- Send data via POST request --&gt;</span>
+    <span class="text-gray-400">&lt;!-- 'name' attribute is the key to access data --&gt;</span>
+    &lt;input type="text" name="name" required&gt;
+    &lt;input type="email" name="email" required&gt;
+    &lt;textarea name="message"&gt;&lt;/textarea&gt;
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+        
+        <div class="mt-4 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
+            <p><strong class="text-gray-900">method="POST":</strong> Sends form data in request body (secure for passwords)</p>
+            <p class="mt-2"><strong class="text-gray-900">name attribute:</strong> Used to identify each field (like a variable name)</p>
+        </div>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-4 mt-6">🐍 Flask Form Handling:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm font-mono"><span class="text-gray-400"># Accept both GET (show form) and POST (submit form)</span>
+@app.route('/form', methods=['GET', 'POST'])
+def form():
+    <span class="text-gray-400"># Check if form was submitted</span>
+    if request.method == 'POST':
+        <span class="text-gray-400"># Get data using the 'name' from HTML input</span>
+        name = request.form.get('name')
+        email = request.form.get('email')
+        message = request.form.get('message')
+        
+        <span class="text-gray-400"># Process data (save to DB, send email, etc.)</span>
+        # ...
+        
+    <span class="text-gray-400"># Show the form (GET request)</span>
+    return render_template('form.html')</code></pre>
+    
+        <div class="mt-4 space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
+            <p><strong class="text-gray-900">GET request:</strong> Display the form to user</p>
+            <p><strong class="text-gray-900">POST request:</strong> User submitted form, process the data</p>
+            <p><strong class="text-gray-900">request.form.get():</strong> Safely retrieve form data by name</p>
+            <p><strong class="text-gray-900">Flow:</strong> User fills form → clicks submit → POST request → process data</p>
+        </div>
+    </div>
+
+    <div>
+        <a href="{{ url_for('forms.forms_home') }}" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">← Back to Forms</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,415 @@
+{% extends "base.html" %}
+
+{% block title %}REST API for Kids{% endblock %}
+
+{% block extra_css %}
+<!-- AOS (Animate On Scroll) Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+{% endblock %}
+
+{% block content %}
+<style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    .interactive-card {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+    }
+    
+    .interactive-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+    
+    .method-badge {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+    
+    .demo-btn {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .demo-btn:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+    
+    .demo-btn:active {
+        transform: translateY(-2px);
+    }
+    
+    .result-box {
+        display: none;
+        animation: fadeInUp 0.5s ease;
+    }
+    
+    .result-box.show {
+        display: block;
+    }
+    
+    .smooth-entrance {
+        animation: fadeInUp 0.8s ease-out;
+    }
+    
+    .elegant-hover {
+        transition: all 0.3s ease;
+    }
+    
+    .elegant-hover:hover {
+        transform: scale(1.03);
+    }
+</style>
+
+<div class="max-w-6xl mx-auto px-4 py-8">
+    <!-- Hero Section -->
+    <div class="text-center mb-12 smooth-entrance" data-aos="fade-up" data-aos-duration="800">
+        <h1 class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+            REST Protocol 🌐
+        </h1>
+        <p class="text-2xl text-gray-600 mb-6" data-aos="fade-up" data-aos-delay="200">Understanding how applications communicate</p>
+        <div class="inline-block bg-gradient-to-r from-blue-50 to-purple-50 border border-purple-200 rounded-full px-8 py-4 text-gray-800 font-semibold text-lg" data-aos="fade-up" data-aos-delay="400">
+            💡 Simple, elegant, and powerful
+        </div>
+    </div>
+
+    <!-- Pizza Analogy -->
+    <div class="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-3xl shadow-lg p-8 mb-12" data-aos="fade-up" data-aos-duration="600">
+        <h2 class="text-4xl font-bold text-center text-gray-800 mb-8">🍕 The Pizza Shop Story</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <div class="bg-white rounded-2xl p-6 shadow-md interactive-card" data-aos="fade-right" data-aos-delay="100">
+                <div class="text-6xl mb-4 text-center">📱</div>
+                <h3 class="text-2xl font-bold text-blue-700 mb-3 text-center">You (The App)</h3>
+                <p class="text-gray-700 text-lg">You're hungry and want pizza! You pick up your phone to order.</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-6 shadow-md interactive-card" data-aos="fade-left" data-aos-delay="200">
+                <div class="text-6xl mb-4 text-center">🏪</div>
+                <h3 class="text-2xl font-bold text-green-700 mb-3 text-center">Pizza Shop (The Server)</h3>
+                <p class="text-gray-700 text-lg">The pizza shop has lots of pizzas ready. They wait for your order!</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 shadow-lg" data-aos="zoom-in">
+            <h3 class="text-2xl font-bold text-purple-700 mb-4 text-center">📞 How do you talk to them?</h3>
+            <p class="text-gray-700 text-lg mb-4 text-center">You use special "magic words" (called HTTP Methods) to tell them what you want!</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                <div class="bg-green-50 border-4 border-green-300 rounded-xl p-4">
+                    <div class="text-4xl mb-2">👀</div>
+                    <h4 class="font-bold text-xl text-green-700">GET</h4>
+                    <p class="text-gray-600">"Show me your menu!" (Look at pizzas)</p>
+                </div>
+                
+                <div class="bg-blue-50 border-4 border-blue-300 rounded-xl p-4">
+                    <div class="text-4xl mb-2">➕</div>
+                    <h4 class="font-bold text-xl text-blue-700">POST</h4>
+                    <p class="text-gray-600">"I want to order a new pizza!"</p>
+                </div>
+                
+                <div class="bg-yellow-50 border-4 border-yellow-300 rounded-xl p-4">
+                    <div class="text-4xl mb-2">✏️</div>
+                    <h4 class="font-bold text-xl text-yellow-700">PUT</h4>
+                    <p class="text-gray-600">"Change my order! Add extra cheese!"</p>
+                </div>
+                
+                <div class="bg-red-50 border-4 border-red-300 rounded-xl p-4">
+                    <div class="text-4xl mb-2">❌</div>
+                    <h4 class="font-bold text-xl text-red-700">DELETE</h4>
+                    <p class="text-gray-600">"Cancel my order please!"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- What is REST? -->
+    <div class="bg-white rounded-3xl shadow-2xl p-8 mb-12" data-aos="fade-up">
+        <h2 class="text-4xl font-bold text-center text-gray-900 mb-8">🤔 What is REST?</h2>
+        
+        <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-6 mb-6">
+            <p class="text-xl text-gray-800 mb-4">
+                <strong>REST</strong> stands for <span class="text-purple-700 font-bold">RE</span>presentational 
+                <span class="text-purple-700 font-bold">S</span>tate <span class="text-purple-700 font-bold">T</span>ransfer
+            </p>
+            <p class="text-lg text-gray-700">
+                Don't worry about the big words! It's just a fancy way of saying:
+            </p>
+            <div class="bg-white rounded-xl p-6 mt-4 border-4 border-purple-300">
+                <p class="text-2xl font-bold text-center text-purple-800">
+                    "Apps talking to each other using simple rules!" 🗣️
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-blue-50 rounded-xl p-6 text-center interactive-card" data-aos="flip-up" data-aos-delay="100">
+                <div class="text-5xl mb-3">🎯</div>
+                <h3 class="font-bold text-xl text-blue-700 mb-2">Simple</h3>
+                <p class="text-gray-600">Easy to understand, like talking to a friend!</p>
+            </div>
+            
+            <div class="bg-green-50 rounded-xl p-6 text-center interactive-card" data-aos="flip-up" data-aos-delay="200">
+                <div class="text-5xl mb-3">🌐</div>
+                <h3 class="font-bold text-xl text-green-700 mb-2">Universal</h3>
+                <p class="text-gray-600">Works everywhere - phones, computers, tablets!</p>
+            </div>
+            
+            <div class="bg-yellow-50 rounded-xl p-6 text-center interactive-card" data-aos="flip-up" data-aos-delay="300">
+                <div class="text-5xl mb-3">⚡</div>
+                <h3 class="font-bold text-xl text-yellow-700 mb-2">Fast</h3>
+                <p class="text-gray-600">Gets things done super quickly!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Demo -->
+    <div class="bg-gradient-to-br from-indigo-100 to-purple-100 rounded-3xl shadow-2xl p-8 mb-12" data-aos="fade-up">
+        <h2 class="text-4xl font-bold text-center text-indigo-900 mb-8">🎮 Try It Yourself!</h2>
+        <p class="text-center text-lg text-gray-700 mb-8">Click the buttons to see REST in action!</p>
+        
+        <div class="bg-white rounded-2xl p-6 mb-6">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">🧸 Toy Store API</h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <button onclick="getToys()" class="demo-btn bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg">
+                    <div class="text-3xl mb-2">👀</div>
+                    <div>GET</div>
+                    <div class="text-xs">See Toys</div>
+                </button>
+                
+                <button onclick="addToy()" class="demo-btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg">
+                    <div class="text-3xl mb-2">➕</div>
+                    <div>POST</div>
+                    <div class="text-xs">Add Toy</div>
+                </button>
+                
+                <button onclick="updateToy()" class="demo-btn bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg">
+                    <div class="text-3xl mb-2">✏️</div>
+                    <div>PUT</div>
+                    <div class="text-xs">Update Toy</div>
+                </button>
+                
+                <button onclick="deleteToy()" class="demo-btn bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg">
+                    <div class="text-3xl mb-2">❌</div>
+                    <div>DELETE</div>
+                    <div class="text-xs">Remove Toy</div>
+                </button>
+            </div>
+            
+            <div id="result" class="result-box bg-gray-100 rounded-xl p-6 border-4 border-gray-300">
+                <h4 class="font-bold text-lg mb-2 text-gray-800">Result:</h4>
+                <div id="result-content" class="text-gray-700"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Real World Examples -->
+    <div class="bg-white rounded-3xl shadow-lg p-8 mb-12" data-aos="fade-up" data-aos-duration="600">
+        <h2 class="text-4xl font-bold text-center text-gray-900 mb-8">🌍 Real Apps Use REST!</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 interactive-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-6xl mb-4 text-center">📱</div>
+                <h3 class="font-bold text-xl text-blue-800 mb-3 text-center">Instagram</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li>✅ GET - See photos</li>
+                    <li>✅ POST - Upload photo</li>
+                    <li>✅ PUT - Edit caption</li>
+                    <li>✅ DELETE - Remove photo</li>
+                </ul>
+            </div>
+            
+            <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 interactive-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-6xl mb-4 text-center">🎮</div>
+                <h3 class="font-bold text-xl text-green-800 mb-3 text-center">Gaming Apps</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li>✅ GET - See high scores</li>
+                    <li>✅ POST - Save your score</li>
+                    <li>✅ PUT - Update profile</li>
+                    <li>✅ DELETE - Delete account</li>
+                </ul>
+            </div>
+            
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 interactive-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="text-6xl mb-4 text-center">🛒</div>
+                <h3 class="font-bold text-xl text-purple-800 mb-3 text-center">Shopping Apps</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li>✅ GET - Browse products</li>
+                    <li>✅ POST - Add to cart</li>
+                    <li>✅ PUT - Change quantity</li>
+                    <li>✅ DELETE - Remove item</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fun Facts -->
+    <div class="bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100 rounded-3xl shadow-lg p-8 mb-12" data-aos="fade-up" data-aos-duration="600">
+        <h2 class="text-4xl font-bold text-center text-gray-900 mb-8">🎉 Fun Facts!</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl p-6 shadow-md" data-aos="fade-right" data-aos-delay="100">
+                <div class="text-5xl mb-3">🚀</div>
+                <h3 class="font-bold text-xl text-purple-700 mb-2">Super Popular!</h3>
+                <p class="text-gray-700">Almost every app on your phone uses REST to talk to servers!</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-6 shadow-md" data-aos="fade-left" data-aos-delay="100">
+                <div class="text-5xl mb-3">🌈</div>
+                <h3 class="font-bold text-xl text-blue-700 mb-2">Works with Everything!</h3>
+                <p class="text-gray-700">REST works with any programming language - Python, JavaScript, Java, and more!</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-6 shadow-md" data-aos="fade-right" data-aos-delay="200">
+                <div class="text-5xl mb-3">💡</div>
+                <h3 class="font-bold text-xl text-green-700 mb-2">Created in 2000!</h3>
+                <p class="text-gray-700">A smart computer scientist named Roy Fielding invented it!</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-6 shadow-md" data-aos="fade-left" data-aos-delay="200">
+                <div class="text-5xl mb-3">🎯</div>
+                <h3 class="font-bold text-xl text-orange-700 mb-2">Easy to Learn!</h3>
+                <p class="text-gray-700">You already understand it! Just like ordering food or asking questions!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="bg-gradient-to-r from-green-400 to-blue-500 rounded-3xl shadow-lg p-8 mb-12 text-white" data-aos="fade-up" data-aos-duration="600">
+        <h2 class="text-4xl font-bold text-center mb-6">📝 Remember This!</h2>
+        <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl p-6">
+            <ul class="space-y-4 text-xl">
+                <li class="flex items-center" data-aos="fade-right" data-aos-delay="100">
+                    <span class="text-3xl mr-4">✅</span>
+                    <span><strong>REST</strong> = Apps talking to each other</span>
+                </li>
+                <li class="flex items-center" data-aos="fade-right" data-aos-delay="150">
+                    <span class="text-3xl mr-4">✅</span>
+                    <span><strong>GET</strong> = Look at stuff</span>
+                </li>
+                <li class="flex items-center" data-aos="fade-right" data-aos-delay="200">
+                    <span class="text-3xl mr-4">✅</span>
+                    <span><strong>POST</strong> = Add new stuff</span>
+                </li>
+                <li class="flex items-center" data-aos="fade-right" data-aos-delay="250">
+                    <span class="text-3xl mr-4">✅</span>
+                    <span><strong>PUT</strong> = Change stuff</span>
+                </li>
+                <li class="flex items-center" data-aos="fade-right" data-aos-delay="300">
+                    <span class="text-3xl mr-4">✅</span>
+                    <span><strong>DELETE</strong> = Remove stuff</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center mb-8" data-aos="fade-up" data-aos-duration="600">
+        <a href="/" class="inline-block bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-10 py-5 rounded-full text-xl shadow-lg transition-all duration-300 hover:shadow-xl" style="transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+            🏠 Back to Home
+        </a>
+    </div>
+</div>
+
+<!-- AOS Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<script>
+// Initialize AOS
+AOS.init({
+    duration: 800,
+    easing: 'ease-out-cubic',
+    once: true,
+    offset: 100,
+    delay: 100
+});
+
+// Toy store demo data
+let toys = [
+    { id: 1, name: '🧸 Teddy Bear', price: '$15' },
+    { id: 2, name: '🚗 Toy Car', price: '$10' },
+    { id: 3, name: '🎮 Video Game', price: '$40' }
+];
+
+function showResult(method, message, data) {
+    const resultBox = document.getElementById('result');
+    const resultContent = document.getElementById('result-content');
+    
+    let methodColor = {
+        'GET': 'bg-green-100 border-green-400',
+        'POST': 'bg-blue-100 border-blue-400',
+        'PUT': 'bg-yellow-100 border-yellow-400',
+        'DELETE': 'bg-red-100 border-red-400'
+    };
+    
+    resultBox.className = `result-box show ${methodColor[method]} rounded-xl p-6 border-4`;
+    
+    resultContent.innerHTML = `
+        <div class="mb-4">
+            <span class="method-badge ${method === 'GET' ? 'bg-green-500' : method === 'POST' ? 'bg-blue-500' : method === 'PUT' ? 'bg-yellow-500' : 'bg-red-500'} text-white">
+                ${method}
+            </span>
+        </div>
+        <p class="text-lg font-semibold mb-3">${message}</p>
+        ${data ? `<pre class="bg-white rounded p-4 text-sm overflow-auto">${data}</pre>` : ''}
+    `;
+}
+
+function getToys() {
+    const toyList = toys.map(t => `${t.name} - ${t.price}`).join('\n');
+    showResult('GET', '📋 Here are all the toys in the store!', toyList);
+}
+
+function addToy() {
+    const newToy = { id: toys.length + 1, name: '🦖 Dinosaur', price: '$25' };
+    toys.push(newToy);
+    showResult('POST', '✨ New toy added to the store!', `${newToy.name} - ${newToy.price}\n\nTotal toys: ${toys.length}`);
+}
+
+function updateToy() {
+    if (toys.length > 0) {
+        toys[0].price = '$18';
+        showResult('PUT', '✏️ Updated the first toy!', `${toys[0].name}\nOld price: $15\nNew price: ${toys[0].price}`);
+    }
+}
+
+function deleteToy() {
+    if (toys.length > 0) {
+        const removed = toys.pop();
+        showResult('DELETE', '🗑️ Removed a toy from the store!', `Removed: ${removed.name}\nRemaining toys: ${toys.length}`);
+    } else {
+        showResult('DELETE', '❌ No toys left to remove!', 'The toy store is empty!');
+    }
+}
+</script>
+
+{% endblock %}

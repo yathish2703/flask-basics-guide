@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-16 px-4 text-center rounded-lg mb-8">
+    <h1 class="text-5xl font-bold mb-4">✨ Template Inheritance Demo</h1>
+    <p class="text-xl">{{ content }}</p>
+</div>
+
+<div class="max-w-7xl mx-auto px-4">
+    <div class="bg-white rounded-lg shadow-md p-8 border border-gray-200 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">How Template Inheritance Works</h2>
+        <p class="text-gray-700 mb-6">This page extends <code class="bg-gray-200 px-2 py-1 rounded text-sm">base.html</code> and overrides specific blocks:</p>
+        
+        <div class="mb-8">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Child Template Code:</h3>
+            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>{% raw %}{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    &lt;h1&gt;{{ content }}&lt;/h1&gt;
+{% endblock %}{% endraw %}</code></pre>
+        </div>
+        
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Base Template Structure:</h3>
+            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>{% raw %}&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;{% block title %}Default Title{% endblock %}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;nav&gt;...&lt;/nav&gt;
+    {% block content %}{% endblock %}
+    &lt;footer&gt;...&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;{% endraw %}</code></pre>
+        </div>
+    </div>
+
+    <div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-6 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Benefits of Template Inheritance:</h3>
+        <ul class="space-y-2 list-disc pl-6 text-gray-700">
+            <li>Reuse common layout across multiple pages</li>
+            <li>Maintain consistent navigation and footer</li>
+            <li>Override only the parts that change</li>
+            <li>Keep code DRY (Don't Repeat Yourself)</li>
+        </ul>
+    </div>
+
+    <div>
+        <a href="{{ url_for('templates.templates_home') }}" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">← Back to Templates</a>
+    </div>
+</div>
+{% endblock %}

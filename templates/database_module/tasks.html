@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Tasks{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8">Task Manager</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="{% if category == 'success' %}bg-green-50 border-l-4 border-green-600{% elif category == 'error' %}bg-red-50 border-l-4 border-red-600{% else %}bg-blue-50 border-l-4 border-blue-600{% endif %} rounded-lg p-6 mb-8">
+                <p class="{% if category == 'success' %}text-green-800{% elif category == 'error' %}text-red-800{% else %}text-blue-800{% endif %} font-medium">{{ message }}</p>
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="mb-6">
+        <a href="{{ url_for('database.create_task') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition">✚ Create New Task</a>
+    </div>
+
+    {% if tasks %}
+    <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden mb-8">
+        <div class="overflow-x-auto">
+            <table class="w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Title</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Priority</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Created</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    {% for task in tasks %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 text-sm text-gray-900">{{ task.id }}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <a href="{{ url_for('database.view_task', task_id=task.id) }}" class="text-blue-600 hover:text-blue-800 hover:underline font-medium">
+                                {{ task.title }}
+                            </a>
+                        </td>
+                        <td class="px-6 py-4 text-sm">
+                            <span class="inline-flex px-3 py-1 text-xs font-semibold rounded-full {% if task.priority == 'high' %}bg-red-100 text-red-800{% elif task.priority == 'medium' %}bg-yellow-100 text-yellow-800{% else %}bg-green-100 text-green-800{% endif %}">
+                                {{ task.priority }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-sm">
+                            {% if task.completed %}
+                            <span class="inline-flex items-center text-green-700">✓ Completed</span>
+                            {% else %}
+                            <span class="inline-flex items-center text-gray-500">○ Pending</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">{{ task.created_at.strftime('%Y-%m-%d') }}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <div class="flex gap-2">
+                                <form method="POST" action="{{ url_for('database.toggle_task', task_id=task.id) }}" class="inline">
+                                    <button type="submit" class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold transition">Toggle</button>
+                                </form>
+                                <a href="{{ url_for('database.edit_task', task_id=task.id) }}" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs font-semibold transition inline-block">Edit</a>
+                                <form method="POST" action="{{ url_for('database.delete_task', task_id=task.id) }}" class="inline" onsubmit="return confirm('Are you sure?')">
+                                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs font-semibold transition">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-6 mb-8">
+        <p class="text-gray-700">No tasks yet. <a href="{{ url_for('database.create_task') }}" class="text-blue-600 hover:text-blue-800 underline font-semibold">Create your first task!</a></p>
+    </div>
+    {% endif %}
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">📚 Database Operations Explained:</h3>
+        
+        <div class="mb-6">
+            <h4 class="font-semibold text-gray-900 mb-2">Read All Tasks (SELECT)</h4>
+            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm font-mono"><span class="text-gray-400"># Query all tasks from database</span>
+tasks = Task.query.all()
+
+<span class="text-gray-400"># SQL equivalent: SELECT * FROM task</span></code></pre>
+            <div class="mt-2 text-sm text-gray-700 bg-gray-50 p-3 rounded">
+                <strong>What it does:</strong> Fetches all Task records from database as a list
+            </div>
+        </div>
+        
+        <div class="mb-6">
+            <h4 class="font-semibold text-gray-900 mb-2">Toggle Task Status (UPDATE)</h4>
+            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm font-mono"><span class="text-gray-400"># Find task by ID or return 404 error</span>
+task = Task.query.get_or_404(task_id)
+
+<span class="text-gray-400"># Flip the boolean value</span>
+task.completed = not task.completed
+
+<span class="text-gray-400"># Save changes to database</span>
+db.session.commit()
+
+<span class="text-gray-400"># SQL: UPDATE task SET completed=? WHERE id=?</span></code></pre>
+            <div class="mt-2 text-sm text-gray-700 bg-gray-50 p-3 rounded">
+                <strong>What it does:</strong> Changes task.completed from True→False or False→True
+            </div>
+        </div>
+        
+        <div>
+            <h4 class="font-semibold text-gray-900 mb-2">Delete Task (DELETE)</h4>
+            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm font-mono"><span class="text-gray-400"># Find the task to delete</span>
+task = Task.query.get_or_404(task_id)
+
+<span class="text-gray-400"># Mark for deletion</span>
+db.session.delete(task)
+
+<span class="text-gray-400"># Execute the deletion</span>
+db.session.commit()
+
+<span class="text-gray-400"># SQL equivalent: DELETE FROM task WHERE id=?</span></code></pre>
+            <div class="mt-2 text-sm text-gray-700 bg-gray-50 p-3 rounded">
+                <strong>What it does:</strong> Permanently removes task record from database
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <a href="{{ url_for('database.database_home') }}" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">← Back to Database</a>
+    </div>
+</div>
+{% endblock %}

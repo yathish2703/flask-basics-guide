@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8">Template Variables</h1>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Simple Variables</h2>
+        <div class="space-y-2 text-gray-700">
+            <p><strong class="text-gray-900">User Name:</strong> {{ user.name }}</p>
+            <p><strong class="text-gray-900">Email:</strong> {{ user.email }}</p>
+            <p><strong class="text-gray-900">Age:</strong> {{ user.age }}</p>
+            <p><strong class="text-gray-900">Is Admin:</strong> {{ user.is_admin }}</p>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Dictionary Access</h2>
+        <pre class="bg-gray-100 p-4 rounded-lg text-sm mb-3"><code>{{ "{{ user.name }}" }} or {{ "{{ user['name'] }}" }}</code></pre>
+        <p class="text-gray-700">Result: {{ user.name }} or {{ user['name'] }}</p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">List Variables</h2>
+        <p class="font-semibold text-gray-900 mb-3">Technologies:</p>
+        <ul class="space-y-2 list-disc pl-6 text-gray-700">
+            {% for item in items %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Template Expressions</h2>
+        <div class="space-y-2 text-gray-700">
+            <p>Age in 5 years: <span class="font-semibold text-gray-900">{{ user.age + 5 }}</span></p>
+            <p>Uppercase name: <span class="font-semibold text-gray-900">{{ user.name.upper() }}</span></p>
+            <p>Number of items: <span class="font-semibold text-gray-900">{{ items|length }}</span></p>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Python Code:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>user = {
+    'name': 'John Doe',
+    'email': 'john@example.com',
+    'age': 28,
+    'is_admin': True
+}
+items = ['Python', 'Flask', 'Jinja2', 'SQLAlchemy']
+
+return render_template('variables.html', user=user, items=items)</code></pre>
+    </div>
+
+    <div>
+        <a href="{{ url_for('templates.templates_home') }}" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">← Back to Templates</a>
+    </div>
+</div>
+{% endblock %}

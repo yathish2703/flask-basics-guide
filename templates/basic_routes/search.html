@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-gradient-to-r from-yellow-500 to-orange-600 rounded-lg shadow-lg p-8 text-white mb-8">
+        <h1 class="text-4xl font-bold mb-2">Search Results 🔍</h1>
+        <p class="text-yellow-100">Demonstrating query string parameters</p>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📋 Query Parameters</h2>
+        <div class="space-y-4">
+            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <h3 class="font-semibold text-blue-900 mb-1">Query</h3>
+                <p class="text-2xl font-bold text-blue-600">{{ query }}</p>
+            </div>
+            <div class="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                <h3 class="font-semibold text-purple-900 mb-1">Category</h3>
+                <p class="text-2xl font-bold text-purple-600">{{ category }}</p>
+            </div>
+            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                <h3 class="font-semibold text-green-900 mb-1">Page</h3>
+                <p class="text-2xl font-bold text-green-600">{{ page }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🔗 All Query Parameters</h2>
+        <div class="bg-gray-100 p-4 rounded-lg">
+            <code class="text-sm text-gray-800">{{ all_params }}</code>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Try These Examples:</h2>
+        <div class="space-y-2">
+            <a href="/basic/search?q=python&category=programming" class="block p-3 bg-gray-50 hover:bg-gray-100 rounded border transition">
+                <code class="text-sm text-gray-800">/basic/search?q=python&category=programming</code>
+            </a>
+            <a href="/basic/search?q=flask&category=tutorial&page=2" class="block p-3 bg-gray-50 hover:bg-gray-100 rounded border transition">
+                <code class="text-sm text-gray-800">/basic/search?q=flask&category=tutorial&page=2</code>
+            </a>
+            <a href="/basic/search?q=web+development&category=all&page=1" class="block p-3 bg-gray-50 hover:bg-gray-100 rounded border transition">
+                <code class="text-sm text-gray-800">/basic/search?q=web+development&category=all&page=1</code>
+            </a>
+            <a href="/basic/search" class="block p-3 bg-gray-50 hover:bg-gray-100 rounded border transition">
+                <code class="text-sm text-gray-800">/basic/search</code> (no parameters - uses defaults)
+            </a>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-3">📝 Code Example:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm font-mono"><span class="text-gray-400"># Import request object to access query parameters</span>
+from flask import request
+
+@app.route('/search')
+def search():
+    <span class="text-gray-400"># Get 'q' parameter, default to 'nothing' if not provided</span>
+    query = request.args.get('q', 'nothing')
+    
+    <span class="text-gray-400"># Get 'category' parameter with default value</span>
+    category = request.args.get('category', 'all')
+    
+    <span class="text-gray-400"># Get 'page', convert to int (default 1)</span>
+    page = request.args.get('page', 1, type=int)
+    
+    <span class="text-gray-400"># Get all parameters as dictionary</span>
+    all_params = dict(request.args)
+    
+    return render_template('search.html', 
+                         query=query,
+                         category=category,
+                         page=page,
+                         all_params=all_params)</code></pre>
+        
+        <div class="mt-4 space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
+            <p><strong class="text-gray-900">request.args:</strong> Contains all query string parameters</p>
+            <p><strong class="text-gray-900">.get('key', default):</strong> Safely get parameter with fallback value</p>
+            <p><strong class="text-gray-900">type=int:</strong> Automatically converts string to integer</p>
+            <p><strong class="text-gray-900">dict(request.args):</strong> Convert to regular Python dictionary</p>
+        </div>
+    </div>
+    
+    <div class="bg-yellow-50 border-l-4 border-yellow-600 rounded-lg p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-3">💡 URL vs Query Parameters</h3>
+        <div class="space-y-4 text-gray-700">
+            <div class="bg-white p-4 rounded-lg border border-yellow-200">
+                <h4 class="font-semibold text-gray-900 mb-2">URL Parameters (Path Variables)</h4>
+                <code class="bg-gray-100 px-2 py-1 rounded text-sm">/user/&lt;username&gt;</code>
+                <ul class="mt-2 ml-4 space-y-1 text-sm list-disc">
+                    <li>Part of the URL path structure</li>
+                    <li>Required for route to match</li>
+                    <li>Example: <code class="bg-gray-100 px-1 rounded">/user/john</code></li>
+                    <li>Best for: identifying specific resources</li>
+                </ul>
+            </div>
+            
+            <div class="bg-white p-4 rounded-lg border border-yellow-200">
+                <h4 class="font-semibold text-gray-900 mb-2">Query Parameters (Query String)</h4>
+                <code class="bg-gray-100 px-2 py-1 rounded text-sm">?q=value&amp;page=1</code>
+                <ul class="mt-2 ml-4 space-y-1 text-sm list-disc">
+                    <li>Optional key-value pairs after <code class="bg-gray-100 px-1 rounded">?</code></li>
+                    <li>Not required - can have defaults</li>
+                    <li>Example: <code class="bg-gray-100 px-1 rounded">?search=flask&amp;sort=date</code></li>
+                    <li>Best for: filtering, sorting, pagination</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center">
+        <a href="/basic" class="text-blue-600 hover:text-blue-700 font-medium">← Back to Basic Routes</a>
+    </div>
+</div>
+{% endblock %}

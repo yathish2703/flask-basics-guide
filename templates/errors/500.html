@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}500 - Server Error{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-r from-red-500 to-pink-400 text-white py-20 px-4 text-center rounded-lg mb-8">
+    <h1 class="text-8xl font-bold mb-4">500</h1>
+    <h2 class="text-3xl font-semibold mb-2">Internal Server Error</h2>
+    <p class="text-xl">Something went wrong on our end.</p>
+</div>
+
+<div class="max-w-3xl mx-auto px-4">
+    <div class="bg-white rounded-lg shadow-md p-8 border border-gray-200 mb-8">
+        <p class="text-gray-700 mb-4">We're sorry, but something unexpected happened.</p>
+        <p class="text-gray-700 mb-4">Our team has been notified and is working to fix the issue.</p>
+        
+        <p class="text-gray-700 mb-4">Please try:</p>
+        <ul class="space-y-2 list-disc pl-6 text-gray-700">
+            <li>Refreshing the page</li>
+            <li>Going back to the homepage</li>
+            <li>Trying again later</li>
+        </ul>
+    </div>
+
+    <div class="flex gap-4 mb-8">
+        <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition">Go to Homepage</a>
+        <a href="javascript:history.back()" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">Go Back</a>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Custom Error Handler:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()  # Rollback any failed transactions
+    return render_template('errors/500.html'), 500</code></pre>
+    </div>
+</div>
+{% endblock %}

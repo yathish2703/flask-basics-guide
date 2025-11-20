@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Basic Routes Module{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-900 mb-6">Module 1: Basic Routes</h1>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Available Examples:</h2>
+        <div class="space-y-3">
+            <a href="/basic/hello" class="block p-4 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition">
+                <h3 class="font-semibold text-blue-900">Simple Hello Route</h3>
+                <p class="text-sm text-gray-600">Basic route without parameters</p>
+            </a>
+            
+            <a href="/basic/user/John" class="block p-4 bg-purple-50 hover:bg-purple-100 rounded-lg border border-purple-200 transition">
+                <h3 class="font-semibold text-purple-900">URL Parameter Example</h3>
+                <p class="text-sm text-gray-600">Try: <code class="bg-white px-2 py-1 rounded">/basic/user/YourName</code></p>
+            </a>
+            
+            <a href="/basic/user/25/profile" class="block p-4 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 transition">
+                <h3 class="font-semibold text-green-900">Multiple URL Parameters</h3>
+                <p class="text-sm text-gray-600">Route with typed parameters (integers)</p>
+            </a>
+            
+            <a href="/basic/search?q=flask&category=tutorial" class="block p-4 bg-yellow-50 hover:bg-yellow-100 rounded-lg border border-yellow-200 transition">
+                <h3 class="font-semibold text-yellow-900">Query String Example</h3>
+                <p class="text-sm text-gray-600">Using <code class="bg-white px-2 py-1 rounded">?q=flask&category=tutorial</code></p>
+            </a>
+            
+            <a href="/basic/methods-demo" class="block p-4 bg-red-50 hover:bg-red-100 rounded-lg border border-red-200 transition">
+                <h3 class="font-semibold text-red-900">HTTP Methods Demo</h3>
+                <p class="text-sm text-gray-600">GET, POST, PUT, DELETE examples</p>
+            </a>
+        </div>
+    </div>
+    
+    <div class="text-center">
+        <a href="/" class="text-blue-600 hover:text-blue-700 font-medium">← Back to Home</a>
+    </div>
+</div>
+{% endblock %}

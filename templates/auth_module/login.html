@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto">
+    <div class="bg-white rounded-lg shadow-md p-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">Login</h1>
+        
+        <form method="POST" class="space-y-4">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                <input type="text" id="username" name="username" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                    required autofocus>
+            </div>
+            
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                <input type="password" id="password" name="password" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                    required>
+            </div>
+            
+            <div class="flex items-center">
+                <input type="checkbox" id="remember" name="remember" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                <label for="remember" class="ml-2 text-sm text-gray-700">Remember me</label>
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                Login
+            </button>
+        </form>
+        
+        <p class="mt-4 text-center text-sm text-gray-600">
+            Don't have an account? 
+            <a href="{{ url_for('auth.register') }}" class="text-blue-600 hover:text-blue-700 font-medium">Register here</a>
+        </p>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mt-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-3">💡 How Login Works:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm font-mono"><span class="text-gray-400"># Import the login function</span>
+from flask_login import login_user
+
+<span class="text-gray-400"># Find user in database by username</span>
+user = User.query.filter_by(username=username).first()
+
+<span class="text-gray-400"># Check if user exists AND password is correct</span>
+if user and user.check_password(password):
+    <span class="text-gray-400"># Log the user in (creates session)</span>
+    login_user(user, remember=remember)
+    <span class="text-gray-400"># Redirect to dashboard</span>
+    return redirect(url_for('dashboard'))</code></pre>
+        
+        <div class="mt-4 space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
+            <p><strong class="text-gray-900">Step 1:</strong> Search database for user with matching username</p>
+            <p><strong class="text-gray-900">Step 2:</strong> Verify the password using secure hash comparison</p>
+            <p><strong class="text-gray-900">Step 3:</strong> Create a session with <code class="bg-white px-2 py-1 rounded text-xs">login_user()</code></p>
+            <p><strong class="text-gray-900">Step 4:</strong> Redirect to protected dashboard page</p>
+        </div>
+    </div>
+    
+    <div class="mt-6 text-center">
+        <a href="{{ url_for('auth.auth_home') }}" class="text-blue-600 hover:text-blue-700 font-medium">← Back to Auth</a>
+    </div>
+</div>
+{% endblock %}

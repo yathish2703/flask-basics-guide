@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}User Profile #{{ user_id }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-gradient-to-r from-green-500 to-teal-600 rounded-lg shadow-lg p-8 text-white mb-8">
+        <h1 class="text-4xl font-bold mb-2">User Profile #{{ user_id }} 🔢</h1>
+        <p class="text-green-100">Multiple URL parameters with type conversion</p>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📊 Parameter Details</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <h3 class="font-semibold text-blue-900 mb-2">User ID</h3>
+                <p class="text-3xl font-bold text-blue-600">{{ user_id }}</p>
+            </div>
+            <div class="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                <h3 class="font-semibold text-purple-900 mb-2">Data Type</h3>
+                <p class="text-3xl font-bold text-purple-600">{{ type }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🎯 Typed URL Parameters</h2>
+        <p class="text-gray-700 mb-4">
+            This route only accepts <strong>integers</strong> in the URL. Try these examples:
+        </p>
+        <div class="space-y-2">
+            <a href="/basic/user/1/profile" class="block p-3 bg-gray-50 hover:bg-gray-100 rounded border transition">
+                <code class="text-sm text-gray-800">/basic/user/1/profile</code> ✅ Valid
+            </a>
+            <a href="/basic/user/42/profile" class="block p-3 bg-gray-50 hover:bg-gray-100 rounded border transition">
+                <code class="text-sm text-gray-800">/basic/user/42/profile</code> ✅ Valid
+            </a>
+            <a href="/basic/user/999/profile" class="block p-3 bg-gray-50 hover:bg-gray-100 rounded border transition">
+                <code class="text-sm text-gray-800">/basic/user/999/profile</code> ✅ Valid
+            </a>
+        </div>
+        <p class="text-sm text-gray-600 mt-4">
+            💡 If you try <code class="bg-gray-100 px-2 py-1 rounded">/basic/user/abc/profile</code> 
+            you'll get a 404 error because "abc" is not an integer!
+        </p>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-3">📝 Code Example:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm font-mono"><span class="text-gray-400"># &lt;int:user_id&gt; means: only accept integers, convert automatically</span>
+@app.route('/user/&lt;int:user_id&gt;/profile')
+def user_profile_by_id(user_id):
+    <span class="text-gray-400"># user_id is already an integer, not a string!</span>
+    return f'User ID: {user_id}'</code></pre>
+        
+        <div class="mt-4 space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
+            <p><strong class="text-gray-900">Without type:</strong> <code class="bg-white px-2 py-1 rounded text-xs">&lt;user_id&gt;</code> → receives string "25"</p>
+            <p><strong class="text-gray-900">With type:</strong> <code class="bg-white px-2 py-1 rounded text-xs">&lt;int:user_id&gt;</code> → receives integer 25</p>
+            <p><strong class="text-gray-900">Benefit:</strong> Automatic validation + no manual conversion needed</p>
+            <p><strong class="text-gray-900">Invalid input:</strong> Non-integers return 404 automatically</p>
+        </div>
+    </div>
+    
+    <div class="bg-green-50 border-l-4 border-green-600 rounded-lg p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-3">💡 Available Type Converters</h3>
+        <div class="space-y-3 text-gray-700">
+            <div class="flex items-start">
+                <code class="bg-white px-2 py-1 rounded text-sm mr-3 flex-shrink-0">&lt;string:name&gt;</code>
+                <span>Accepts any text (default if no type specified)</span>
+            </div>
+            <div class="flex items-start">
+                <code class="bg-white px-2 py-1 rounded text-sm mr-3 flex-shrink-0">&lt;int:id&gt;</code>
+                <span>Accepts positive integers only (1, 42, 999)</span>
+            </div>
+            <div class="flex items-start">
+                <code class="bg-white px-2 py-1 rounded text-sm mr-3 flex-shrink-0">&lt;float:price&gt;</code>
+                <span>Accepts decimal numbers (3.14, 99.99)</span>
+            </div>
+            <div class="flex items-start">
+                <code class="bg-white px-2 py-1 rounded text-sm mr-3 flex-shrink-0">&lt;path:filepath&gt;</code>
+                <span>Accepts text with slashes (/docs/file.pdf)</span>
+            </div>
+            <div class="flex items-start">
+                <code class="bg-white px-2 py-1 rounded text-sm mr-3 flex-shrink-0">&lt;uuid:id&gt;</code>
+                <span>Accepts UUID format (550e8400-e29b-41d4-a716-446655440000)</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center">
+        <a href="/basic" class="text-blue-600 hover:text-blue-700 font-medium">← Back to Basic Routes</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}View Task{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8">Task Details</h1>
+
+    <div class="bg-white rounded-lg shadow-md p-8 border border-gray-200 mb-8">
+        <div class="overflow-x-auto">
+            <table class="w-full divide-y divide-gray-200">
+                <tbody class="divide-y divide-gray-200">
+                    <tr>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 bg-gray-50">ID:</th>
+                        <td class="px-6 py-4 text-sm text-gray-900">{{ task.id }}</td>
+                    </tr>
+                    <tr>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 bg-gray-50">Title:</th>
+                        <td class="px-6 py-4 text-sm text-gray-900">{{ task.title }}</td>
+                    </tr>
+                    <tr>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 bg-gray-50">Description:</th>
+                        <td class="px-6 py-4 text-sm text-gray-900">{{ task.description or 'No description' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 bg-gray-50">Priority:</th>
+                        <td class="px-6 py-4 text-sm">
+                            <span class="inline-flex px-3 py-1 text-xs font-semibold rounded-full {% if task.priority == 'high' %}bg-red-100 text-red-800{% elif task.priority == 'medium' %}bg-yellow-100 text-yellow-800{% else %}bg-green-100 text-green-800{% endif %}">
+                                {{ task.priority }}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 bg-gray-50">Status:</th>
+                        <td class="px-6 py-4 text-sm">
+                            {% if task.completed %}
+                            <span class="inline-flex items-center text-green-700 font-semibold">✓ Completed</span>
+                            {% else %}
+                            <span class="inline-flex items-center text-gray-500">○ Pending</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 bg-gray-50">Created:</th>
+                        <td class="px-6 py-4 text-sm text-gray-900">{{ task.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="flex gap-4 flex-wrap mb-8">
+        <a href="{{ url_for('database.edit_task', task_id=task.id) }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition">Edit</a>
+        <form method="POST" action="{{ url_for('database.delete_task', task_id=task.id) }}" class="inline" onsubmit="return confirm('Are you sure?')">
+            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-lg transition">Delete</button>
+        </form>
+        <a href="{{ url_for('database.tasks') }}" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">Back to List</a>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Get Single Record:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>task = Task.query.get_or_404(task_id)</code></pre>
+    </div>
+</div>
+{% endblock %}

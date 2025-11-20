@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Authentication Module{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8">Module 5: Authentication</h1>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Authentication Examples:</h2>
+        <ul class="space-y-3">
+            {% if current_user.is_authenticated %}
+            <li>
+                <a href="{{ url_for('auth.dashboard') }}" class="text-blue-600 hover:text-blue-800 hover:underline flex items-center">
+                    <span class="mr-2">🔒</span> Dashboard (Protected)
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('auth.profile') }}" class="text-blue-600 hover:text-blue-800 hover:underline flex items-center">
+                    <span class="mr-2">👤</span> Profile
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('auth.logout') }}" class="text-blue-600 hover:text-blue-800 hover:underline flex items-center">
+                    <span class="mr-2">🚪</span> Logout
+                </a>
+            </li>
+            {% else %}
+            <li>
+                <a href="{{ url_for('auth.register') }}" class="text-blue-600 hover:text-blue-800 hover:underline flex items-center">
+                    <span class="mr-2">📝</span> Register
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('auth.login') }}" class="text-blue-600 hover:text-blue-800 hover:underline flex items-center">
+                    <span class="mr-2">🔑</span> Login
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-6 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">What You'll Learn:</h3>
+        <ul class="space-y-2 list-disc pl-6 text-gray-700">
+            <li>User registration and login</li>
+            <li>Password hashing for security</li>
+            <li>Session management</li>
+            <li>Protected routes with @login_required</li>
+            <li>Flask-Login integration</li>
+            <li>Current user access</li>
+        </ul>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">User Model:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True)
+    email = db.Column(db.String(120), unique=True)
+    password_hash = db.Column(db.String(200))
+    
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+    
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)</code></pre>
+    </div>
+
+    <div class="mt-8">
+        <a href="/" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">← Back to Home</a>
+    </div>
+</div>
+{% endblock %}

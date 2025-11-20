@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ state.name }} - State Information</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .game-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .game-card:hover {
+            transform: translateY(-4px);
+        }
+        .correct {
+            animation: correctPulse 0.5s ease;
+        }
+        .wrong {
+            animation: wrongShake 0.5s ease;
+        }
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-50 min-h-screen">
+
+<div class="container mx-auto px-4 py-12 max-w-4xl">
+    
+    <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8">
+        <div class="text-center mb-8">
+            <h1 class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
+                📍 {{ state.name }}
+            </h1>
+            <p class="text-xl text-gray-600">State Information</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6">
+                <h3 class="text-2xl font-bold text-blue-800 mb-3">🏛️ Capital</h3>
+                <p class="text-3xl font-bold text-gray-800">{{ state.capital }}</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6">
+                <h3 class="text-2xl font-bold text-purple-800 mb-3">👥 Population</h3>
+                <p class="text-3xl font-bold text-gray-800">{{ state.population }}</p>
+            </div>
+        </div>
+        
+        <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-6 mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">🗺️ Current Route Structure</h3>
+            <div class="bg-white rounded-lg p-4 font-mono text-lg">
+                /country/<strong class="text-blue-600">{{ state.name|lower }}</strong>
+            </div>
+            <p class="text-gray-600 mt-4">
+                <strong>Level 1:</strong> You're viewing state-level information
+            </p>
+        </div>
+        
+        <div class="bg-yellow-50 border-l-4 border-yellow-500 rounded-lg p-6 mb-8">
+            <h3 class="text-xl font-bold text-yellow-800 mb-3">🔍 Explore Cities</h3>
+            <p class="text-gray-700 mb-4">Try adding a city to the URL:</p>
+            <div class="space-y-2">
+                {% for city in available_cities[:2] %}
+                <a href="/india/{{ state.name|lower|replace(' ', '') }}/{{ city }}" class="block bg-white hover:bg-gray-50 rounded-lg p-3 transition">
+                    <code class="text-blue-600">/india/{{ state.name|lower|replace(' ', '') }}/{{ city }}</code>
+                </a>
+                {% endfor %}
+                {% if available_cities|length == 0 %}
+                <p class="text-gray-500 italic">No cities available for this state yet.</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Interactive Route Building Game -->
+        <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-8 mb-8 border-4 border-purple-300">
+            <h3 class="text-3xl font-bold text-purple-900 mb-4 text-center">🎮 Build Your Route!</h3>
+            <p class="text-center text-gray-700 mb-6 text-lg">Click on states to see how routes are built step by step</p>
+            
+            <div class="bg-white rounded-xl p-6 mb-6">
+                <h4 class="text-xl font-bold mb-4 text-gray-800">Current URL Path:</h4>
+                <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-lg break-all" id="urlDisplay">
+                    <span class="text-gray-500">yourdomain.com</span>/india/<span id="selectedState" class="text-yellow-300 font-bold">{{ state.name|lower|replace(' ', '') }}</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-3">
+                    <strong>Level 1:</strong> State is captured by <code class="bg-gray-100 px-2 py-1 rounded">&lt;state&gt;</code> parameter
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                <button onclick="selectState('karnataka')" class="state-btn bg-gradient-to-br from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">🏛️</div>
+                    <div>Karnataka</div>
+                </button>
+                <button onclick="selectState('tamilnadu')" class="state-btn bg-gradient-to-br from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">🏛️</div>
+                    <div>Tamil Nadu</div>
+                </button>
+                <button onclick="selectState('kerala')" class="state-btn bg-gradient-to-br from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">🏛️</div>
+                    <div>Kerala</div>
+                </button>
+                <button onclick="selectState('telangana')" class="state-btn bg-gradient-to-br from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">🏛️</div>
+                    <div>Telangana</div>
+                </button>
+                <button onclick="selectState('andhrapradesh')" class="state-btn bg-gradient-to-br from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-6 px-4 rounded-xl transition transform hover:scale-105">
+                    <div class="text-3xl mb-2">🏛️</div>
+                    <div>Andhra Pradesh</div>
+                </button>
+            </div>
+            
+            <div class="bg-green-50 border-l-4 border-green-500 rounded-lg p-6">
+                <h4 class="text-lg font-bold text-green-800 mb-2">💡 What's Happening?</h4>
+                <ul class="space-y-2 text-gray-700">
+                    <li>✅ The <code class="bg-white px-2 py-1 rounded">&lt;state&gt;</code> in the route captures whatever you type</li>
+                    <li>✅ Flask receives it as a variable in the function</li>
+                    <li>✅ Click a state button to visit that state's page</li>
+                    <li>✅ Next: Add a city to go deeper!</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="flex justify-center gap-4">
+            <a href="/routes-explained" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-8 py-4 rounded-full transition">
+                ← Back to Routes Guide
+            </a>
+            <a href="/" class="bg-gray-600 hover:bg-gray-700 text-white font-bold px-8 py-4 rounded-full transition">
+                🏠 Home
+            </a>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+function selectState(state) {
+    window.location.href = `/india/${state}`;
+}
+</script>
+
+</body>
+</html>

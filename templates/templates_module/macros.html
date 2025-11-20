@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% macro render_product(product) %}
+<div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 hover:shadow-lg transition">
+    <h3 class="text-xl font-bold text-gray-900 mb-2">{{ product.name }}</h3>
+    <p class="text-2xl font-semibold text-green-600 mb-3">${{ "%.2f"|format(product.price) }}</p>
+    <p class="text-yellow-500 text-lg">
+        {% for i in range(5) %}
+            {% if i < product.rating %}⭐{% else %}☆{% endif %}
+        {% endfor %}
+        <span class="text-gray-600 text-sm ml-1">({{ product.rating }})</span>
+    </p>
+</div>
+{% endmacro %}
+
+{% macro render_alert(message, type='info') %}
+<div class="{% if type == 'success' %}bg-green-50 border-l-4 border-green-600 text-green-800{% elif type == 'error' %}bg-red-50 border-l-4 border-red-600 text-red-800{% elif type == 'warning' %}bg-yellow-50 border-l-4 border-yellow-600 text-yellow-800{% else %}bg-blue-50 border-l-4 border-blue-600 text-blue-800{% endif %} rounded-lg p-4 mb-4">
+    <span class="font-semibold">
+        {% if type == 'success' %}✓{% elif type == 'error' %}✗{% elif type == 'warning' %}⚠{% else %}ℹ{% endif %}
+    </span>
+    <span class="ml-2">{{ message }}</span>
+</div>
+{% endmacro %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8">Macros (Reusable Components)</h1>
+
+    <div class="mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Product Cards (Using Macros)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for product in products %}
+                {{ render_product(product) }}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Alert Messages (Using Macros)</h2>
+        {{ render_alert('This is an info message', 'info') }}
+        {{ render_alert('Success! Operation completed', 'success') }}
+        {{ render_alert('Warning: Please check your input', 'warning') }}
+        {{ render_alert('Error: Something went wrong', 'error') }}
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Macro Definition:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>{% raw %}{% macro render_product(product) %}
+&lt;div class="product-card"&gt;
+    &lt;h3&gt;{{ product.name }}&lt;/h3&gt;
+    &lt;p&gt;${{ product.price }}&lt;/p&gt;
+&lt;/div&gt;
+{% endmacro %}{% endraw %}</code></pre>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Using the Macro:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>{% raw %}{% for product in products %}
+    {{ render_product(product) }}
+{% endfor %}{% endraw %}</code></pre>
+    </div>
+
+    <div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-6 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">What are Macros?</h3>
+        <ul class="space-y-2 list-disc pl-6 text-gray-700">
+            <li>Reusable template components (like functions)</li>
+            <li>Accept parameters for customization</li>
+            <li>Help keep templates DRY</li>
+            <li>Can be imported from separate files</li>
+        </ul>
+    </div>
+
+    <div>
+        <a href="{{ url_for('templates.templates_home') }}" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">← Back to Templates</a>
+    </div>
+</div>
+{% endblock %}

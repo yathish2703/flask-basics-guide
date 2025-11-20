@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg shadow-lg p-8 text-white mb-8">
+    <h1 class="text-4xl font-bold mb-2">👋 Welcome, {{ current_user.username }}!</h1>
+    <p class="text-blue-100">This is your protected dashboard</p>
+</div>
+
+<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h2 class="text-2xl font-bold text-gray-900 mb-4">User Information</h2>
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <tbody class="divide-y divide-gray-200">
+                <tr>
+                    <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 bg-gray-50">Username:</th>
+                    <td class="px-4 py-3 text-sm text-gray-900">{{ current_user.username }}</td>
+                </tr>
+                <tr>
+                    <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 bg-gray-50">Email:</th>
+                    <td class="px-4 py-3 text-sm text-gray-900">{{ current_user.email }}</td>
+                </tr>
+                <tr>
+                    <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 bg-gray-50">User ID:</th>
+                    <td class="px-4 py-3 text-sm text-gray-900">{{ current_user.id }}</td>
+                </tr>
+                <tr>
+                    <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 bg-gray-50">Member Since:</th>
+                    <td class="px-4 py-3 text-sm text-gray-900">{{ current_user.created_at.strftime('%Y-%m-%d') }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="flex flex-wrap gap-4 mb-8">
+    <a href="{{ url_for('auth.profile') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition">View Profile</a>
+    <a href="{{ url_for('auth.protected') }}" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg transition">Protected Page</a>
+    <a href="{{ url_for('auth.logout') }}" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-lg transition">Logout</a>
+</div>
+
+<div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-3">🔒 How Protected Routes Work:</h3>
+    <p class="text-gray-700 mb-4">This page uses the <code class="bg-white px-2 py-1 rounded text-sm">@login_required</code> decorator. Users must be logged in to access it.</p>
+    <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm font-mono"><span class="text-gray-400"># Import authentication decorators</span>
+from flask_login import login_required, current_user
+
+<span class="text-gray-400"># Define the route</span>
+@app.route('/dashboard')
+<span class="text-gray-400"># Protect it - only logged-in users can access</span>
+@login_required
+def dashboard():
+    <span class="text-gray-400"># Access logged-in user data with current_user</span>
+    username = current_user.username
+    <span class="text-gray-400"># Render template with user data</span>
+    return render_template('dashboard.html')</code></pre>
+    
+    <div class="mt-4 space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
+        <p><strong class="text-gray-900">@login_required:</strong> Decorator that checks if user is logged in</p>
+        <p><strong class="text-gray-900">current_user:</strong> Special object that contains logged-in user's data</p>
+        <p><strong class="text-gray-900">Behavior:</strong> If not logged in → redirects to login page</p>
+        <p><strong class="text-gray-900">Benefit:</strong> Protects sensitive pages from unauthorized access</p>
+    </div>
+</div>
+
+<p><a href="{{ url_for('auth.auth_home') }}" class="btn">← Back to Auth</a></p>
+{% endblock %}

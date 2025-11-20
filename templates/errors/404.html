@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}404 - Not Found{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-r from-pink-500 to-red-500 text-white py-20 px-4 text-center rounded-lg mb-8">
+    <h1 class="text-8xl font-bold mb-4">404</h1>
+    <h2 class="text-3xl font-semibold mb-2">Page Not Found</h2>
+    <p class="text-xl">The page you're looking for doesn't exist.</p>
+</div>
+
+<div class="max-w-3xl mx-auto px-4">
+    <div class="bg-white rounded-lg shadow-md p-8 border border-gray-200 mb-8">
+        <p class="text-gray-700 mb-4">Sorry, we couldn't find the page you requested.</p>
+        <p class="text-gray-700 mb-4">This might have happened because:</p>
+        <ul class="space-y-2 list-disc pl-6 text-gray-700">
+            <li>The page has been moved or deleted</li>
+            <li>You followed a broken link</li>
+            <li>You typed the URL incorrectly</li>
+        </ul>
+    </div>
+
+    <div class="flex gap-4 mb-8">
+        <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition">Go to Homepage</a>
+        <a href="javascript:history.back()" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">Go Back</a>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Custom Error Handler:</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('errors/404.html'), 404</code></pre>
+    </div>
+</div>
+{% endblock %}
