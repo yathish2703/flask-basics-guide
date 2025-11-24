@@ -60,7 +60,7 @@ def search():
 @basic_bp.route('/methods-demo', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def methods_demo():
     """
-    Route demonstrating different HTTP methods
+    Route demonstrating different HTTP methods with markdown response
     """
     method = request.method
     
@@ -77,11 +77,83 @@ def methods_demo():
                              method=method,
                              method_color=method_colors.get(method, 'gray'))
     elif method == 'POST':
-        return jsonify({'message': 'POST request received', 'method': 'POST'})
+        markdown_response = """
+# POST Request Received ✅
+
+## Request Details
+- **Method**: POST
+- **Purpose**: Create new resources
+- **Status**: Success
+
+### Common Use Cases:
+1. Submit forms
+2. Create new users
+3. Upload files
+4. Add items to cart
+
+### Example Response:
+```json
+{
+    "message": "Resource created successfully",
+    "id": 123
+}
+```
+
+**Note**: POST requests typically return status code 201 (Created)
+"""
+        return markdown_response, 200, {'Content-Type': 'text/markdown'}
     elif method == 'PUT':
-        return jsonify({'message': 'PUT request received', 'method': 'PUT'})
+        markdown_response = """
+# PUT Request Received ✅
+
+## Request Details
+- **Method**: PUT
+- **Purpose**: Update/Replace existing resources
+- **Status**: Success
+
+### Common Use Cases:
+1. Update user profile
+2. Replace entire resource
+3. Modify settings
+4. Update database records
+
+### Example Response:
+```json
+{
+    "message": "Resource updated successfully",
+    "id": 123
+}
+```
+
+**Note**: PUT requests typically return status code 200 (OK) or 204 (No Content)
+"""
+        return markdown_response, 200, {'Content-Type': 'text/markdown'}
     elif method == 'DELETE':
-        return jsonify({'message': 'DELETE request received', 'method': 'DELETE'})
+        markdown_response = """
+# DELETE Request Received ✅
+
+## Request Details
+- **Method**: DELETE
+- **Purpose**: Remove resources
+- **Status**: Success
+
+### Common Use Cases:
+1. Delete user account
+2. Remove items from cart
+3. Clear data
+4. Cancel orders
+
+### Example Response:
+```json
+{
+    "message": "Resource deleted successfully",
+    "id": 123
+}
+```
+
+**Note**: DELETE requests typically return status code 200 (OK) or 204 (No Content)
+"""
+        return markdown_response, 200, {'Content-Type': 'text/markdown'}
 
 
 @basic_bp.route('/redirect-example')

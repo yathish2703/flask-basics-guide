@@ -1,33 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Server Quest - Learning Game</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .request-box, .response-box {
-            transition: all 0.5s ease;
-        }
-        .processing {
-            animation: pulse 1s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        .arrow {
-            animation: slide 1.5s infinite;
-        }
-        @keyframes slide {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(10px); }
-        }
-    </style>
-</head>
-<body class="bg-gradient-to-br from-blue-50 to-cyan-50 min-h-screen">
+{% extends "base.html" %}
 
-<div class="container mx-auto px-4 py-12 max-w-6xl">
+{% block title %}Web Server Quest - Learning Game{% endblock %}
+
+{% block extra_css %}
+<style>
+    .request-box, .response-box {
+        transition: all 0.5s ease;
+    }
+    .processing {
+        animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+    .arrow {
+        animation: slide 1.5s infinite;
+    }
+    @keyframes slide {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(10px); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-br from-blue-50 to-cyan-50 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 -mt-8 py-12 min-h-screen">
+<div class="container mx-auto max-w-6xl">
     
     <!-- Header -->
     <div class="text-center mb-12">
@@ -146,6 +145,7 @@
         </a>
     </div>
 
+</div>
 </div>
 
 <script>
@@ -321,6 +321,4 @@ function resetGame() {
 // Initialize
 loadScenarios();
 </script>
-
-</body>
-</html>
+{% endblock %}

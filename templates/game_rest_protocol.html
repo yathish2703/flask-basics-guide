@@ -1,22 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REST API Adventure - Learning Game</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .menu-item {
-            transition: all 0.3s ease;
-        }
-        .menu-item:hover {
-            transform: scale(1.05);
-        }
-    </style>
-</head>
-<body class="bg-gradient-to-br from-green-50 to-teal-50 min-h-screen">
+{% extends "base.html" %}
 
-<div class="container mx-auto px-4 py-12 max-w-6xl">
+{% block title %}REST API Adventure - Learning Game{% endblock %}
+
+{% block extra_css %}
+<style>
+    .menu-item {
+        transition: all 0.3s ease;
+    }
+    .menu-item:hover {
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-br from-green-50 to-teal-50 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 -mt-8 py-12 min-h-screen">
+<div class="container mx-auto max-w-6xl">
     
     <!-- Header -->
     <div class="text-center mb-12">
@@ -157,6 +156,7 @@
         </a>
     </div>
 
+</div>
 </div>
 
 <script>
@@ -430,6 +430,4 @@ function resetGame() {
 // Initialize
 renderMenu();
 </script>
-
-</body>
-</html>
+{% endblock %}

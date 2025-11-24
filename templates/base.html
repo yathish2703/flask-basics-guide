@@ -18,15 +18,23 @@
         }
     </script>
     <style>
-        .dropdown:hover .dropdown-menu {
+        .dropdown-menu {
+            display: none;
+        }
+        .dropdown:hover .dropdown-menu,
+        .dropdown-menu:hover {
             display: block;
+        }
+        /* Ensure z-index is high enough */
+        .dropdown {
+            position: relative;
         }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg">
+    <nav class="bg-white shadow-lg relative z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
@@ -36,31 +44,31 @@
                 </div>
                 <div class="hidden md:flex space-x-4 items-center">
                     <!-- Learning Dropdown -->
-                    <div class="dropdown relative">
+                    <div class="dropdown relative group">
                         <button class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition flex items-center">
                             📚 Learning
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
-                        <div class="dropdown-menu hidden absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
-                            <a href="/why-flask" class="block px-4 py-3 hover:bg-purple-50 transition">
+                        <div class="dropdown-menu absolute left-0 mt-0 w-64 bg-white rounded-lg shadow-xl border border-gray-200 z-50 group-hover:block">
+                            <a href="/why-flask" class="block px-4 py-3 hover:bg-purple-50 transition text-left">
                                 <div class="font-semibold text-gray-900">💡 Why Flask?</div>
                                 <div class="text-xs text-gray-600">Discover advantages</div>
                             </a>
-                            <a href="/how-web-works" class="block px-4 py-3 hover:bg-purple-50 transition">
+                            <a href="/how-web-works" class="block px-4 py-3 hover:bg-purple-50 transition text-left">
                                 <div class="font-semibold text-gray-900">🌐 How Web Works</div>
                                 <div class="text-xs text-gray-600">Learn the basics</div>
                             </a>
-                            <a href="/rest-protocol" class="block px-4 py-3 hover:bg-purple-50 transition">
+                            <a href="/rest-protocol" class="block px-4 py-3 hover:bg-purple-50 transition text-left">
                                 <div class="font-semibold text-gray-900">🔄 REST Protocol</div>
                                 <div class="text-xs text-gray-600">Understand APIs</div>
                             </a>
-                            <a href="/routes-explained" class="block px-4 py-3 hover:bg-purple-50 transition">
+                            <a href="/routes-explained" class="block px-4 py-3 hover:bg-purple-50 transition text-left">
                                 <div class="font-semibold text-gray-900">🗺️ Routes Explained</div>
                                 <div class="text-xs text-gray-600">Master routing</div>
                             </a>
-                            <a href="/games" class="block px-4 py-3 hover:bg-purple-50 transition border-t border-gray-200">
+                            <a href="/games" class="block px-4 py-3 hover:bg-purple-50 transition border-t border-gray-200 text-left">
                                 <div class="font-semibold text-gray-900">🎮 Learning Games</div>
                                 <div class="text-xs text-gray-600">Interactive practice</div>
                             </a>
@@ -68,35 +76,35 @@
                     </div>
                     
                     <!-- Flask Modules Dropdown -->
-                    <div class="dropdown relative">
+                    <div class="dropdown relative group">
                         <button class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition flex items-center">
                             🔧 Modules
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
-                        <div class="dropdown-menu hidden absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
-                            <a href="/basic" class="block px-4 py-3 hover:bg-blue-50 transition">
+                        <div class="dropdown-menu absolute left-0 mt-0 w-64 bg-white rounded-lg shadow-xl border border-gray-200 z-50 group-hover:block">
+                            <a href="/basic" class="block px-4 py-3 hover:bg-blue-50 transition text-left">
                                 <div class="font-semibold text-gray-900">🛣️ Routes</div>
                                 <div class="text-xs text-gray-600">Basic routing</div>
                             </a>
-                            <a href="/templates" class="block px-4 py-3 hover:bg-blue-50 transition">
+                            <a href="/templates" class="block px-4 py-3 hover:bg-blue-50 transition text-left">
                                 <div class="font-semibold text-gray-900">📄 Templates</div>
                                 <div class="text-xs text-gray-600">Jinja2 templates</div>
                             </a>
-                            <a href="/forms" class="block px-4 py-3 hover:bg-blue-50 transition">
+                            <a href="/forms" class="block px-4 py-3 hover:bg-blue-50 transition text-left">
                                 <div class="font-semibold text-gray-900">📝 Forms</div>
                                 <div class="text-xs text-gray-600">Form handling</div>
                             </a>
-                            <a href="/database" class="block px-4 py-3 hover:bg-blue-50 transition">
+                            <a href="/database" class="block px-4 py-3 hover:bg-blue-50 transition text-left">
                                 <div class="font-semibold text-gray-900">🗄️ Database</div>
                                 <div class="text-xs text-gray-600">SQLAlchemy ORM</div>
                             </a>
-                            <a href="/auth" class="block px-4 py-3 hover:bg-blue-50 transition">
+                            <a href="/auth" class="block px-4 py-3 hover:bg-blue-50 transition text-left">
                                 <div class="font-semibold text-gray-900">🔐 Authentication</div>
                                 <div class="text-xs text-gray-600">User management</div>
                             </a>
-                            <a href="/api" class="block px-4 py-3 hover:bg-blue-50 transition">
+                            <a href="/api" class="block px-4 py-3 hover:bg-blue-50 transition text-left">
                                 <div class="font-semibold text-gray-900">🔌 API</div>
                                 <div class="text-xs text-gray-600">RESTful APIs</div>
                             </a>
