@@ -3,6 +3,7 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
+subtitle: {{ subtitle }}
 <div class="max-w-7xl mx-auto px-4 py-8">
     <h1 class="text-4xl font-bold text-gray-900 mb-8">Template Variables</h1>
 
@@ -12,7 +13,8 @@
             <p><strong class="text-gray-900">User Name:</strong> {{ user.name }}</p>
             <p><strong class="text-gray-900">Email:</strong> {{ user.email }}</p>
             <p><strong class="text-gray-900">Age:</strong> {{ user.age }}</p>
-            <p><strong class="text-gray-900">Is Admin:</strong> {{ user.is_admin }}</p>
+            <p><strong class="text-gray-900">LinkedIn Profile :</strong> {{ user.linkedin_profile }}</p>
+            
         </div>
     </div>
 

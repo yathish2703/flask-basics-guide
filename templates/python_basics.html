@@ -1,0 +1,741 @@
+{% extends "base.html" %}
+
+{% block title %}Python Basics - Complete Guide{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg shadow-lg p-8 text-white mb-8">
+        <h1 class="text-4xl font-bold mb-2">🐍 Python Basics</h1>
+        <p class="text-blue-100 text-lg">Master Python fundamentals - the foundation for Flask and FastAPI</p>
+    </div>
+
+    <!-- Quick Navigation -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📑 Quick Navigation</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <a href="#variables" class="text-blue-600 hover:text-blue-800 hover:underline">Variables & Types</a>
+            <a href="#strings" class="text-blue-600 hover:text-blue-800 hover:underline">Strings</a>
+            <a href="#lists" class="text-blue-600 hover:text-blue-800 hover:underline">Lists & Tuples</a>
+            <a href="#dictionaries" class="text-blue-600 hover:text-blue-800 hover:underline">Dictionaries</a>
+            <a href="#conditions" class="text-blue-600 hover:text-blue-800 hover:underline">Conditionals</a>
+            <a href="#loops" class="text-blue-600 hover:text-blue-800 hover:underline">Loops</a>
+            <a href="#functions" class="text-blue-600 hover:text-blue-800 hover:underline">Functions</a>
+            <a href="#classes" class="text-blue-600 hover:text-blue-800 hover:underline">Classes</a>
+        </div>
+    </div>
+
+    <!-- Variables and Data Types -->
+    <div id="variables" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📦 Variables and Data Types</h2>
+        
+        <div class="space-y-4">
+            <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Basic Types</h3>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># Integer
+age = 25
+
+# Float
+price = 99.99
+
+# String
+name = "John Doe"
+
+# Boolean
+is_active = True
+
+# None (null value)
+result = None
+
+# Check type
+print(type(age))  # <class 'int'></code></pre>
+            </div>
+
+            <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded">
+                <p class="text-gray-700"><strong>💡 Tip:</strong> Python is dynamically typed - you don't need to declare variable types!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strings -->
+    <div id="strings" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📝 Strings</h2>
+        
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4"><code class="text-sm"># String creation
+single = 'Hello'
+double = "World"
+multiline = """This is a
+multiline string"""
+
+# String formatting
+name = "Alice"
+age = 30
+
+# f-strings (Python 3.6+)
+message = f"My name is {name} and I'm {age} years old"
+
+# format() method
+message = "My name is {} and I'm {} years old".format(name, age)
+
+# String methods
+text = "  Python Programming  "
+print(text.strip())        # Remove whitespace
+print(text.upper())        # PYTHON PROGRAMMING
+print(text.lower())        # python programming
+print(text.replace("Python", "Java"))  # Replace text
+print(text.split())        # Split into list
+
+# String slicing
+word = "Python"
+print(word[0])      # P (first character)
+print(word[-1])     # n (last character)
+print(word[0:3])    # Pyt (characters 0 to 2)
+print(word[2:])     # thon (from index 2 to end)</code></pre>
+    </div>
+
+    <!-- Lists and Tuples -->
+    <div id="lists" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📋 Lists and Tuples</h2>
+        
+        <div class="space-y-4">
+            <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Lists (Mutable)</h3>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># Create a list
+fruits = ["apple", "banana", "cherry"]
+numbers = [1, 2, 3, 4, 5]
+mixed = [1, "hello", True, 3.14]
+
+# Access items
+print(fruits[0])      # apple
+print(fruits[-1])     # cherry (last item)
+
+# Modify items
+fruits[1] = "blueberry"
+
+# List methods
+fruits.append("date")           # Add to end
+fruits.insert(0, "avocado")     # Insert at position
+fruits.remove("cherry")         # Remove by value
+last = fruits.pop()             # Remove and return last
+fruits.sort()                   # Sort in place
+fruits.reverse()                # Reverse in place
+
+# List comprehension
+squares = [x**2 for x in range(1, 6)]  # [1, 4, 9, 16, 25]
+evens = [x for x in range(10) if x % 2 == 0]  # [0, 2, 4, 6, 8]</code></pre>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Tuples (Immutable)</h3>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># Create a tuple
+coordinates = (10, 20)
+person = ("John", 25, "Engineer")
+
+# Access items
+print(coordinates[0])  # 10
+
+# Unpacking
+x, y = coordinates
+name, age, job = person
+
+# Tuple methods
+numbers = (1, 2, 3, 2, 4, 2)
+print(numbers.count(2))   # 3
+print(numbers.index(3))   # 2</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dictionaries -->
+    <div id="dictionaries" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📚 Dictionaries</h2>
+        
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># Create a dictionary
+user = {
+    "name": "Alice",
+    "age": 30,
+    "email": "alice@example.com",
+    "is_active": True
+}
+
+# Access values
+print(user["name"])           # Alice
+print(user.get("age"))        # 30
+print(user.get("phone", "N/A"))  # N/A (default if key doesn't exist)
+
+# Modify dictionary
+user["age"] = 31              # Update value
+user["phone"] = "123-456"     # Add new key-value pair
+del user["email"]             # Delete key
+
+# Dictionary methods
+print(user.keys())            # Get all keys
+print(user.values())          # Get all values
+print(user.items())           # Get all key-value pairs
+
+# Iterate through dictionary
+for key, value in user.items():
+    print(f"{key}: {value}")
+
+# Dictionary comprehension
+squares = {x: x**2 for x in range(1, 6)}  # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}</code></pre>
+    </div>
+
+    <!-- Conditionals -->
+    <div id="conditions" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🔀 Conditionals</h2>
+        
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># if-elif-else
+age = 18
+
+if age < 18:
+    print("Minor")
+elif age == 18:
+    print("Just became an adult!")
+else:
+    print("Adult")
+
+# Comparison operators
+# == (equal), != (not equal), < (less than), > (greater than)
+# <= (less than or equal), >= (greater than or equal)
+
+# Logical operators
+is_student = True
+has_id = False
+
+if is_student and has_id:
+    print("Access granted")
+elif is_student or has_id:
+    print("Partial access")
+else:
+    print("Access denied")
+
+# Ternary operator
+status = "Active" if is_student else "Inactive"
+
+# in operator
+fruits = ["apple", "banana", "cherry"]
+if "apple" in fruits:
+    print("Apple found!")
+
+# is operator (identity check)
+x = None
+if x is None:
+    print("x is None")</code></pre>
+    </div>
+
+    <!-- Loops -->
+    <div id="loops" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🔁 Loops</h2>
+        
+        <div class="space-y-4">
+            <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">For Loops</h3>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># Loop through list
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)
+
+# Loop with range
+for i in range(5):          # 0, 1, 2, 3, 4
+    print(i)
+
+for i in range(2, 10, 2):   # 2, 4, 6, 8 (start, stop, step)
+    print(i)
+
+# Loop with enumerate (get index and value)
+for index, fruit in enumerate(fruits):
+    print(f"{index}: {fruit}")
+
+# Loop through dictionary
+user = {"name": "Alice", "age": 30}
+for key, value in user.items():
+    print(f"{key}: {value}")</code></pre>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">While Loops</h3>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># Basic while loop
+count = 0
+while count < 5:
+    print(count)
+    count += 1
+
+# break and continue
+for i in range(10):
+    if i == 3:
+        continue  # Skip 3
+    if i == 7:
+        break     # Stop at 7
+    print(i)</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Functions -->
+    <div id="functions" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">⚡ Functions</h2>
+        
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># Basic function
+def greet(name):
+    return f"Hello, {name}!"
+
+print(greet("Alice"))
+
+# Function with default parameters
+def greet(name, greeting="Hello"):
+    return f"{greeting}, {name}!"
+
+print(greet("Bob"))              # Hello, Bob!
+print(greet("Bob", "Hi"))        # Hi, Bob!
+
+# Multiple return values
+def get_user():
+    return "Alice", 30, "alice@example.com"
+
+name, age, email = get_user()
+
+# *args and **kwargs
+def sum_all(*args):
+    return sum(args)
+
+print(sum_all(1, 2, 3, 4))  # 10
+
+def print_info(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+print_info(name="Alice", age=30)
+
+# Lambda functions (anonymous functions)
+square = lambda x: x**2
+print(square(5))  # 25
+
+# Map, Filter, Reduce
+numbers = [1, 2, 3, 4, 5]
+squared = list(map(lambda x: x**2, numbers))
+evens = list(filter(lambda x: x % 2 == 0, numbers))
+
+# Decorators (used heavily in Flask!)
+def uppercase_decorator(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        return result.upper()
+    return wrapper
+
+@uppercase_decorator
+def greet():
+    return "hello world"
+
+print(greet())  # HELLO WORLD</code></pre>
+    </div>
+
+    <!-- Classes and Objects -->
+    <div id="classes" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🏗️ Object-Oriented Programming (OOP)</h2>
+        <p class="text-gray-700 mb-4">OOP is a programming paradigm based on the concept of "objects", which can contain data (attributes) and code (methods). Python is a powerful object-oriented language.</p>
+
+        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded mb-6">
+            <h3 class="font-bold text-blue-900 mb-2">The Four Pillars of OOP:</h3>
+            <ul class="space-y-1 text-sm text-gray-700 list-disc pl-5">
+                <li><strong>Encapsulation:</strong> Bundling data and methods that work on that data within one unit (a class).</li>
+                <li><strong>Inheritance:</strong> A way to form new classes using classes that have already been defined.</li>
+                <li><strong>Polymorphism:</strong> The ability of an object to take on many forms. The most common use is method overriding.</li>
+                <li><strong>Abstraction:</strong> Hiding complex implementation details and showing only the necessary features of an object.</li>
+            </ul>
+        </div>
+        
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># Define a class
+class Person:
+    # Class variable (shared by all instances)
+    species = "Homo sapiens"
+    
+    # Constructor
+    def __init__(self, name, age):
+        # Instance variables
+        self.name = name
+        self.age = age
+    
+    # Instance method
+    def greet(self):
+        return f"Hello, I'm {self.name}"
+    
+    # Method with parameters
+    def have_birthday(self):
+        self.age += 1
+        return f"Happy birthday! Now {self.age} years old"
+    
+    # String representation
+    def __str__(self):
+        return f"Person(name={self.name}, age={self.age})"
+
+# Create objects
+person1 = Person("Alice", 30)
+person2 = Person("Bob", 25)
+
+print(person1.greet())           # Hello, I'm Alice
+print(person1.have_birthday())   # Happy birthday! Now 31 years old
+print(person1)                   # Person(name=Alice, age=31)
+
+# Inheritance
+class Student(Person):
+    def __init__(self, name, age, student_id):
+        super().__init__(name, age)  # Call parent constructor
+        self.student_id = student_id
+    
+    def study(self):
+        return f"{self.name} is studying"
+    
+    # Override parent method
+    def greet(self):
+        return f"Hi, I'm {self.name}, student ID: {self.student_id}"
+
+student = Student("Charlie", 20, "S123")
+print(student.greet())   # Hi, I'm Charlie, student ID: S123
+print(student.study())   # Charlie is studying
+
+# Properties (getters and setters)
+class User:
+    def __init__(self, name):
+        self._name = name  # Protected attribute
+    
+    @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, value):
+        if len(value) < 2:
+            raise ValueError("Name too short")
+        self._name = value
+
+user = User("Alice")
+print(user.name)      # Alice
+user.name = "Bob"     # Uses setter</code></pre>
+    </div>
+
+    <!-- Encapsulation -->
+    <div id="encapsulation" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">🛡️ Encapsulation</h3>
+        <p class="text-gray-700 mb-4">Encapsulation restricts direct access to an object's components. In Python, this is done by convention using name prefixes.</p>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">class Car:
+    def __init__(self, make, model):
+        self.make = make              # Public attribute
+        self._speed = 0               # Protected attribute (convention)
+        self.__engine_status = "Off"  # Private attribute (name mangling)
+
+    def start_engine(self):
+        self.__engine_status = "On"
+        return "Engine started."
+
+    def stop_engine(self):
+        self.__engine_status = "Off"
+        self._speed = 0
+        return "Engine stopped."
+
+    def accelerate(self):
+        if self.__engine_status == "On":
+            self._speed += 10
+            return f"Accelerating to {self._speed} km/h"
+        return "Engine is off!"
+
+my_car = Car("Toyota", "Camry")
+print(my_car.make)  # Accessible
+
+# Accessing protected attribute (by convention, you shouldn't do this directly)
+# print(my_car._speed)
+
+# Cannot access private attribute directly
+# print(my_car.__engine_status)  # This will raise an AttributeError
+
+print(my_car.start_engine())
+print(my_car.accelerate())
+
+# Accessing "private" attribute via name mangling (for demonstration only)
+print(my_car._Car__engine_status) # On
+</code></pre>
+    </div>
+
+    <!-- Polymorphism -->
+    <div id="polymorphism" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">🎭 Polymorphism</h3>
+        <p class="text-gray-700 mb-4">Polymorphism allows objects of different classes to be treated as objects of a common superclass. It's about using a single interface to represent different underlying forms (data types).</p>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">class Dog:
+    def speak(self):
+        return "Woof!"
+
+class Cat:
+    def speak(self):
+        return "Meow!"
+
+class Duck:
+    def speak(self):
+        return "Quack!"
+
+# A function that can work with any object that has a 'speak' method
+def make_animal_speak(animal):
+    print(animal.speak())
+
+dog = Dog()
+cat = Cat()
+duck = Duck()
+
+make_animal_speak(dog)   # Woof!
+make_animal_speak(cat)   # Meow!
+make_animal_speak(duck)  # Quack!
+
+# This is known as "Duck Typing": if it walks like a duck and quacks like a duck, it's a duck.
+</code></pre>
+    </div>
+
+    <!-- Abstraction -->
+    <div id="abstraction" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">👻 Abstraction</h3>
+        <p class="text-gray-700 mb-4">Abstraction hides the complex reality while exposing only the essential parts. In Python, we can use Abstract Base Classes (ABCs).</p>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">from abc import ABC, abstractmethod
+
+# Abstract Base Class
+class Vehicle(ABC):
+    @abstractmethod
+    def start(self):
+        pass
+
+    @abstractmethod
+    def stop(self):
+        pass
+
+# Concrete class implementing the abstract class
+class Car(Vehicle):
+    def start(self):
+        print("Car engine started.")
+
+    def stop(self):
+        print("Car engine stopped.")
+
+class Motorcycle(Vehicle):
+    def start(self):
+        print("Motorcycle engine started.")
+
+    def stop(self):
+        print("Motorcycle engine stopped.")
+
+# You cannot create an instance of an abstract class
+# vehicle = Vehicle() # This would raise a TypeError
+
+car = Car()
+motorcycle = Motorcycle()
+
+car.start()
+motorcycle.start()
+</code></pre>
+    </div>
+
+    <!-- Magic/Dunder Methods -->
+    <div id="dunder-methods" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">✨ Magic (Dunder) Methods</h3>
+        <p class="text-gray-700 mb-4">Dunder (double underscore) methods allow you to emulate the behavior of built-in types. They are hooks that let you customize Python's behavior.</p>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    # String representation for developers
+    def __repr__(self):
+        return f"Vector({self.x}, {self.y})"
+
+    # String representation for users
+    def __str__(self):
+        return f"({self.x}, {self.y})"
+
+    # Overload the + operator
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y)
+
+    # Overload the len() function
+    def __len__(self):
+        return 2
+
+v1 = Vector(2, 3)
+v2 = Vector(3, 4)
+
+print(v1)          # (2, 3) - uses __str__
+print(repr(v1))    # Vector(2, 3) - uses __repr__
+print(v1 + v2)     # (5, 7) - uses __add__
+print(len(v1))     # 2 - uses __len__
+</code></pre>
+    </div>
+
+    <!-- Static and Class Methods -->
+    <div id="static-class-methods" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">@ Static and Class Methods</h3>
+        <p class="text-gray-700 mb-4">Methods can belong to an instance, the class, or be independent.</p>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">class MyClass:
+    class_var = "I am a class variable"
+
+    def __init__(self, instance_var):
+        self.instance_var = instance_var
+
+    # Regular instance method (needs 'self')
+    def instance_method(self):
+        return f"Instance method called for {self.instance_var}"
+
+    # Class method (needs 'cls')
+    @classmethod
+    def class_method(cls):
+        return f"Class method called. Class var: {cls.class_var}"
+
+    # Static method (no 'self' or 'cls')
+    @staticmethod
+    def static_method(x, y):
+        return f"Static method called with {x} and {y}. It's just a function."
+
+# Instance method needs an object
+obj = MyClass("my_instance")
+print(obj.instance_method())
+
+# Class method can be called on the class or an instance
+print(MyClass.class_method())
+print(obj.class_method())
+
+# Static method can be called on the class or an instance
+print(MyClass.static_method(1, 2))
+print(obj.static_method(3, 4))
+</code></pre>
+    </div>
+
+    <!-- File Handling -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📁 File Handling</h2>
+        
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># Reading files
+with open('file.txt', 'r') as file:
+    content = file.read()        # Read entire file
+    # Or
+    lines = file.readlines()     # Read as list of lines
+    # Or
+    for line in file:            # Iterate line by line
+        print(line)
+
+# Writing files
+with open('file.txt', 'w') as file:
+    file.write("Hello World\n")
+    file.writelines(["Line 1\n", "Line 2\n"])
+
+# Append to file
+with open('file.txt', 'a') as file:
+    file.write("New line\n")
+
+# Working with JSON
+import json
+
+# Write JSON
+data = {"name": "Alice", "age": 30}
+with open('data.json', 'w') as file:
+    json.dump(data, file, indent=2)
+
+# Read JSON
+with open('data.json', 'r') as file:
+    data = json.load(file)</code></pre>
+    </div>
+
+    <!-- Exception Handling -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">⚠️ Exception Handling</h2>
+        
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># Try-except
+try:
+    result = 10 / 0
+except ZeroDivisionError:
+    print("Cannot divide by zero!")
+
+# Multiple exceptions
+try:
+    number = int(input("Enter a number: "))
+    result = 10 / number
+except ValueError:
+    print("Invalid input!")
+except ZeroDivisionError:
+    print("Cannot divide by zero!")
+except Exception as e:
+    print(f"An error occurred: {e}")
+
+# Finally block (always executes)
+try:
+    file = open('file.txt', 'r')
+    content = file.read()
+except FileNotFoundError:
+    print("File not found!")
+finally:
+    file.close()  # Always close the file
+
+# Raise exceptions
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Denominator cannot be zero")
+    return a / b</code></pre>
+    </div>
+
+    <!-- Important Modules -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📦 Important Built-in Modules</h2>
+        
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># datetime
+from datetime import datetime, timedelta
+
+now = datetime.now()
+print(now.strftime("%Y-%m-%d %H:%M:%S"))
+
+tomorrow = now + timedelta(days=1)
+
+# os (operating system)
+import os
+
+print(os.getcwd())           # Current directory
+os.mkdir('new_folder')       # Create directory
+os.listdir('.')              # List directory contents
+os.path.exists('file.txt')   # Check if file exists
+
+# random
+import random
+
+print(random.randint(1, 10))        # Random integer
+print(random.choice(['a', 'b', 'c']))  # Random choice
+print(random.random())              # Random float 0-1
+
+# collections
+from collections import Counter, defaultdict
+
+words = ['apple', 'banana', 'apple', 'cherry', 'banana', 'apple']
+counter = Counter(words)
+print(counter)  # Counter({'apple': 3, 'banana': 2, 'cherry': 1})
+
+# requests (needs pip install)
+import requests
+
+response = requests.get('https://api.example.com/data')
+data = response.json()</code></pre>
+    </div>
+
+    <!-- Best Practices -->
+    <div class="bg-gradient-to-r from-green-50 to-blue-50 border-l-4 border-green-600 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">✨ Python Best Practices</h2>
+        <ul class="space-y-2 text-gray-700 list-disc pl-6">
+            <li><strong>PEP 8:</strong> Follow Python's style guide (use 4 spaces for indentation)</li>
+            <li><strong>Naming:</strong> Use snake_case for variables and functions, PascalCase for classes</li>
+            <li><strong>Comments:</strong> Use # for single-line, """...""" for docstrings</li>
+            <li><strong>List Comprehensions:</strong> Use when it improves readability</li>
+            <li><strong>Context Managers:</strong> Always use `with` for file operations</li>
+            <li><strong>Exception Handling:</strong> Be specific about exceptions you catch</li>
+            <li><strong>Type Hints:</strong> Use them for better code documentation (Python 3.5+)</li>
+            <li><strong>Virtual Environments:</strong> Always use venv or conda for projects</li>
+        </ul>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center">
+        <a href="/" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition">
+            ← Back to Home
+        </a>
+    </div>
+</div>
+{% endblock %}

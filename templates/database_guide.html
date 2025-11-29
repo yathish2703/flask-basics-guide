@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% block title %}The Ultimate Database Guide{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-indigo-600 to-purple-700 rounded-lg shadow-lg p-8 text-white mb-8">
+        <h1 class="text-4xl font-bold mb-2">🗄️ The Ultimate Database Guide</h1>
+        <p class="text-indigo-100 text-lg">SQL vs NoSQL, When to Use What, and Best Practices</p>
+    </div>
+
+    <!-- Quick Navigation -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📑 Quick Navigation</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <a href="#sql-vs-nosql" class="text-indigo-600 hover:text-indigo-800 hover:underline">SQL vs NoSQL</a>
+            <a href="#sql" class="text-indigo-600 hover:text-indigo-800 hover:underline">Relational (SQL)</a>
+            <a href="#nosql" class="text-indigo-600 hover:text-indigo-800 hover:underline">Non-Relational (NoSQL)</a>
+            <a href="#orm" class="text-indigo-600 hover:text-indigo-800 hover:underline">What is an ORM?</a>
+            <a href="#when-to-use" class="text-indigo-600 hover:text-indigo-800 hover:underline">When to Use Which?</a>
+            <a href="#best-practices" class="text-indigo-600 hover:text-indigo-800 hover:underline">Best Practices</a>
+        </div>
+    </div>
+
+    <!-- What is a Database? -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🤔 What is a Database?</h2>
+        <p class="text-gray-700 mb-4">A database is an organized collection of structured information, or data, typically stored electronically in a computer system. It's like a digital filing cabinet, designed to make it easy to store, retrieve, manage, and update data.</p>
+        <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded">
+            <p class="text-gray-700">Think of it as the "brain" of an application, remembering all the important information like user accounts, posts, products, and more.</p>
+        </div>
+    </div>
+
+    <!-- SQL vs NoSQL -->
+    <div id="sql-vs-nosql" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🔄 SQL vs. NoSQL: The Main Difference</h2>
+        <p class="text-gray-700 mb-4">The primary difference lies in how they structure data. SQL databases are relational, using tables, rows, and columns. NoSQL databases are non-relational, using various data models like key-value, document, graph, or wide-column.</p>
+        
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr>
+                        <th class="border-b-2 border-gray-200 p-4 text-gray-800 font-bold">Feature</th>
+                        <th class="border-b-2 border-gray-200 p-4 text-blue-600 font-bold">SQL (Relational)</th>
+                        <th class="border-b-2 border-gray-200 p-4 text-green-600 font-bold">NoSQL (Non-Relational)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="hover:bg-gray-50">
+                        <td class="border-b p-4"><strong>Data Model</strong></td>
+                        <td class="border-b p-4">Tables with rows and columns</td>
+                        <td class="border-b p-4">Documents, key-value, graph, etc.</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="border-b p-4"><strong>Schema</strong></td>
+                        <td class="border-b p-4">Fixed, predefined schema (rigid)</td>
+                        <td class="border-b p-4">Dynamic schema (flexible)</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="border-b p-4"><strong>Scaling</strong></td>
+                        <td class="border-b p-4">Vertically (increase server power)</td>
+                        <td class="border-b p-4">Horizontally (add more servers)</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="border-b p-4"><strong>Query Language</strong></td>
+                        <td class="border-b p-4">Structured Query Language (SQL)</td>
+                        <td class="border-b p-4">Varies by database (UnQL)</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="border-b p-4"><strong>Consistency</strong></td>
+                        <td class="border-b p-4">ACID properties (high consistency)</td>
+                        <td class="border-b p-4">BASE properties (eventual consistency)</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4"><strong>Best For</strong></td>
+                        <td class="p-4">Structured data, complex queries, transactions</td>
+                        <td class="p-4">Unstructured data, big data, high scalability</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Relational (SQL) -->
+    <div id="sql" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🔗 Relational Databases (SQL)</h2>
+        <p class="text-gray-700 mb-4">SQL databases store data in tables, which are like spreadsheets. Each table has a strict schema, meaning the columns and their data types are defined upfront. Data is linked across tables using foreign keys.</p>
+        
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Example: Users and Posts</h3>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4"><code class="text-sm">-- Users Table
+CREATE TABLE Users (
+    id INT PRIMARY KEY,
+    username VARCHAR(50),
+    email VARCHAR(100)
+);
+
+-- Posts Table
+CREATE TABLE Posts (
+    id INT PRIMARY KEY,
+    title VARCHAR(200),
+    content TEXT,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+-- Query to get all posts by a user
+SELECT * FROM Posts WHERE user_id = 1;
+</code></pre>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Popular SQL Databases:</h3>
+        <ul class="list-disc pl-6 text-gray-700">
+            <li><strong>PostgreSQL:</strong> Advanced, open-source, great for complex queries.</li>
+            <li><strong>MySQL:</strong> The world's most popular open-source database.</li>
+            <li><strong>SQLite:</strong> Serverless, self-contained, great for small apps and mobile (used in this project!).</li>
+            <li><strong>Microsoft SQL Server:</strong> Enterprise-grade database from Microsoft.</li>
+        </ul>
+    </div>
+
+    <!-- Non-Relational (NoSQL) -->
+    <div id="nosql" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📄 Non-Relational Databases (NoSQL)</h2>
+        <p class="text-gray-700 mb-4">NoSQL databases are more flexible and can handle various data types. They don't use tables, rows, and columns. Instead, they use different models to store data.</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Document -->
+            <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Document Databases</h3>
+                <p class="text-sm text-gray-600 mb-2">Stores data in JSON-like documents. Very flexible.</p>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">// Example: MongoDB
+{
+  "_id": 1,
+  "username": "john_doe",
+  "email": "john@example.com",
+  "posts": [
+    { "title": "My First Post", "content": "..." },
+    { "title": "My Second Post", "content": "..." }
+  ]
+}
+</code></pre>
+                <p class="text-sm mt-2"><strong>Used by:</strong> MongoDB, CouchDB</p>
+            </div>
+            <!-- Key-Value -->
+            <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Key-Value Stores</h3>
+                <p class="text-sm text-gray-600 mb-2">The simplest model. Data is stored as a key-value pair.</p>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># Example: Redis
+SET user:1 '{"name": "Alice", "age": 30}'
+GET user:1
+</code></pre>
+                <p class="text-sm mt-2"><strong>Used by:</strong> Redis, Amazon DynamoDB</p>
+            </div>
+            <!-- Graph -->
+            <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Graph Databases</h3>
+                <p class="text-sm text-gray-600 mb-2">Designed to store and navigate relationships.</p>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">// Example: Neo4j
+(Alice)-[:FRIENDS_WITH]->(Bob)
+(Alice)-[:LIKES]->(Post {title: "GraphQL"})
+</code></pre>
+                <p class="text-sm mt-2"><strong>Used by:</strong> Neo4j, Amazon Neptune</p>
+            </div>
+            <!-- Wide-Column -->
+            <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Wide-Column Stores</h3>
+                <p class="text-sm text-gray-600 mb-2">Optimized for queries over large datasets.</p>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># Example: Cassandra
+// Stores data in column families
+RowKey: user123
+  -> name: "John"
+  -> email: "john@doe.com"
+  -> city: "New York"
+</code></pre>
+                <p class="text-sm mt-2"><strong>Used by:</strong> Apache Cassandra, Google Bigtable</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ORM -->
+    <div id="orm" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🤖 What is an ORM?</h2>
+        <p class="text-gray-700 mb-4">An Object-Relational Mapper (ORM) is a library that automates the transfer of data between a relational database and an object-oriented programming language. It lets you interact with your database using Python objects instead of writing raw SQL.</p>
+        
+        <div class="bg-purple-50 border-l-4 border-purple-600 p-4 rounded mb-4">
+            <p class="text-gray-700"><strong>SQLAlchemy</strong>, used in this project, is a powerful ORM for Python.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+            <div>
+                <h3 class="font-bold text-gray-800 mb-2">Without ORM (Raw SQL)</h3>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">def get_user(user_id):
+    query = "SELECT * FROM users WHERE id = %s"
+    cursor.execute(query, (user_id,))
+    return cursor.fetchone()
+</code></pre>
+            </div>
+            <div>
+                <h3 class="font-bold text-gray-800 mb-2">With ORM (SQLAlchemy)</h3>
+                <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">def get_user(user_id):
+    return User.query.get(user_id)
+</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- When to Use Which? -->
+    <div id="when-to-use" class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🤔 When to Use Which?</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-blue-50 p-6 rounded-lg">
+                <h3 class="font-bold text-blue-900 text-xl mb-3">✅ Use SQL When...</h3>
+                <ul class="space-y-2 text-gray-700 list-disc pl-5">
+                    <li>Your data is structured and doesn't change often.</li>
+                    <li>You need to ensure data integrity and consistency (e.g., financial applications).</li>
+                    <li>You need to perform complex queries and joins across multiple tables.</li>
+                    <li>You are building an e-commerce site, a banking app, or a CRM.</li>
+                </ul>
+            </div>
+            <div class="bg-green-50 p-6 rounded-lg">
+                <h3 class="font-bold text-green-900 text-xl mb-3">✅ Use NoSQL When...</h3>
+                <ul class="space-y-2 text-gray-700 list-disc pl-5">
+                    <li>You are working with large volumes of unstructured or semi-structured data.</li>
+                    <li>You need high scalability and availability (e.g., social media feeds, IoT data).</li>
+                    <li>Your data schema is flexible and evolves over time.</li>
+                    <li>You are building a real-time application, a content management system, or a big data analytics platform.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Best Practices -->
+    <div id="best-practices" class="bg-gradient-to-r from-gray-50 to-blue-50 border-l-4 border-gray-600 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">✨ Best Practices for Choosing a Database</h2>
+        <ul class="space-y-2 text-gray-700 list-disc pl-6">
+            <li><strong>Understand Your Data:</strong> Is it structured, semi-structured, or unstructured? How will it relate?</li>
+            <li><strong>Consider Your Scale:</strong> How much data will you have? How many users? Will you need to scale horizontally?</li>
+            <li><strong>Evaluate Your Query Patterns:</strong> Will you run simple lookups or complex analytical queries?</li>
+            <li><strong>Assess Consistency Needs:</strong> Is immediate consistency critical (ACID), or is eventual consistency acceptable (BASE)?</li>
+            <li><strong>Don't Be Afraid to Mix:</strong> Many modern applications use a hybrid approach (polyglot persistence), using SQL for transactions and NoSQL for analytics or caching.</li>
+            <li><strong>Think About Your Team's Skills:</strong> Choose a technology your team is comfortable with or can learn quickly.</li>
+        </ul>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center">
+        <a href="/" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-lg transition">
+            ← Back to Home
+        </a>
+    </div>
+</div>
+{% endblock %}

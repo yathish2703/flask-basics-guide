@@ -18,16 +18,17 @@ def templates_home():
 def variables():
     """Demonstrate template variables"""
     user = {
-        'name': 'John Doe',
-        'email': 'john@example.com',
-        'age': 28,
-        'is_admin': True
+        'name': 'Yathish',
+        'email': 'yathish@gmail.com',
+        'age': 25,
+        'linkedin_profile': 'https://www.linkedin.com/in/yathish'
     }
-    items = ['Python', 'Flask', 'Jinja2', 'SQLAlchemy']
-    
+    items = ['Python', 'Flask', 'Jinja2', 'SQLAlchemy','VR','AR']
+    subtitle = "Learning Flask Templating"
     return render_template('templates_module/variables.html', 
                          user=user, 
                          items=items,
+                         subtitle=subtitle,
                          title='Template Variables Demo')
 
 

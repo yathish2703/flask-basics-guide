@@ -30,6 +30,45 @@
         </div>
         {% endfor %}
     </div>
+
+    <!-- Additional Links Section -->
+    <div class="mt-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">
+            <span class="bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent">🔗 Additional Links</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Why Flask? -->
+            <a href="{{ url_for('why_flask') }}" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow border border-gray-200">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">🚀 Why Flask?</h3>
+                <p class="text-gray-600">Discover the philosophy behind Flask and why it's a great choice for web development.</p>
+            </a>
+            <!-- How Web Works -->
+            <a href="{{ url_for('how_web_works') }}" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow border border-gray-200">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">🌐 How the Web Works</h3>
+                <p class="text-gray-600">A beginner-friendly guide to the underlying mechanics of the internet.</p>
+            </a>
+            <!-- Python Basics -->
+            <a href="{{ url_for('python_basics') }}" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow border border-gray-200">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">🐍 Python Basics</h3>
+                <p class="text-gray-600">A refresher on the core Python concepts you'll need for Flask development.</p>
+            </a>
+            <!-- REST Protocol -->
+            <a href="{{ url_for('rest_protocol') }}" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow border border-gray-200">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">🍕 REST Protocol</h3>
+                <p class="text-gray-600">Understand the principles of RESTful APIs with a simple, fun analogy.</p>
+            </a>
+            <!-- FastAPI Notes -->
+            <a href="{{ url_for('fastapi_notes') }}" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow border border-gray-200">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">⚡ FastAPI Notes</h3>
+                <p class="text-gray-600">Explore the high-performance FastAPI framework, a popular alternative to Flask.</p>
+            </a>
+             <!-- Database Guide -->
+             <a href="{{ url_for('database_guide') }}" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow border border-gray-200">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">🗄️ Database Guide</h3>
+                <p class="text-gray-600">Learn about SQL vs NoSQL, ORMs, and how to choose the right database.</p>
+            </a>
+        </div>
+    </div>
 </div>
 
 <!-- Flask Modules Section -->

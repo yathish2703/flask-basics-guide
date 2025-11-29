@@ -1,0 +1,611 @@
+{% extends "base.html" %}
+
+{% block title %}FastAPI Complete Guide{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-teal-500 to-cyan-600 rounded-lg shadow-lg p-8 text-white mb-8">
+        <h1 class="text-4xl font-bold mb-2">⚡ FastAPI Complete Guide</h1>
+        <p class="text-teal-100 text-lg">Modern, fast (high-performance), web framework for building APIs with Python 3.7+</p>
+    </div>
+
+    <!-- Why FastAPI -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🚀 Why FastAPI?</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-green-50 p-4 rounded-lg">
+                <h3 class="font-bold text-green-900 mb-2">✅ Advantages</h3>
+                <ul class="space-y-1 text-sm text-gray-700 list-disc pl-5">
+                    <li><strong>Very Fast:</strong> One of the fastest Python frameworks</li>
+                    <li><strong>Auto Documentation:</strong> Swagger UI & ReDoc included</li>
+                    <li><strong>Type Hints:</strong> Based on Python type hints</li>
+                    <li><strong>Easy to Learn:</strong> Intuitive and easy to use</li>
+                    <li><strong>Production Ready:</strong> Used by Microsoft, Netflix, Uber</li>
+                    <li><strong>Async Support:</strong> Built-in async/await support</li>
+                </ul>
+            </div>
+            <div class="bg-blue-50 p-4 rounded-lg">
+                <h3 class="font-bold text-blue-900 mb-2">🆚 FastAPI vs Flask</h3>
+                <ul class="space-y-1 text-sm text-gray-700 list-disc pl-5">
+                    <li><strong>Performance:</strong> FastAPI is faster (async support)</li>
+                    <li><strong>Documentation:</strong> FastAPI auto-generates docs</li>
+                    <li><strong>Type Safety:</strong> FastAPI uses Pydantic for validation</li>
+                    <li><strong>Learning Curve:</strong> Flask is simpler for beginners</li>
+                    <li><strong>Ecosystem:</strong> Flask has more extensions</li>
+                    <li><strong>Use Case:</strong> FastAPI for APIs, Flask for full web apps</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Installation -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📦 Installation</h2>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># Install FastAPI and Uvicorn (ASGI server)
+pip install fastapi uvicorn[standard]
+
+# Or with all optional dependencies
+pip install "fastapi[all]"</code></pre>
+    </div>
+
+    <!-- Hello World -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">👋 Hello World</h2>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4"><code class="text-sm">from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello World"}
+
+@app.get("/items/{item_id}")
+def read_item(item_id: int, q: str = None):
+    return {"item_id": item_id, "q": q}
+
+# Run with: uvicorn main:app --reload
+# Visit: http://localhost:8000
+# Docs: http://localhost:8000/docs</code></pre>
+        
+        <div class="bg-teal-50 border-l-4 border-teal-600 p-4 rounded">
+            <p class="text-gray-700"><strong>💡 Tip:</strong> FastAPI automatically generates interactive API docs at <code class="bg-gray-200 px-2 py-1 rounded">/docs</code> (Swagger UI) and <code class="bg-gray-200 px-2 py-1 rounded">/redoc</code> (ReDoc)</p>
+        </div>
+    </div>
+
+    <!-- Path Parameters -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🛣️ Path Parameters</h2>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">from fastapi import FastAPI
+
+app = FastAPI()
+
+# Path parameter
+@app.get("/users/{user_id}")
+def get_user(user_id: int):
+    return {"user_id": user_id}
+
+# Multiple path parameters
+@app.get("/users/{user_id}/posts/{post_id}")
+def get_user_post(user_id: int, post_id: int):
+    return {"user_id": user_id, "post_id": post_id}
+
+# Enum for path parameters
+from enum import Enum
+
+class ModelName(str, Enum):
+    alexnet = "alexnet"
+    resnet = "resnet"
+    lenet = "lenet"
+
+@app.get("/models/{model_name}")
+def get_model(model_name: ModelName):
+    if model_name == ModelName.alexnet:
+        return {"model_name": model_name, "message": "Deep Learning FTW!"}
+    return {"model_name": model_name}</code></pre>
+    </div>
+
+    <!-- Query Parameters -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🔍 Query Parameters</h2>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">from fastapi import FastAPI
+from typing import Optional
+
+app = FastAPI()
+
+# Optional query parameters
+@app.get("/items/")
+def read_items(skip: int = 0, limit: int = 10):
+    return {"skip": skip, "limit": limit}
+
+# Optional with None
+@app.get("/search/")
+def search(q: Optional[str] = None, page: int = 1):
+    if q:
+        return {"q": q, "page": page}
+    return {"message": "No query provided"}
+
+# Required query parameter
+@app.get("/products/")
+def get_products(category: str):
+    return {"category": category}
+
+# Multiple types
+@app.get("/filter/")
+def filter_items(
+    min_price: float = 0,
+    max_price: float = 1000,
+    in_stock: bool = True
+):
+    return {
+        "min_price": min_price,
+        "max_price": max_price,
+        "in_stock": in_stock
+    }</code></pre>
+    </div>
+
+    <!-- Request Body (Pydantic) -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📨 Request Body with Pydantic</h2>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">from fastapi import FastAPI
+from pydantic import BaseModel, EmailStr, Field
+from typing import Optional
+
+app = FastAPI()
+
+# Define data model
+class User(BaseModel):
+    name: str = Field(..., min_length=2, max_length=50)
+    email: EmailStr
+    age: int = Field(..., ge=0, le=150)
+    is_active: bool = True
+    bio: Optional[str] = None
+
+# POST request with body
+@app.post("/users/")
+def create_user(user: User):
+    return {
+        "message": "User created",
+        "user": user
+    }
+
+# PUT request
+@app.put("/users/{user_id}")
+def update_user(user_id: int, user: User):
+    return {"user_id": user_id, "user": user}
+
+# Nested models
+class Address(BaseModel):
+    street: str
+    city: str
+    country: str
+    zipcode: str
+
+class UserWithAddress(BaseModel):
+    name: str
+    email: EmailStr
+    address: Address
+
+@app.post("/users/with-address/")
+def create_user_with_address(user: UserWithAddress):
+    return user</code></pre>
+    </div>
+
+    <!-- Response Models -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📤 Response Models</h2>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class UserIn(BaseModel):
+    username: str
+    password: str
+    email: str
+
+class UserOut(BaseModel):
+    username: str
+    email: str
+    # No password in response!
+
+# Use response_model to filter response
+@app.post("/users/", response_model=UserOut)
+def create_user(user: UserIn):
+    return user  # Password will be excluded automatically
+
+# Status codes
+from fastapi import status
+
+@app.post("/items/", status_code=status.HTTP_201_CREATED)
+def create_item(name: str):
+    return {"name": name}
+
+# Multiple response models
+from typing import Union
+
+class SuccessResponse(BaseModel):
+    success: bool
+    data: dict
+
+class ErrorResponse(BaseModel):
+    success: bool
+    error: str
+
+@app.get("/data/", response_model=Union[SuccessResponse, ErrorResponse])
+def get_data(valid: bool = True):
+    if valid:
+        return {"success": True, "data": {"id": 1}}
+    return {"success": False, "error": "Invalid request"}</code></pre>
+    </div>
+
+    <!-- HTTP Methods -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🔄 HTTP Methods (CRUD)</h2>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Item(BaseModel):
+    name: str
+    price: float
+    description: str = None
+
+# In-memory database
+items_db = {}
+
+# CREATE
+@app.post("/items/")
+def create_item(item: Item):
+    item_id = len(items_db) + 1
+    items_db[item_id] = item
+    return {"id": item_id, "item": item}
+
+# READ (all)
+@app.get("/items/")
+def read_items():
+    return items_db
+
+# READ (one)
+@app.get("/items/{item_id}")
+def read_item(item_id: int):
+    if item_id not in items_db:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return items_db[item_id]
+
+# UPDATE
+@app.put("/items/{item_id}")
+def update_item(item_id: int, item: Item):
+    if item_id not in items_db:
+        raise HTTPException(status_code=404, detail="Item not found")
+    items_db[item_id] = item
+    return {"id": item_id, "item": item}
+
+# DELETE
+@app.delete("/items/{item_id}")
+def delete_item(item_id: int):
+    if item_id not in items_db:
+        raise HTTPException(status_code=404, detail="Item not found")
+    del items_db[item_id]
+    return {"message": "Item deleted"}</code></pre>
+    </div>
+
+    <!-- Dependency Injection -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">💉 Dependency Injection</h2>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+
+app = FastAPI()
+security = HTTPBasic()
+
+# Simple dependency
+def get_query_token(token: str):
+    if token != "secret-token":
+        raise HTTPException(status_code=400, detail="Invalid token")
+    return token
+
+@app.get("/items/")
+def read_items(token: str = Depends(get_query_token)):
+    return {"token": token}
+
+# Authentication dependency
+def get_current_user(credentials: HTTPBasicCredentials = Depends(security)):
+    if credentials.username != "admin" or credentials.password != "password":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid credentials"
+        )
+    return credentials.username
+
+@app.get("/protected/")
+def protected_route(username: str = Depends(get_current_user)):
+    return {"message": f"Hello {username}"}
+
+# Database dependency
+from typing import Generator
+
+def get_db() -> Generator:
+    db = "database_connection"
+    try:
+        yield db
+    finally:
+        # Close connection
+        pass
+
+@app.get("/users/")
+def get_users(db: str = Depends(get_db)):
+    return {"db": db, "users": []}</code></pre>
+    </div>
+
+    <!-- Async/Await -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">⚡ Async/Await</h2>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">from fastapi import FastAPI
+import asyncio
+import httpx
+
+app = FastAPI()
+
+# Async route
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+# Async with await
+@app.get("/fetch-data/")
+async def fetch_data():
+    await asyncio.sleep(1)  # Simulate async operation
+    return {"data": "fetched"}
+
+# Async HTTP request
+@app.get("/external-api/")
+async def call_external_api():
+    async with httpx.AsyncClient() as client:
+        response = await client.get("https://api.example.com/data")
+        return response.json()
+
+# Regular sync function (works too)
+@app.get("/sync/")
+def sync_route():
+    return {"message": "Sync route"}
+
+# When to use async?
+# - Use async for I/O operations (database, API calls, file operations)
+# - Use sync for CPU-bound operations (calculations, processing)</code></pre>
+    </div>
+
+    <!-- File Upload -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📁 File Upload</h2>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">from fastapi import FastAPI, File, UploadFile
+from typing import List
+
+app = FastAPI()
+
+# Single file upload
+@app.post("/upload/")
+async def upload_file(file: UploadFile = File(...)):
+    contents = await file.read()
+    return {
+        "filename": file.filename,
+        "content_type": file.content_type,
+        "size": len(contents)
+    }
+
+# Multiple files
+@app.post("/upload-multiple/")
+async def upload_multiple(files: List[UploadFile] = File(...)):
+    return [
+        {"filename": file.filename, "size": len(await file.read())}
+        for file in files
+    ]
+
+# Save file
+@app.post("/save-file/")
+async def save_file(file: UploadFile = File(...)):
+    with open(f"uploads/{file.filename}", "wb") as f:
+        content = await file.read()
+        f.write(content)
+    return {"filename": file.filename}</code></pre>
+    </div>
+
+    <!-- Middleware & CORS -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🔧 Middleware & CORS</h2>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+import time
+
+app = FastAPI()
+
+# CORS (Cross-Origin Resource Sharing)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
+)
+
+# Custom middleware
+@app.middleware("http")
+async def add_process_time_header(request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    response.headers["X-Process-Time"] = str(process_time)
+    return response
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello World"}</code></pre>
+    </div>
+
+    <!-- Database (SQLAlchemy) -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🗄️ Database with SQLAlchemy</h2>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># database.py
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+SQLALCHEMY_DATABASE_URL = "sqlite:///./app.db"
+
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+# models.py
+from sqlalchemy import Column, Integer, String
+from database import Base
+
+class User(Base):
+    __tablename__ = "users"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    email = Column(String, unique=True, index=True)
+
+# schemas.py
+from pydantic import BaseModel
+
+class UserCreate(BaseModel):
+    name: str
+    email: str
+
+class UserResponse(BaseModel):
+    id: int
+    name: str
+    email: str
+    
+    class Config:
+        orm_mode = True
+
+# main.py
+from fastapi import FastAPI, Depends
+from sqlalchemy.orm import Session
+from database import SessionLocal, engine
+import models, schemas
+
+models.Base.metadata.create_all(bind=engine)
+
+app = FastAPI()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+@app.post("/users/", response_model=schemas.UserResponse)
+def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    db_user = models.User(name=user.name, email=user.email)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+@app.get("/users/{user_id}", response_model=schemas.UserResponse)
+def get_user(user_id: int, db: Session = Depends(get_db)):
+    return db.query(models.User).filter(models.User.id == user_id).first()</code></pre>
+    </div>
+
+    <!-- Testing -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">🧪 Testing</h2>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm"># test_main.py
+from fastapi.testclient import TestClient
+from main import app
+
+client = TestClient(app)
+
+def test_read_root():
+    response = client.get("/")
+    assert response.status_code == 200
+    assert response.json() == {"message": "Hello World"}
+
+def test_create_user():
+    response = client.post(
+        "/users/",
+        json={"name": "Alice", "email": "alice@example.com"}
+    )
+    assert response.status_code == 200
+    assert response.json()["name"] == "Alice"
+
+def test_invalid_user():
+    response = client.post(
+        "/users/",
+        json={"name": "A"}  # Too short
+    )
+    assert response.status_code == 422  # Validation error
+
+# Run tests: pytest test_main.py</code></pre>
+    </div>
+
+    <!-- Best Practices -->
+    <div class="bg-gradient-to-r from-purple-50 to-pink-50 border-l-4 border-purple-600 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">✨ FastAPI Best Practices</h2>
+        <ul class="space-y-2 text-gray-700 list-disc pl-6">
+            <li><strong>Use Pydantic Models:</strong> Always define request/response models for validation</li>
+            <li><strong>Type Hints:</strong> Use type hints everywhere for auto-documentation</li>
+            <li><strong>Dependency Injection:</strong> Use for database sessions, authentication, etc.</li>
+            <li><strong>Async When Needed:</strong> Use async for I/O operations, sync for CPU-bound tasks</li>
+            <li><strong>Response Models:</strong> Define response_model to document and validate responses</li>
+            <li><strong>Error Handling:</strong> Use HTTPException with proper status codes</li>
+            <li><strong>API Versioning:</strong> Use routers with prefixes like /api/v1</li>
+            <li><strong>Environment Variables:</strong> Use pydantic Settings for configuration</li>
+            <li><strong>Testing:</strong> Write tests using TestClient</li>
+            <li><strong>Documentation:</strong> Add docstrings to path operations</li>
+        </ul>
+    </div>
+
+    <!-- Project Structure -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">📁 Recommended Project Structure</h2>
+        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code class="text-sm">fastapi-project/
+│
+├── app/
+│   ├── __init__.py
+│   ├── main.py              # FastAPI app instance
+│   ├── config.py            # Configuration
+│   ├── database.py          # Database setup
+│   │
+│   ├── models/              # SQLAlchemy models
+│   │   ├── __init__.py
+│   │   └── user.py
+│   │
+│   ├── schemas/             # Pydantic models
+│   │   ├── __init__.py
+│   │   └── user.py
+│   │
+│   ├── routers/             # API routes
+│   │   ├── __init__.py
+│   │   ├── users.py
+│   │   └── items.py
+│   │
+│   ├── services/            # Business logic
+│   │   ├── __init__.py
+│   │   └── user_service.py
+│   │
+│   └── dependencies.py      # Shared dependencies
+│
+├── tests/
+│   ├── __init__.py
+│   └── test_users.py
+│
+├── .env
+├── requirements.txt
+└── README.md</code></pre>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center">
+        <a href="/" class="inline-block bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-3 rounded-lg transition">
+            ← Back to Home
+        </a>
+    </div>
+</div>
+{% endblock %}

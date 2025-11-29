@@ -47,6 +47,18 @@ def index():
     """Home page with links to all modules"""
     learning_resources = [
         {
+            'name': 'Python Basics',
+            'url': '/python-basics',
+            'description': 'Complete Python fundamentals guide - variables, functions, classes & more',
+            'icon': '🐍'
+        },
+        {
+            'name': 'FastAPI Guide',
+            'url': '/fastapi-guide',
+            'description': 'Modern, fast API framework - learn FastAPI from scratch',
+            'icon': '⚡'
+        },
+        {
             'name': 'Why Flask?',
             'url': '/why-flask',
             'description': 'Discover Flask advantages, key concepts, and multiple examples',
@@ -123,6 +135,26 @@ def index():
         }
     ]
     return render_template('index.html', learning_resources=learning_resources, flask_modules=flask_modules)
+
+# Python Basics page
+@app.route('/python-basics')
+def python_basics():
+    """Complete Python basics guide"""
+    return render_template('python_basics.html')
+
+# FastAPI Guide page
+@app.route('/fastapi-guide')
+def fastapi_guide():
+    """Complete FastAPI guide"""
+    return render_template('fastapi_notes.html')
+
+@app.route('/fastapi-notes')
+def fastapi_notes():
+    return render_template('fastapi_notes.html', title="FastAPI Notes")
+
+@app.route('/database-guide')
+def database_guide():
+    return render_template('database_guide.html', title="Database Guide")
 
 # Why Flask? explanation page
 @app.route('/why-flask')
@@ -313,4 +345,4 @@ with app.app_context():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5001)
